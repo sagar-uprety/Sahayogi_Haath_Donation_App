@@ -1,6 +1,6 @@
 # sahayogihaath
 
-A new Flutter project.
+A donation app made with Flutter, Firabase and lots of love! 
 
 ## Getting Started
 
