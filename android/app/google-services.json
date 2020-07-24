@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "290977852397",
+    "firebase_url": "https://sahayogi-haath.firebaseio.com",
+    "project_id": "sahayogi-haath",
+    "storage_bucket": "sahayogi-haath.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290977852397:android:580d14db9ea3462a8415e4",
+        "android_client_info": {
+          "package_name": "com.cfnepal.sahayogi_haath"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290977852397-ha1jo7ce865khbg4f7vm47b01bj3o7jb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cfnepal.sahayogi_haath",
+            "certificate_hash": "2e9458bad1879736957f5f939ea6e409c553a1b0"
+          }
+        },
+        {
+          "client_id": "290977852397-n5t4ks1f44j57c9n6feqmbpjd1dlp7ra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHV0unBZlNqQ_1u9PCj0KAcUshc5R__Z0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290977852397-n5t4ks1f44j57c9n6feqmbpjd1dlp7ra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
