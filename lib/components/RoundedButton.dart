@@ -4,13 +4,13 @@ import '../constants.dart';
 class RoundButton extends StatelessWidget {
   final String text;
   final Color color, textColor;
-  final Function press;
+  final Function onPress;
   const RoundButton({
     Key key,
     @required this.text,
     this.color = kPrimaryColor,
     this.textColor = Colors.white,
-    this.press,
+    this.onPress,
   }) : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class RoundButton extends StatelessWidget {
         child: FlatButton(
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
           color: color,
-          onPressed: press,
+          onPressed: onPress,
           child: Text(text,
               style: TextStyle(
                 color: textColor,

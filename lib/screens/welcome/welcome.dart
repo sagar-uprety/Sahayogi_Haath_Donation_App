@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sahayogihaath/screens/signup/signup.dart';
+import '../login/login.dart';
 import '../../components/RoundedButton.dart';
 import '../../constants.dart';
-import './background.dart';
+import './WelcomeBackground.dart';
 
 class Welcome extends StatelessWidget {
   static const id = 'welcome';
@@ -10,14 +12,16 @@ class Welcome extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Background(
+      body: WelcomeBackground(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
                 'WELCOME TO SAHAYOGI HAATH',
-                style: TextStyle(fontWeight: FontWeight.w900), //fix this
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: size.height * 0.022), //fix this
               ),
               SizedBox(height: size.height * 0.05),
               SvgPicture.asset(
@@ -27,13 +31,17 @@ class Welcome extends StatelessWidget {
               SizedBox(height: size.height * 0.05),
               RoundButton(
                 text: 'Login',
-                press: () {},
+                onPress: () {
+                  Navigator.pushNamed(context, Login.id);
+                },
               ),
               RoundButton(
                 text: 'Sign Up',
                 color: kPrimaryLightColor,
                 textColor: Colors.black,
-                press: () {},
+                onPress: () {
+                  Navigator.pushNamed(context, SignUp.id);
+                },
               ),
             ],
           ),
