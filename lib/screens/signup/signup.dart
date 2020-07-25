@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Auth extends StatelessWidget {
-  static const id = 'auth';
+class SignUp extends StatelessWidget {
+  static const id = 'signup';
   @override
   Widget build(BuildContext context) {
     return Container();
