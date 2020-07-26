@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../services/firebase_auth.dart';
 import '../../components/HrDivider.dart';
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
@@ -61,7 +62,10 @@ class SignUp extends StatelessWidget {
                 children: <Widget>[
                   SocialIcon(
                     iconSource: 'assets/icons/google-plus.svg',
-                    onPress: () {},
+                    onPress: () async {
+                      bool res = await AuthProvider().loginWithGoogle();
+                      if (!res) print('Error with Google');
+                    },
                   )
                 ],
               )
