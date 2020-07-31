@@ -33,14 +33,14 @@ class Login extends StatelessWidget {
               RoundedInput(
                 hintText: "Enter Your Email",
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {},
+                onSaved: (value) {},
               ),
               RoundedInput(
                 hintText: "Password",
                 icon: Icons.lock,
                 obscureText: true,
                 suffixIcon: Icons.visibility,
-                onChanged: (value) {},
+                onSaved: (value) {},
               ),
               RoundButton(
                 text: 'LOGIN',

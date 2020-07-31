@@ -5,6 +5,21 @@ class AuthProvider {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+  Future<bool> loginWithEmail(String email, String password) async {
+    try {
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
+      if (user != null)
+        return true;
+      else
+        return false;
+    } catch (e) {
+      print(e.message);
+      return false;
+    }
+  }
+
   Future<bool> loginWithGoogle() async {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();

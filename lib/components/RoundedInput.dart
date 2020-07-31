@@ -4,26 +4,38 @@ import '../constants.dart';
 class RoundedInput extends StatelessWidget {
   final String hintText;
   final IconData icon, suffixIcon;
-  final ValueChanged<String> onChanged;
   final bool obscureText;
   final TextInputType keyboardType;
+  final TextCapitalization capitalization;
+  final bool enableSuggesstion;
+  final FormFieldSetter<String> onSaved;
+  final FormFieldValidator<String> validator;
+  final Key key;
   const RoundedInput({
-    Key key,
+    this.key, //TODO: have a look at these key value
     this.hintText,
     this.icon = Icons.person,
-    this.onChanged,
+    this.onSaved,
     this.obscureText = false,
     this.suffixIcon,
     this.keyboardType,
+    this.capitalization,
+    this.enableSuggesstion,
+    this.validator,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextInputController(
-      child: TextField(
+      child: TextFormField(
+        key: key,
+        autocorrect: false,
+        textCapitalization: capitalization,
+        enableSuggestions: enableSuggesstion,
         obscureText: obscureText,
-        onChanged: onChanged,
         keyboardType: keyboardType,
+        onSaved: onSaved,
+        validator: validator,
         decoration: InputDecoration(
           hintText: hintText,
           icon: Icon(
