@@ -1,22 +1,37 @@
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import './login.dart';
 
-class AuthProvider {
+class LoginMain extends StatefulWidget {
+  static const id = 'login';
+  @override
+  _LoginMainState createState() => _LoginMainState();
+}
+
+class _LoginMainState extends State<LoginMain> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future<bool> loginWithEmail(String email, String password) async {
+  void _submitLoginForm(
+    String email,
+    String password,
+  ) async {
+    AuthResult authResult;
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      FirebaseUser user = result.user;
-      if (user != null)
-        return true;
-      else
-        return false;
-    } catch (e) {
-      print(e.message);
-      return false;
+      authResult = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on PlatformException catch (err) {
+      var message = 'An error occurred, pelase check your credentials!';
+
+      if (err.message != null) {
+        message = err.message;
+      }
+    } catch (err) {
+      print(err);
     }
   }
 
@@ -45,11 +60,16 @@ class AuthProvider {
     }
   }
 
-  Future<void> logOut() async {
+  /*  Future<void> logOut() async {
     try {
       await _auth.signOut();
     } catch (e) {
       print("error logging out");
     }
+  } */
+
+  @override
+  Widget build(BuildContext context) {
+    return Login(_submitLoginForm, loginWithGoogle);
   }
 }

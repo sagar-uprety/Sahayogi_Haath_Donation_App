@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sahayogihaath/screens/signup/signup.dart';
-import '../login/login.dart';
+import '../login/login_main.dart';
+import '../signup/signup_main.dart';
 import '../../components/RoundedButton.dart';
 import '../../constants.dart';
 import './WelcomeBackground.dart';
@@ -32,7 +32,7 @@ class Welcome extends StatelessWidget {
               RoundButton(
                 text: 'Login',
                 onPress: () {
-                  Navigator.pushNamed(context, Login.id);
+                  Navigator.pushNamed(context, LoginMain.id);
                 },
               ),
               RoundButton(
@@ -40,7 +40,7 @@ class Welcome extends StatelessWidget {
                 color: kPrimaryLightColor,
                 textColor: Colors.black,
                 onPress: () {
-                  Navigator.pushNamed(context, SignUp.id);
+                  Navigator.pushNamed(context, SignUpMain.id);
                 },
               ),
             ],

@@ -19,8 +19,8 @@ class RoundedInput extends StatelessWidget {
     this.obscureText = false,
     this.suffixIcon,
     this.keyboardType,
-    this.capitalization,
-    this.enableSuggesstion,
+    this.capitalization = TextCapitalization.none,
+    this.enableSuggesstion = false,
     this.validator,
   }) : super(key: key);
 

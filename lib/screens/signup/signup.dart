@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../services/firebase_auth.dart';
 import '../../components/HrDivider.dart';
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
 import '../../components/HaveAnAccount.dart';
 import '../../components/SocialIcons.dart';
-import '../login/login.dart';
+import '../login/login_main.dart';
 import './SignUpBackground.dart';
 
 class SignUp extends StatefulWidget {
-  static const id = 'signup';
+  SignUp(this.submitSignUpForm, this.loginWithGoogle);
 
+  final void Function(
+    String email,
+    String password,
+  ) submitSignUpForm;
+
+  final Future<bool> Function() loginWithGoogle;
   @override
   _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
-  String _userEmail = '';
-  String _userPassword = '';
-  
-
+  var userEmail = '';
+  var userPassword = '';
+  // var _userName = '';
   void _submit() {
     final isValid = _formKey.currentState.validate();
     // FocusScope.of(context).unfocus();
-
     if (isValid) {
       _formKey.currentState.save();
-     
+      widget.submitSignUpForm(
+        userEmail,
+        userPassword,
+      );
     }
   }
 
@@ -57,35 +63,36 @@ class _SignUpState extends State<SignUp> {
                 ),
                 SizedBox(height: size.height * 0.03),
                 RoundedInput(
-                  key: ValueKey('email'),
                   hintText: "Enter Your Email",
-                  capitalization: TextCapitalization.none,
+                  key: ValueKey('email'),
                   enableSuggesstion: false,
                   keyboardType: TextInputType.emailAddress,
-                  onSaved: (value) {
-                    _userEmail = value;
-                  },
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
                       return 'Please enter a valid email address.';
                     }
                     return null;
                   },
+                  onSaved: (value) {
+                    userEmail = value;
+                    print(userEmail);
+                  },
                 ),
                 RoundedInput(
-                  key: ValueKey('password'),
                   hintText: "Password",
+                  key: ValueKey('password'),
                   icon: Icons.lock,
                   obscureText: true,
                   suffixIcon: Icons.visibility,
-                  onSaved: (value) {
-                    _userPassword = value;
-                  },
                   validator: (value) {
                     if (value.isEmpty || value.length < 8) {
-                      return 'Password must be at least 8 characters';
+                      return 'Password must be at least 8 characters long.';
                     }
                     return null;
+                  },
+                  onSaved: (value) {
+                    userPassword = value;
+                    print(userPassword);
                   },
                 ),
                 RoundButton(
@@ -96,7 +103,7 @@ class _SignUpState extends State<SignUp> {
                 HaveAnAccountCheck(
                   login: false,
                   onPress: () {
-                    Navigator.pushNamed(context, Login.id);
+                    Navigator.pushNamed(context, LoginMain.id);
                   },
                 ),
                 HrDivider(),
@@ -106,7 +113,7 @@ class _SignUpState extends State<SignUp> {
                     SocialIcon(
                       iconSource: 'assets/icons/google-plus.svg',
                       onPress: () async {
-                        bool res = await AuthProvider().loginWithGoogle();
+                        bool res = await widget.loginWithGoogle();
                         if (!res) print('Error with Google');
                       },
                     )

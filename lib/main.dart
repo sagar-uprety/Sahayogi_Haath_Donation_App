@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sahayogihaath/screens/signup/signup.dart';
-import 'screens/welcome/welcome.dart';
+import './screens/welcome/welcome.dart';
+import './screens/signup/signup_main.dart';
 import './screens/dashboard.dart';
-import './screens/login/login.dart';
+import './screens/login/login_main.dart';
 import './screens/explore.dart';
 import './constants.dart';
 
@@ -33,8 +33,8 @@ class SahayogiHaath extends StatelessWidget {
         initialRoute: Welcome.id,
         routes: {
           Welcome.id: (ctx) => Welcome(),
-          Login.id: (ctx) => Login(),
-          SignUp.id: (ctx) => SignUp(),
+          LoginMain.id: (ctx) => LoginMain(),
+          SignUpMain.id: (ctx) => SignUpMain(),
           Dashboard.id: (ctx) => Dashboard(),
           Explore.id: (ctx) => Explore(),
         });
