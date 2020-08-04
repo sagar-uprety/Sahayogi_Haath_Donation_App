@@ -13,25 +13,42 @@ class LoginMain extends StatefulWidget {
 class _LoginMainState extends State<LoginMain> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  var _isLoading = false;
 
-  void _submitLoginForm(
-    String email,
-    String password,
-  ) async {
+  void _submitLoginForm(String email, String password, BuildContext ctx) async {
     AuthResult authResult;
     try {
+      setState(() {
+        _isLoading = true;
+      });
       authResult = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      setState(() {
+        _isLoading = false;
+      });
+      // Navigator.pushNamed(context, Dashboard.id);
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';
 
       if (err.message != null) {
         message = err.message;
       }
+      Scaffold.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(ctx).errorColor,
+        ),
+      );
+      setState(() {
+        _isLoading = false;
+      });
     } catch (err) {
       print(err);
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -70,6 +87,8 @@ class _LoginMainState extends State<LoginMain> {
 
   @override
   Widget build(BuildContext context) {
-    return Login(_submitLoginForm, loginWithGoogle);
+    return Scaffold(
+      body: Login(_submitLoginForm, loginWithGoogle, _isLoading),
+    );
   }
 }

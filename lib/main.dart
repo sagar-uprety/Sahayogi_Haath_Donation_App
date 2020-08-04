@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import './screens/welcome/welcome.dart';
 import './screens/signup/signup_main.dart';
 import './screens/dashboard.dart';
@@ -30,7 +31,18 @@ class SahayogiHaath extends StatelessWidget {
             // TODO:set app-wide text theme
           ),
         ),
-        initialRoute: Welcome.id,
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.onAuthStateChanged,
+          builder: (BuildContext context, AsyncSnapshot userSnapshot) {
+            if (userSnapshot.connectionState == ConnectionState.waiting) {
+              // return SplashScreen();
+            }
+            if (userSnapshot.hasData) {
+              return Dashboard();
+            }
+            return Welcome();
+          },
+        ),
         routes: {
           Welcome.id: (ctx) => Welcome(),
           LoginMain.id: (ctx) => LoginMain(),

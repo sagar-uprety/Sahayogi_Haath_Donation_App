@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:sahayogihaath/screens/dashboard.dart';
 import './signup.dart';
 
 class SignUpMain extends StatefulWidget {
@@ -13,25 +14,42 @@ class SignUpMain extends StatefulWidget {
 class _SignUpMainState extends State<SignUpMain> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  var _isLoading = false;
 
   void _submitSignUpForm(
     String email,
     String password,
+    BuildContext ctx,
   ) async {
     AuthResult authResult;
     try {
+      setState(() {
+        _isLoading = true;
+      });
       authResult = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      // Navigator.pushNamed(context, Dashboard.id);
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';
-
       if (err.message != null) {
         message = err.message;
       }
+      Scaffold.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(ctx).errorColor,
+        ),
+      );
+      setState(() {
+        _isLoading = false;
+      });
     } catch (err) {
       print(err);
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -70,6 +88,8 @@ class _SignUpMainState extends State<SignUpMain> {
 
   @override
   Widget build(BuildContext context) {
-    return SignUp(_submitSignUpForm, loginWithGoogle);
+    return Scaffold(
+      body: SignUp(_submitSignUpForm, loginWithGoogle, _isLoading),
+    );
   }
 }

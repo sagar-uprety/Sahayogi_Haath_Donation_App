@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../constants.dart';
+import '../../components/RoundedButton.dart';
 import '../login/login_main.dart';
 import '../signup/signup_main.dart';
-import '../../components/RoundedButton.dart';
-import '../../constants.dart';
 import './WelcomeBackground.dart';
 
 class Welcome extends StatelessWidget {
