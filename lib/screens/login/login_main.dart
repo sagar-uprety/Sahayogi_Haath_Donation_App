@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 import './login.dart';
+import '../dashboard.dart';
 
 class LoginMain extends StatefulWidget {
   static const id = 'login';
@@ -15,7 +17,11 @@ class _LoginMainState extends State<LoginMain> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   var _isLoading = false;
 
-  void _submitLoginForm(String email, String password, BuildContext ctx) async {
+  void _submitLoginForm(
+    String email,
+    String password,
+    BuildContext ctx,
+  ) async {
     AuthResult authResult;
     try {
       setState(() {
@@ -25,10 +31,8 @@ class _LoginMainState extends State<LoginMain> {
         email: email,
         password: password,
       );
-      setState(() {
-        _isLoading = false;
-      });
-      // Navigator.pushNamed(context, Dashboard.id);
+      //TODO: This should be auto handled by authStateChanged
+      Navigator.pushReplacementNamed(context, Dashboard.id);
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';
 
@@ -38,7 +42,7 @@ class _LoginMainState extends State<LoginMain> {
       Scaffold.of(ctx).showSnackBar(
         SnackBar(
           content: Text(message),
-          backgroundColor: Theme.of(ctx).errorColor,
+          backgroundColor: Colors.red[600],
         ),
       );
       setState(() {
@@ -76,14 +80,6 @@ class _LoginMainState extends State<LoginMain> {
       return false;
     }
   }
-
-  /*  Future<void> logOut() async {
-    try {
-      await _auth.signOut();
-    } catch (e) {
-      print("error logging out");
-    }
-  } */
 
   @override
   Widget build(BuildContext context) {

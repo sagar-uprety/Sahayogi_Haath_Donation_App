@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:sahayogihaath/screens/dashboard.dart';
+import '../dashboard.dart';
 import './signup.dart';
 
 class SignUpMain extends StatefulWidget {
@@ -30,7 +31,8 @@ class _SignUpMainState extends State<SignUpMain> {
         email: email,
         password: password,
       );
-      // Navigator.pushNamed(context, Dashboard.id);
+      //TODO: This should be auto handled by authStateChanged
+      Navigator.pushReplacementNamed(context, Dashboard.id);
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';
       if (err.message != null) {
@@ -39,7 +41,7 @@ class _SignUpMainState extends State<SignUpMain> {
       Scaffold.of(ctx).showSnackBar(
         SnackBar(
           content: Text(message),
-          backgroundColor: Theme.of(ctx).errorColor,
+          backgroundColor: Colors.red[600],
         ),
       );
       setState(() {
@@ -77,14 +79,6 @@ class _SignUpMainState extends State<SignUpMain> {
       return false;
     }
   }
-
-  /*  Future<void> logOut() async {
-    try {
-      await _auth.signOut();
-    } catch (e) {
-      print("error logging out");
-    }
-  } */
 
   @override
   Widget build(BuildContext context) {

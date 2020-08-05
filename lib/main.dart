@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import './screens/welcome/welcome.dart';
 import './screens/signup/signup_main.dart';
+import './screens/splash.dart';
 import './screens/dashboard.dart';
 import './screens/login/login_main.dart';
 import './screens/explore.dart';
@@ -33,12 +35,12 @@ class SahayogiHaath extends StatelessWidget {
         ),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,
-          builder: (BuildContext context, AsyncSnapshot userSnapshot) {
-            if (userSnapshot.connectionState == ConnectionState.waiting) {
-              // return SplashScreen();
-            }
+          builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
               return Dashboard();
+            }
+            if (userSnapshot.connectionState == ConnectionState.waiting) {
+              return SplashScreen();
             }
             return Welcome();
           },

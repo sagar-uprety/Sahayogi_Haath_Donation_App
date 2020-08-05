@@ -105,25 +105,27 @@ class _SignUpState extends State<SignUp> {
                   onPress: _submit,
                 ),
               SizedBox(height: size.height * 0.03),
-              HaveAnAccountCheck(
-                login: false,
-                onPress: () {
-                  Navigator.pushNamed(context, LoginMain.id);
-                },
-              ),
-              HrDivider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SocialIcon(
-                    iconSource: 'assets/icons/google-plus.svg',
-                    onPress: () async {
-                      bool res = await widget.loginWithGoogle();
-                      if (!res) print('Error with Google');
-                    },
-                  )
-                ],
-              )
+              if (!widget.isLoading)
+                HaveAnAccountCheck(
+                  login: false,
+                  onPress: () {
+                    Navigator.pushNamed(context, LoginMain.id);
+                  },
+                ),
+              if (!widget.isLoading) HrDivider(),
+              if (!widget.isLoading)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SocialIcon(
+                      iconSource: 'assets/icons/google-plus.svg',
+                      onPress: () async {
+                        bool res = await widget.loginWithGoogle();
+                        if (!res) print('Error with Google');
+                      },
+                    )
+                  ],
+                )
             ],
           ),
         ),

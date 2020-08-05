@@ -65,7 +65,7 @@ class TextInputController extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      width: size.width * 0.7,
+      width: size.width * 0.8,
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       decoration: BoxDecoration(

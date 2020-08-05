@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
 import '../../components/HaveAnAccount.dart';
@@ -17,6 +18,7 @@ class Login extends StatefulWidget {
   final Future<bool> Function() loginWithGoogle;
 
   final bool isLoading;
+
   @override
   _LoginState createState() => _LoginState();
 }
@@ -102,11 +104,12 @@ class _LoginState extends State<Login> {
                   onPress: _submit,
                 ),
               SizedBox(height: size.height * 0.03),
-              HaveAnAccountCheck(
-                onPress: () {
-                  Navigator.pushNamed(context, SignUpMain.id);
-                },
-              )
+              if (!widget.isLoading)
+                HaveAnAccountCheck(
+                  onPress: () {
+                    Navigator.pushNamed(context, SignUpMain.id);
+                  },
+                )
             ],
           ),
         ),
