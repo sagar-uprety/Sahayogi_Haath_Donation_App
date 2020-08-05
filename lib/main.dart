@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import './screens/welcome/welcome.dart';
 import './screens/signup/signup_main.dart';
 import './screens/splash.dart';
-import './screens/dashboard.dart';
+import 'screens/dashboard/dashboard_main.dart';
 import './screens/login/login_main.dart';
 import './screens/explore.dart';
 import './constants.dart';
@@ -37,7 +37,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return Dashboard();
+              return DashboardMain();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
@@ -49,7 +49,7 @@ class SahayogiHaath extends StatelessWidget {
           Welcome.id: (ctx) => Welcome(),
           LoginMain.id: (ctx) => LoginMain(),
           SignUpMain.id: (ctx) => SignUpMain(),
-          Dashboard.id: (ctx) => Dashboard(),
+          DashboardMain.id: (ctx) => DashboardMain(),
           Explore.id: (ctx) => Explore(),
         });
   }

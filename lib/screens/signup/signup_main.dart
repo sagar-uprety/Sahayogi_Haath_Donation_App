@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:sahayogihaath/screens/dashboard.dart';
-import '../dashboard.dart';
+import '../dashboard/dashboard_main.dart';
 import './signup.dart';
 
 class SignUpMain extends StatefulWidget {
@@ -32,7 +31,7 @@ class _SignUpMainState extends State<SignUpMain> {
         password: password,
       );
       //TODO: This should be auto handled by authStateChanged
-      Navigator.pushReplacementNamed(context, Dashboard.id);
+      Navigator.pushReplacementNamed(context, DashboardMain.id);
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';
       if (err.message != null) {
