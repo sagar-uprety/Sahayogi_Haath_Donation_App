@@ -22,6 +22,12 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<!-- gallery and camera access for image picker -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Grant permission to Access Your Gallery Photos</string>
+	<!-- <key>NSCameraUsageDescription</key>
+	<string>Access permission to access your gallery</string> -->
+	<!-- gallery access for image picker -->
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

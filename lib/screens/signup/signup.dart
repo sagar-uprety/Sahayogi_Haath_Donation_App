@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../components/HrDivider.dart';
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
@@ -7,6 +10,7 @@ import '../../components/HaveAnAccount.dart';
 import '../../components/SocialIcons.dart';
 import '../login/login_main.dart';
 import './SignUpBackground.dart';
+import '../pickers/user_image_picker.dart';
 
 class SignUp extends StatefulWidget {
   SignUp(this.submitSignUpForm, this.loginWithGoogle, this.isLoading);
@@ -14,8 +18,13 @@ class SignUp extends StatefulWidget {
   final void Function(
     String email,
     String password,
+    String name,
+    String phone,
+    String address,
+    File userImage,
     BuildContext ctx,
   ) submitSignUpForm;
+
   final Future<bool> Function() loginWithGoogle;
 
   final bool isLoading;
@@ -26,17 +35,40 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
-  var userEmail = '';
-  var userPassword = '';
-  // var _userName = '';
+  var _userEmail = '';
+  var _userPassword = '';
+  var _name = '';
+  var _phone = '';
+  var _address = '';
+  File _userImage;
+
+  void _pickedImage(File image) {
+    _userImage = image;
+  }
+
   void _submit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
+
+    if (_userImage == null) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please pick an image.'),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return;
+    }
+
     if (isValid) {
       _formKey.currentState.save();
       widget.submitSignUpForm(
-        userEmail.trim(),
-        userPassword.trim(),
+        _userEmail.trim(),
+        _userPassword.trim(),
+        _name.trim(),
+        _phone.trim(),
+        _address.trim(),
+        _userImage,
         context,
       );
     }
@@ -59,12 +91,29 @@ class _SignUpState extends State<SignUp> {
                   fontSize: 25.0,
                 ),
               ),
-              SizedBox(height: size.height * 0.03),
+              /*    SizedBox(height: size.height * 0.03),
               SvgPicture.asset(
                 'assets/icons/signup.svg',
-                height: size.height * 0.3,
+                height: size.height * 0.,
+              ), */
+              SizedBox(height: size.height * 0.04),
+              UserImagePicker(_pickedImage),
+              RoundedInput(
+                hintText: "Full Name",
+                key: ValueKey('name'),
+                // icon: Icons.user,
+                keyboardType: TextInputType.name,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Your Name cannot be empty';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _name = value;
+                  print(_name);
+                },
               ),
-              SizedBox(height: size.height * 0.03),
               RoundedInput(
                 hintText: "Enter Your Email",
                 key: ValueKey('email'),
@@ -77,8 +126,8 @@ class _SignUpState extends State<SignUp> {
                   return null;
                 },
                 onSaved: (value) {
-                  userEmail = value;
-                  print(userEmail);
+                  _userEmail = value;
+                  print(_userEmail);
                 },
               ),
               RoundedInput(
@@ -94,8 +143,40 @@ class _SignUpState extends State<SignUp> {
                   return null;
                 },
                 onSaved: (value) {
-                  userPassword = value;
-                  print(userPassword);
+                  _userPassword = value;
+                  print(_userPassword);
+                },
+              ),
+              RoundedInput(
+                hintText: "Mobile Number",
+                key: ValueKey('phone'),
+                // icon: Icons.user,
+                keyboardType: TextInputType.phone,
+                validator: (value) {
+                  if (value.isEmpty || value.length != 10) {
+                    return 'Your Phone Number is invalid';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _phone = value;
+                  print(_phone);
+                },
+              ),
+              RoundedInput(
+                hintText: "Address",
+                key: ValueKey('address'),
+                // icon: Icons.user,
+                keyboardType: TextInputType.streetAddress,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Your Address cannot be empty';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _address = value;
+                  print(_address);
                 },
               ),
               if (widget.isLoading) CircularProgressIndicator(),

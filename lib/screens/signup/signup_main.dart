@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../dashboard/dashboard_main.dart';
@@ -19,17 +24,43 @@ class _SignUpMainState extends State<SignUpMain> {
   void _submitSignUpForm(
     String email,
     String password,
+    String name,
+    String phone,
+    String address,
+    File userImage,
     BuildContext ctx,
   ) async {
     AuthResult authResult;
+
     try {
       setState(() {
         _isLoading = true;
       });
+
       authResult = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('user_image')
+          .child(authResult.user.uid + '.jpg');
+
+      await ref.putFile(userImage).onComplete;
+      final url = await ref.getDownloadURL();
+
+      await Firestore.instance
+          .collection('users')
+          .document(authResult.user.uid)
+          .setData({
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'address': address,
+        'image_url': url,
+        'type': 'donor'
+      });
       //TODO: This should be auto handled by authStateChanged
       Navigator.pushReplacementNamed(context, DashboardMain.id);
     } on PlatformException catch (err) {
