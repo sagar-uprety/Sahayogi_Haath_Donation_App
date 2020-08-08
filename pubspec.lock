@@ -36,6 +36,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  cloud_firestore:
+    dependency: "direct main"
+    description:
+      name: cloud_firestore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.7"
+  cloud_firestore_platform_interface:
+    dependency: transitive
+    description:
+      name: cloud_firestore_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.2"
+  cloud_firestore_web:
+    dependency: transitive
+    description:
+      name: cloud_firestore_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1+2"
   collection:
     dependency: transitive
     description:
@@ -205,6 +226,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
+  image_picker:
+    dependency: "direct main"
+    description:
+      name: image_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.7+4"
+  image_picker_platform_interface:
+    dependency: transitive
+    description:
+      name: image_picker_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   intl:
     dependency: transitive
     description:
@@ -401,4 +436,4 @@ packages:
     version: "4.2.0"
 sdks:
   dart: ">=2.9.0-14.0.dev <3.0.0"
-  flutter: ">=1.17.0 <2.0.0"
+  flutter: ">=1.18.0-6.0.pre <2.0.0"
