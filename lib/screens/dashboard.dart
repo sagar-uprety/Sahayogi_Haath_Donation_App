@@ -27,8 +27,8 @@ class Dashboard extends StatelessWidget {
                 await initEpayment();
               }),
           RaisedButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
             },
             child: Text('Logout'),
           )
