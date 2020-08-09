@@ -64,7 +64,6 @@ class _SignUpMainState extends State<SignUpMain> {
       });
       //TODO: This should be auto handled by authStateChanged
       Navigator.pushReplacementNamed(context, Dashboard.id);
-      
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';
       if (err.message != null) {
