@@ -1,26 +1,22 @@
 import 'dart:io';
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-
 import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import '../dashboard/dashboard_main.dart';
-import './signup.dart';
+import './signup_org.dart';
 
-class SignUpMain extends StatefulWidget {
-  static const id = 'signupmain';
+class SignUpOrganizationMain extends StatefulWidget {
+  static const id='signuporganizer';
   @override
-  _SignUpMainState createState() => _SignUpMainState();
+  _SignUpOrganizationMainState createState() => _SignUpOrganizationMainState();
 }
 
-class _SignUpMainState extends State<SignUpMain> {
+class _SignUpOrganizationMainState extends State<SignUpOrganizationMain> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
   var _isLoading = false;
 
   void _submitSignUpForm(
@@ -29,7 +25,10 @@ class _SignUpMainState extends State<SignUpMain> {
     String name,
     String phone,
     String address,
+    String establishedDate,
+    String type,
     File userImage,
+    File document,
     BuildContext ctx,
   ) async {
     AuthResult authResult;
@@ -44,28 +43,36 @@ class _SignUpMainState extends State<SignUpMain> {
         password: password,
       );
 
-      final ref = FirebaseStorage.instance
+      final profile = FirebaseStorage.instance
           .ref()
           .child('user_image')
           .child(authResult.user.uid + '.jpg');
 
-      await ref.putFile(userImage).onComplete;
-      final url = await ref.getDownloadURL();
+      await profile.putFile(userImage).onComplete;
+      final profileImageURL = await profile.getDownloadURL();
+
+      final document = FirebaseStorage.instance
+          .ref()
+          .child('documents')
+          .child(authResult.user.uid + '.jpg');
+
+      await document.putFile(userImage).onComplete;
+      final documentImageURL = await document.getDownloadURL();
 
       await Firestore.instance
-          .collection('users')
+          .collection('organizations')
           .document(authResult.user.uid)
           .setData({
         'name': name,
         'email': email,
         'phone': phone,
         'address': address,
-        'image_url': url,
-        'type': 'donor',
-        'isAdmin': false,
+        'established_date': establishedDate,
+        'type': type,
+        'profile_url': profileImageURL,
+        'document_url': documentImageURL,
       });
-      
-      //TODO: This should be auto handled by authStateChanged
+
       Navigator.pushReplacementNamed(context, DashboardMain.id);
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';
@@ -89,36 +96,10 @@ class _SignUpMainState extends State<SignUpMain> {
     }
   }
 
-  Future<bool> loginWithGoogle() async {
-    try {
-      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        return false;
-      }
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-        idToken: googleAuth.idToken,
-        accessToken: googleAuth.accessToken,
-      );
-
-      final FirebaseUser user =
-          (await _auth.signInWithCredential(credential)).user;
-      if (user == null) return false;
-      return true;
-    } catch (e) {
-      print(e.message);
-      print('Errow with Google SignUp');
-      return false;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SignUp(_submitSignUpForm, loginWithGoogle, _isLoading),
+      body: SignUpOrganization(_submitSignUpForm, _isLoading),
     );
   }
 }
-

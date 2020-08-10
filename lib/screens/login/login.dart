@@ -28,6 +28,14 @@ class _LoginState extends State<Login> {
   var userEmail = '';
   var userPassword = '';
 
+  bool obscurePassword= true;
+
+  void _toggleVisibility(){
+    setState(() {
+      obscurePassword = !obscurePassword;
+    });
+  }
+
   void _submit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
@@ -84,8 +92,9 @@ class _LoginState extends State<Login> {
                 hintText: "Password",
                 key: ValueKey('password'),
                 icon: Icons.lock,
-                obscureText: true,
-                suffixIcon: Icons.visibility,
+                obscureText: obscurePassword,
+                suffixIcon: obscurePassword ? Icons.visibility : Icons.visibility_off,
+                onClickedSuffixIcon: _toggleVisibility,
                 validator: (value) {
                   if (value.isEmpty || value.length < 8) {
                     return 'Password must be at least 8 characters long.';

@@ -42,6 +42,14 @@ class _SignUpState extends State<SignUp> {
   var _address = '';
   File _userImage;
 
+  bool obscurePassword= true;
+
+  void _toggleVisibility(){
+    setState(() {
+      obscurePassword = !obscurePassword;
+    });
+  }
+
   void _pickedImage(File image) {
     _userImage = image;
   }
@@ -101,7 +109,7 @@ class _SignUpState extends State<SignUp> {
               RoundedInput(
                 hintText: "Full Name",
                 key: ValueKey('name'),
-                // icon: Icons.user,
+                icon: Icons.person,
                 keyboardType: TextInputType.name,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -117,6 +125,7 @@ class _SignUpState extends State<SignUp> {
               RoundedInput(
                 hintText: "Enter Your Email",
                 key: ValueKey('email'),
+                icon: Icons.email,
                 enableSuggesstion: false,
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -134,8 +143,9 @@ class _SignUpState extends State<SignUp> {
                 hintText: "Password",
                 key: ValueKey('password'),
                 icon: Icons.lock,
-                obscureText: true,
-                suffixIcon: Icons.visibility,
+                obscureText: obscurePassword,
+                suffixIcon: obscurePassword ? Icons.visibility : Icons.visibility_off,
+                onClickedSuffixIcon: _toggleVisibility,
                 validator: (value) {
                   if (value.isEmpty || value.length < 8) {
                     return 'Password must be at least 8 characters long.';
@@ -150,7 +160,7 @@ class _SignUpState extends State<SignUp> {
               RoundedInput(
                 hintText: "Mobile Number",
                 key: ValueKey('phone'),
-                // icon: Icons.user,
+                icon: Icons.phone,
                 keyboardType: TextInputType.phone,
                 validator: (value) {
                   if (value.isEmpty || value.length != 10) {
@@ -166,7 +176,7 @@ class _SignUpState extends State<SignUp> {
               RoundedInput(
                 hintText: "Address",
                 key: ValueKey('address'),
-                // icon: Icons.user,
+                icon: Icons.location_on,
                 keyboardType: TextInputType.streetAddress,
                 validator: (value) {
                   if (value.isEmpty) {

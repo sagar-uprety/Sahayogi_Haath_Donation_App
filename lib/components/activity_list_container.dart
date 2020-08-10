@@ -27,7 +27,6 @@ class ActivityContainer extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              height: size.height*0.122,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,

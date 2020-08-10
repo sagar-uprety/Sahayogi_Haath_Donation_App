@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../components/HrDivider.dart';
 import '../../constants.dart';
 import '../../components/RoundedButton.dart';
 import '../login/login_main.dart';
 import '../signup/signup_main.dart';
 import './WelcomeBackground.dart';
+import '../signup/signup_org_main.dart';
 
 class Welcome extends StatelessWidget {
   static const id = 'welcome';
@@ -41,6 +43,15 @@ class Welcome extends StatelessWidget {
                 textColor: Colors.black,
                 onPress: () {
                   Navigator.pushNamed(context, SignUpMain.id);
+                },
+              ),
+              HrDivider(),
+              RoundButton(
+                text: 'Sign Up For Organizer',
+                color: kPrimaryLightColor,
+                textColor: Colors.black,
+                onPress: () {
+                  Navigator.pushNamed(context, SignUpOrganizationMain.id);
                 },
               ),
             ],

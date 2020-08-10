@@ -47,6 +47,14 @@ class _DashboardMainState extends State<DashboardMain> {
             fontSize: 28,
           ),
         ),
+        actions: [
+          FlatButton(
+            onPressed: (){
+              _auth.signOut();
+            },
+            child: Text('Logout'),
+          )
+        ],
       ),
       body: Dashboard(),
     );
