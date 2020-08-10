@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sahayogihaath/screens/transaction/admin_transaction.dart';
+import 'package:sahayogihaath/screens/transaction/organization.dart';
 import 'package:sahayogihaath/screens/transaction/user_transaction.dart';
 
 import './screens/welcome/welcome.dart';
@@ -38,7 +40,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return UserTransaction();
+              return Dashboard();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
@@ -54,6 +56,8 @@ class SahayogiHaath extends StatelessWidget {
           Dashboard.id: (ctx) => Dashboard(),
           Explore.id: (ctx) => Explore(),
           UserTransaction.id: (ctx) => UserTransaction(),
+          AdminTransaction.id:(ctx)=>AdminTransaction(),
+          OrganizationTransaction.id:(ctx) => OrganizationTransaction(),
         });
   }
 }

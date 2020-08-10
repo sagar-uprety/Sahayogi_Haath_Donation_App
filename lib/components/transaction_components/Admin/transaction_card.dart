@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constants/transaction_const.dart';
+import '../../../constants/transaction_const.dart';
 //transaction card
 class TransactionCard extends StatelessWidget {
    String day;
@@ -11,6 +11,7 @@ class TransactionCard extends StatelessWidget {
   TransactionCard({this.day,@required this.donor, @required this.donee, @required this.time, @required this.donorImage, @required this.amount});
   //responsive spacing instead of sized box
   @override
+  
   Widget build(BuildContext context) {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
@@ -20,7 +21,7 @@ class TransactionCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text('$day', style: kTransactionCardBoxText,),
+        Text(day, style: kTransactionCardBoxText,),
         SizedBox(
                     height: queryData.size.height*0.007,
                   ),
@@ -83,7 +84,7 @@ class TransactionCard extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width*0.02,
                                 ),
                                 Text(
-                                  '$time',
+                                  time,
                                   style: kDetailTransactionCardText
                                 ),
                               ],
@@ -101,14 +102,32 @@ class TransactionCard extends StatelessWidget {
                       alignment: Alignment(1.0,0.0),
                       width: cardWidth*0.40,
                       child: FittedBox(
-                              child: Text('Rs $amount',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight:FontWeight.bold,
-                                  color: Color(0xFFFA2E69),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            FittedBox(
+                                    child: Text('Rs $amount',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight:FontWeight.bold,
+                                        color: Color(0xFFFA2E69),
+                                      ),
+                                    ),
+                                  ),
+                                  FittedBox(
+                                    child: IconButton(
+                                      iconSize: MediaQuery.of(context).size.width*0.09,
+                                      onPressed: (){
+                                        print(amount);
+                                      },
+                                      icon:Icon(
+                                        Icons.arrow_right,
+                                      )
+                                    ),
                                 ),
-                              ),
-                            ),
+                          ],
+                        ),
+                      ),
                     ),  
                   ]
                   

@@ -1,6 +1,6 @@
-import '../../components/transaction_components/transactioncardCreator.dart';
+import '../../components/transaction_components/User/transactioncardCreator.dart';
 import '../../components/transaction_components/search_bar.dart';
-import '../../components/transaction_components/showtransactionButton.dart';
+import '../../components/transaction_components/User/showtransactionButton.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 enum MyChoice {
