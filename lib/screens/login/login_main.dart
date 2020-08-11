@@ -76,7 +76,7 @@ class _LoginMainState extends State<LoginMain> {
       return true;
     } catch (e) {
       print(e.message);
-      print('Errow with Google SignUp');
+      print('Error with Google SignUp');
       return false;
     }
   }

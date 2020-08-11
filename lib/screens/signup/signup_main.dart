@@ -60,8 +60,8 @@ class _SignUpMainState extends State<SignUpMain> {
         'email': email,
         'phone': phone,
         'address': address,
-        'image_url': url,
-        'type': 'donor',
+        'profile_url': url,
+        'user_type': 'donor',
         'isAdmin': false,
       });
       
@@ -122,3 +122,37 @@ class _SignUpMainState extends State<SignUpMain> {
   }
 }
 
+// import 'package:mailer/mailer.dart';
+// import 'package:mailer/smtp_server.dart';
+
+// sendMail();
+// try {
+//   await authResult.user.sendEmailVerification();
+//   print('mail sent.');
+// } catch (e) {
+//   print("An error occured.");
+//   print(e.message);
+// }
+
+// Future<void> sendMail() async{
+//   String username = 'ds.ed347@gmail.com';
+//   String password = 'webleedblue';
+
+//   SmtpServer smtpServer = SmtpServer('smtp.gmail.com',username: username,password: password, ssl: true, allowInsecure: false ,ignoreBadCertificate: true,);
+
+//   final message= Message()
+//     ..from= Address(username, "Dipesh Shrestha")
+//     ..recipients.add('dipesh650@yahoo.com')
+//     ..subject = 'This is the Subject.'
+//     ..text = 'This is the text.'
+//     ..html = "<h1>HTML</h1>";
+
+//   try {
+//     final SendReport sendReport = await send(message, smtpServer);
+//     print(sendReport.toString());
+//     print('Messeage sent.');
+//   } on MailerException catch (e) {
+//     print('Message not sent.');
+//     print(e);
+//   }
+// }

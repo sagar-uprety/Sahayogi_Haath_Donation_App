@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../splash.dart';
 import './dashboard.dart';
 
 class DashboardMain extends StatefulWidget {
@@ -14,6 +16,12 @@ class _DashboardMainState extends State<DashboardMain> {
 
   FirebaseUser loggedInUser;
 
+  DocumentReference userInfo;
+
+  Map<String,dynamic> user;
+
+  bool isLoading=true;
+
   @override
   void initState() {
     super.initState();
@@ -21,17 +29,41 @@ class _DashboardMainState extends State<DashboardMain> {
     getCurrentUser();
   }
 
+
   void getCurrentUser() async{
     try{
       final user=await _auth.currentUser();
 
       if(user != null){
         loggedInUser=user;
+
+        userInfo= Firestore.instance.collection('users').document(user.uid);
+
+        getCurrentUserInfo();
       }
     }
     catch(e){
       print(e);
     }
+  }
+
+  void getCurrentUserInfo() async{
+    try{
+      await userInfo.get().then((doc){
+        if(doc.exists){
+          user=doc.data;
+          
+          setState(() {
+            isLoading =false;
+          });
+          // print(doc.data);
+        } else {
+          print("No such document!");
+        }
+      }); 
+    } catch(error){
+      print('ERROR getting user details.'+ error);
+    };
   }
 
   @override
@@ -56,7 +88,7 @@ class _DashboardMainState extends State<DashboardMain> {
           )
         ],
       ),
-      body: Dashboard(),
+      body: isLoading ? SplashScreen() : Dashboard(user),
     );
   }
 }

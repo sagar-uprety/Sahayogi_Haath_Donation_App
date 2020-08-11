@@ -28,7 +28,7 @@ class _SignUpOrganizationMainState extends State<SignUpOrganizationMain> {
     String establishedDate,
     String type,
     File userImage,
-    File document,
+    File documentImage,
     BuildContext ctx,
   ) async {
     AuthResult authResult;
@@ -56,11 +56,11 @@ class _SignUpOrganizationMainState extends State<SignUpOrganizationMain> {
           .child('documents')
           .child(authResult.user.uid + '.jpg');
 
-      await document.putFile(userImage).onComplete;
+      await document.putFile(documentImage).onComplete;
       final documentImageURL = await document.getDownloadURL();
 
       await Firestore.instance
-          .collection('organizations')
+          .collection('users')
           .document(authResult.user.uid)
           .setData({
         'name': name,
@@ -68,6 +68,7 @@ class _SignUpOrganizationMainState extends State<SignUpOrganizationMain> {
         'phone': phone,
         'address': address,
         'established_date': establishedDate,
+        'user_type': 'organization',
         'type': type,
         'profile_url': profileImageURL,
         'document_url': documentImageURL,

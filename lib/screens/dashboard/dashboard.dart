@@ -5,11 +5,14 @@ import '../../components/overview_detail.dart';
 import '../../constants.dart';
 
 class Dashboard extends StatelessWidget {
+  Dashboard(this.user);
 
+  final user;
+    
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(size);
+    print(user);
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: size.width*0.046),
@@ -17,7 +20,7 @@ class Dashboard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget> [
             Text(
-              'Welcome User',
+              'Welcome ${user['name']}',
               style: tTitleTextStyle.copyWith(fontSize: size.width*0.065),
             ),
             SizedBox(
@@ -47,7 +50,7 @@ class Dashboard extends StatelessWidget {
                       ),
                       child: CircleAvatar(
                         backgroundColor: Colors.blue,
-                        // backgroundImage: AssetImage('images/chrisevans.jpg'),
+                        backgroundImage: NetworkImage(user['profile_url']),
                         radius: size.width*0.093
                       ),
                     ),
