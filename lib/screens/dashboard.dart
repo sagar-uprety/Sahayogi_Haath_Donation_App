@@ -22,13 +22,13 @@ class _DashboardState extends State<Dashboard> {
 
     KhaltiProduct product = KhaltiProduct(
       id: "test",
-      amount: 1000,
+      amount: 90000,
       name: "Hello Product",
     );
     _flutterKhalti.startPayment(
       product: product,
       onSuccess: (data) {
-        print("here");
+        print("${data.toString()}");
       },
       onFaliure: (error) {
         print("sorry");
