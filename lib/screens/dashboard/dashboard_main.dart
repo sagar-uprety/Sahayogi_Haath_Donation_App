@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/auth_provider.dart';
 import '../splash.dart';
 import './dashboard.dart';
 
@@ -68,6 +70,8 @@ class _DashboardMainState extends State<DashboardMain> {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -82,7 +86,7 @@ class _DashboardMainState extends State<DashboardMain> {
         actions: [
           FlatButton(
             onPressed: (){
-              _auth.signOut();
+              authProvider.signOut();
             },
             child: Text('Logout'),
           )

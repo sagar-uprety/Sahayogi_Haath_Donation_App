@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../components/HrDivider.dart';
@@ -11,23 +12,13 @@ import '../../components/SocialIcons.dart';
 import '../login/login_main.dart';
 import './SignUpBackground.dart';
 import '../pickers/user_image_picker.dart';
+import '../../provider/auth_provider.dart';
+import '../dashboard/dashboard_main.dart';
 
 class SignUp extends StatefulWidget {
-  SignUp(this.submitSignUpForm, this.loginWithGoogle, this.isLoading);
-
-  final void Function(
-    String email,
-    String password,
-    String name,
-    String phone,
-    String address,
-    File userImage,
-    BuildContext ctx,
-  ) submitSignUpForm;
+  SignUp(this.loginWithGoogle);
 
   final Future<bool> Function() loginWithGoogle;
-
-  final bool isLoading;
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -54,37 +45,11 @@ class _SignUpState extends State<SignUp> {
     _userImage = image;
   }
 
-  void _submit() {
-    final isValid = _formKey.currentState.validate();
-    FocusScope.of(context).unfocus();
-
-    if (_userImage == null) {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please pick an image.'),
-          backgroundColor: Theme.of(context).errorColor,
-        ),
-      );
-      return;
-    }
-
-    if (isValid) {
-      _formKey.currentState.save();
-      widget.submitSignUpForm(
-        _userEmail.trim(),
-        _userPassword.trim(),
-        _name.trim(),
-        _phone.trim(),
-        _address.trim(),
-        _userImage,
-        context,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return SignUpBackground(
       child: SingleChildScrollView(
         child: Form(
@@ -189,22 +154,63 @@ class _SignUpState extends State<SignUp> {
                   print(_address);
                 },
               ),
-              if (widget.isLoading) CircularProgressIndicator(),
-              if (!widget.isLoading)
-                RoundButton(
+              authProvider.status==Status.Registering 
+                ? CircularProgressIndicator()
+                : RoundButton(
                   text: 'SIGN UP',
-                  onPress: _submit,
+                  // onPress: _submit,
+                  onPress: () async{
+
+                    final isValid = _formKey.currentState.validate();
+                    FocusScope.of(context).unfocus();
+                    bool state=false;
+
+                    //TODO: Default Image
+                    if (_userImage == null) {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Please pick an image.'),
+                          backgroundColor: Theme.of(context).errorColor,
+                        ),
+                      );
+                      return;
+                    }
+                    if(isValid) {
+                      try{
+                        _formKey.currentState.save();
+                        await authProvider.registerWithEmailAndPasword(
+                          name: _name.trim(),
+                          email: _userEmail.trim(),
+                          password: _userPassword,
+                          phone: _phone.trim(),
+                          address: _address.trim(),
+                          profileUrl: _userImage,
+                          userType: 'donor',
+                          ctx: context,
+                        );
+                        state=true;
+                      } catch(e) {
+                        state=false;
+                      }
+
+                      if(state) {
+                        Navigator.of(context).pushReplacementNamed(DashboardMain.id);
+                      }
+                    }
+                  },
                 ),
               SizedBox(height: size.height * 0.03),
-              if (!widget.isLoading)
+              if(authProvider.status != Status.Registering)
                 HaveAnAccountCheck(
                   login: false,
                   onPress: () {
                     Navigator.pushNamed(context, LoginMain.id);
                   },
                 ),
-              if (!widget.isLoading) HrDivider(),
-              if (!widget.isLoading)
+
+              if(authProvider.status !=Status.Registering) HrDivider(),
+
+              if(authProvider.status !=Status.Registering)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[

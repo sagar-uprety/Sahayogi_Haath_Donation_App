@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/auth_provider.dart';
 import '../../components/activity_list_container.dart';
 import '../../components/donation_list_container.dart';
 import '../../components/overview_detail.dart';
@@ -12,6 +14,8 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final authProvider = Provider.of<AuthProvider>(context);
+    
     print(user);
     return SingleChildScrollView(
       child: Padding(

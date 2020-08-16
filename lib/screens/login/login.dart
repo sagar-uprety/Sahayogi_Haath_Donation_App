@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/auth_provider.dart';
+import 'package:sahayogihaath/screens/dashboard/dashboard_main.dart';
 
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
@@ -8,16 +11,9 @@ import '../signup/signup_main.dart';
 import './LoginBackground.dart';
 
 class Login extends StatefulWidget {
-  Login(this.submitLoginForm, this.loginWithGoogle, this.isLoading);
+  Login(this.loginWithGoogle);
 
-  final void Function(
-    String email,
-    String password,
-    BuildContext ctx,
-  ) submitLoginForm;
   final Future<bool> Function() loginWithGoogle;
-
-  final bool isLoading;
 
   @override
   _LoginState createState() => _LoginState();
@@ -36,22 +32,11 @@ class _LoginState extends State<Login> {
     });
   }
 
-  void _submit() {
-    final isValid = _formKey.currentState.validate();
-    FocusScope.of(context).unfocus();
-    if (isValid) {
-      _formKey.currentState.save();
-      widget.submitLoginForm(
-        userEmail.trim(),
-        userPassword.trim(),
-        context,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return LoginBackground(
       child: SingleChildScrollView(
         child: Form(
@@ -106,14 +91,22 @@ class _LoginState extends State<Login> {
                   print(userPassword);
                 },
               ),
-              if (widget.isLoading) CircularProgressIndicator(),
-              if (!widget.isLoading)
+              authProvider.status == Status.Authenticating ? CircularProgressIndicator() :
                 RoundButton(
                   text: 'LOGIN',
-                  onPress: _submit,
+                  onPress: ()async{
+                    final isValid = _formKey.currentState.validate();
+                    FocusScope.of(context).unfocus();
+                
+                    if(isValid){
+                      _formKey.currentState.save();
+                      await authProvider.signInWithEmailAndPassword(userEmail.trim(), userPassword.trim(), context);
+                      Navigator.pushReplacementNamed(context, DashboardMain.id);
+                    }
+                  },
                 ),
               SizedBox(height: size.height * 0.03),
-              if (!widget.isLoading)
+              if (authProvider.status != Status.Authenticating)
                 HaveAnAccountCheck(
                   onPress: () {
                     Navigator.pushNamed(context, SignUpMain.id);

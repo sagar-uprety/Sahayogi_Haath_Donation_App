@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 import './screens/welcome/welcome.dart';
 import './screens/signup/signup_main.dart';
@@ -10,9 +11,17 @@ import 'screens/dashboard/dashboard_main.dart';
 import './screens/login/login_main.dart';
 import './screens/explore.dart';
 import './constants.dart';
+import './provider/auth_provider.dart';
 
 void main() {
-  runApp(SahayogiHaath());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<AuthProvider>(
+        create: (context) => AuthProvider(),
+      ),
+    ],
+    child: SahayogiHaath(),
+  ));
 }
 
 class SahayogiHaath extends StatelessWidget {
