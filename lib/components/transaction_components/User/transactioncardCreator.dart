@@ -25,6 +25,7 @@ class DonationStream extends StatelessWidget {
                       day = 'Today';                    
                     donationLists.add(TransactionCard(day: day, donor: donor, donorImage: donorImage, time: time, donee: donee,amount: amount,));
                   }
+                  
                   return  Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: donationLists,

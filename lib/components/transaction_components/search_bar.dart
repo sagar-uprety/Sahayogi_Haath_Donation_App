@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../constants/transaction_const.dart';
 
-class SearchBar extends StatelessWidget {
+class SearchBar extends StatefulWidget {
+  @override
+  _SearchBarState createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
      MediaQueryData queryData;
@@ -33,9 +38,20 @@ class SearchBar extends StatelessWidget {
   }
 }
 
-class SearchTextField extends StatelessWidget {
+class SearchTextField extends StatefulWidget {
   final Function onchange;
   SearchTextField({this.onchange});
+
+  @override
+  _SearchTextFieldState createState() => _SearchTextFieldState();
+}
+
+class _SearchTextFieldState extends State<SearchTextField> {
+  var queryResultSet = [];
+
+  var tempSearchStore = [];
+
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -67,7 +83,9 @@ class SearchTextField extends StatelessWidget {
       )
     )
         ),
-        onChanged: onchange,
+        onChanged: (value){
+          //print
+        },
       );
   }
 }
@@ -91,3 +109,4 @@ class SearchButton extends StatelessWidget {
     );
   }
 }
+
