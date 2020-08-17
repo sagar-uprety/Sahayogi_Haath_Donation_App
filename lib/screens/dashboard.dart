@@ -17,6 +17,7 @@ class _DashboardState extends State<Dashboard> {
       urlSchemeIOS: "KhaltiPayFlutterExampleScheme",
       paymentPreferences: [
         KhaltiPaymentPreference.KHALTI,
+        KhaltiPaymentPreference.MOBILE_BANKING
       ],
     );
 
