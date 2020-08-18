@@ -32,7 +32,7 @@ class _DashboardState extends State<Dashboard> {
         print("${data.toString()}");
       },
       onFaliure: (error) {
-        print("sorry");
+        print(error);
       },
     );
   }
