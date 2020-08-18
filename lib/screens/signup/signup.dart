@@ -9,11 +9,11 @@ import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
 import '../../components/HaveAnAccount.dart';
 import '../../components/SocialIcons.dart';
-import '../login/login_main.dart';
 import './SignUpBackground.dart';
 import '../pickers/user_image_picker.dart';
 import '../../provider/auth_provider.dart';
-import '../dashboard/dashboard_main.dart';
+import '../../models/usermodel.dart';
+import '../../routes.dart';
 
 class SignUp extends StatefulWidget {
   SignUp(this.loginWithGoogle);
@@ -158,12 +158,10 @@ class _SignUpState extends State<SignUp> {
                 ? CircularProgressIndicator()
                 : RoundButton(
                   text: 'SIGN UP',
-                  // onPress: _submit,
                   onPress: () async{
 
                     final isValid = _formKey.currentState.validate();
                     FocusScope.of(context).unfocus();
-                    bool state=false;
 
                     //TODO: Default Image
                     if (_userImage == null) {
@@ -176,26 +174,19 @@ class _SignUpState extends State<SignUp> {
                       return;
                     }
                     if(isValid) {
-                      try{
-                        _formKey.currentState.save();
-                        await authProvider.registerWithEmailAndPasword(
-                          name: _name.trim(),
-                          email: _userEmail.trim(),
-                          password: _userPassword,
-                          phone: _phone.trim(),
-                          address: _address.trim(),
-                          profileUrl: _userImage,
-                          userType: 'donor',
-                          ctx: context,
-                        );
-                        state=true;
-                      } catch(e) {
-                        state=false;
-                      }
-
-                      if(state) {
-                        Navigator.of(context).pushReplacementNamed(DashboardMain.id);
-                      }
+                      _formKey.currentState.save();
+                      await authProvider.registerWithEmailAndPasword(
+                        name: _name.trim(),
+                        email: _userEmail.trim(),
+                        password: _userPassword,
+                        phone: _phone.trim(),
+                        address: _address.trim(),
+                        profileImage: _userImage,
+                        userType: UserType.donor,
+                        ctx: context,
+                      );
+                      
+                      Navigator.of(context).pushReplacementNamed(Routes.dashboard);
                     }
                   },
                 ),
@@ -204,7 +195,7 @@ class _SignUpState extends State<SignUp> {
                 HaveAnAccountCheck(
                   login: false,
                   onPress: () {
-                    Navigator.pushNamed(context, LoginMain.id);
+                    Navigator.pushNamed(context, Routes.login);
                   },
                 ),
 

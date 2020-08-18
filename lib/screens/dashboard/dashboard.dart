@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/auth_provider.dart';
+// import 'package:provider/provider.dart';
+
+// import '../../provider/auth_provider.dart';
 import '../../components/activity_list_container.dart';
 import '../../components/donation_list_container.dart';
 import '../../components/overview_detail.dart';
@@ -14,7 +15,7 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final authProvider = Provider.of<AuthProvider>(context);
+    // final authProvider = Provider.of<AuthProvider>(context);
     
     print(user);
     return SingleChildScrollView(
@@ -54,7 +55,7 @@ class Dashboard extends StatelessWidget {
                       ),
                       child: CircleAvatar(
                         backgroundColor: Colors.blue,
-                        backgroundImage: NetworkImage(user['profile_url']),
+                        backgroundImage: NetworkImage(user['profile_image']),
                         radius: size.width*0.093
                       ),
                     ),

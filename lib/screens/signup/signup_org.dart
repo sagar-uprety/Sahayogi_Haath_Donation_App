@@ -3,32 +3,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../../routes.dart';
+import '../../models/usermodel.dart';
+import '../../provider/auth_provider.dart';
 import '../pickers/document_picker.dart';
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
 import '../../components/HaveAnAccount.dart';
-import '../login/login_main.dart';
 import './SignUpBackground.dart';
 import '../pickers/user_image_picker.dart';
 import '../../constants.dart';
+
 class SignUpOrganization extends StatefulWidget {
-
-  SignUpOrganization(this.submitSignUpForm, this.isLoading);
-
-  final void Function(
-    String email,
-    String password,
-    String name,
-    String phone,
-    String address,
-    String establishedDate,
-    String type,
-    File userImage,
-    File document,
-    BuildContext ctx,
-  ) submitSignUpForm;
-
-  final bool isLoading;
 
   @override
   _SignUpOrganizationState createState() => _SignUpOrganizationState();
@@ -60,22 +48,6 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
     });
   }
 
-  void _datePicker(){
-    showDatePicker(
-      context: context, 
-      initialDate: DateTime.now(), 
-      firstDate: DateTime(2000), 
-      lastDate: DateTime.now()
-    ).then(
-      (date) {
-        setState(() {
-           _pickedDate = DateFormat("yyyy-MM-dd").format(DateTime.parse(date.toString()));
-          controller = TextEditingController(text: _pickedDate);
-        });
-      }
-    );
-  }
-
   void _pickedImage(File image) {
     _userImage = image;
   }
@@ -84,50 +56,17 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
     _documentImage = image;
   }
 
-  void _submit() {
-    final isValid = _formKey.currentState.validate();
-    FocusScope.of(context).unfocus();
-
-    if (_userImage == null) {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please pick an image.'),
-          backgroundColor: Theme.of(context).errorColor,
-        ),
-      );
-      return;
-    }
-
-    if (_documentImage == null) {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please upload a document to prove that you are a legal organization.'),
-          backgroundColor: Theme.of(context).errorColor,
-        ),
-      );
-      return;
-    }
-
-    if (isValid) {
-      _formKey.currentState.save();
-      widget.submitSignUpForm(
-        _organizationEmail.trim(),
-        _password.trim(),
-        _name.trim(),
-        _phone.trim(),
-        _address.trim(),
-        _establishedDate.trim(),
-        _type,
-        _userImage,
-        _documentImage,
-        context,
-      );
-    }
+  @override
+  void dispose() {
+    controller.dispose();
+    
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final authProvider = Provider.of<AuthProvider>(context);
 
     return SignUpBackground(
       child: SingleChildScrollView(
@@ -235,7 +174,21 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                   controller: controller,
                   icon: Icons.access_time,
                   suffixIcon: Icons.today,
-                  onClickedSuffixIcon: _datePicker,
+                  onClickedSuffixIcon: (){
+                    showDatePicker(
+                      context: context, 
+                      initialDate: DateTime.now(), 
+                      firstDate: DateTime(2000), 
+                      lastDate: DateTime.now()
+                    ).then(
+                      (date) {
+                        setState(() {
+                          _pickedDate = DateFormat("yyyy-MM-dd").format(DateTime.parse(date.toString()));
+                          controller = TextEditingController(text: _pickedDate);
+                        });
+                      }
+                    );
+                  },
                   keyboardType: TextInputType.datetime,
                   validator: (value){
                     if(value.isNotEmpty || RegExp(r'([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$').hasMatch(value)){
@@ -281,18 +234,64 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                   ),
                 ),
                 DocumentPicker(_pickedDocument),
-                if (widget.isLoading) CircularProgressIndicator(),
-                if (!widget.isLoading)
-                  RoundButton(
+                authProvider.status == Status.Registering
+                  ? CircularProgressIndicator()
+                  : RoundButton(
                     text: 'SIGN UP',
-                    onPress: _submit,
+                    onPress: () async{
+                      final isValid = _formKey.currentState.validate();
+                      FocusScope.of(context).unfocus();
+
+                      //TODO: Default Image
+                      if (_userImage == null) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Please pick an image.'),
+                            backgroundColor: Theme.of(context).errorColor,
+                          ),
+                        );
+                        return;
+                      }
+
+                      if (_documentImage == null) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Please upload a document to prove that you are a legal organization.',
+                              ),
+                            backgroundColor: Theme.of(context).errorColor,
+                          ),
+                        );
+                        return;
+                      }
+
+                      if (isValid) {
+                        _formKey.currentState.save();
+                        
+                        await authProvider.registerWithEmailAndPasword(
+                          name: _name.trim(),
+                          email: _organizationEmail.trim(),
+                          password: _password,
+                          phone: _phone.trim(),
+                          address: _address.trim(),
+                          establishedDate: _establishedDate.trim(),
+                          profileImage: _userImage,
+                          documentImage: _documentImage,
+                          type: _type,
+                          userType: UserType.organization,
+                          ctx: context,
+                        );
+
+                        Navigator.of(context).pushReplacementNamed(Routes.dashboard);
+                      }
+                    }
                   ),
                 SizedBox(height: size.height * 0.03),
-                if (!widget.isLoading)
+                if (authProvider.status != Status.Registering)
                   HaveAnAccountCheck(
                     login: false,
                     onPress: () {
-                      Navigator.pushNamed(context, LoginMain.id);
+                      Navigator.pushNamed(context, Routes.login);
                     },
                   ),
                 SizedBox(height: size.height * 0.03),

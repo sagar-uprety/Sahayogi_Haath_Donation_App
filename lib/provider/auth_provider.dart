@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:io';
 
+import '../models/usermodel.dart';
 import '../image_upload.dart';
 
 enum Status {
@@ -32,8 +34,11 @@ class AuthProvider extends ChangeNotifier {
       String password,
       String phone,
       String address,
-      File profileUrl,
-      String userType,
+      File profileImage,
+      UserType userType,
+      String establishedDate,
+      String type,
+      File documentImage,
       BuildContext ctx}) async {
     try {
       _status = Status.Registering;
@@ -46,20 +51,49 @@ class AuthProvider extends ChangeNotifier {
         String imageUrl;
         await ImageUploader()
             .uploadImage(
-                image: profileUrl, path: CloudPath.profile, userId: uid)
+                image: profileImage, path: CloudPath.profile, userId: uid)
             .then((String value) {
           imageUrl = value;
         });
 
-        await Firestore.instance.collection('users').document(uid).setData({
-          'name': name,
-          'email': email,
-          'phone': phone,
-          'address': address,
-          'profile_url': imageUrl,
-          'user_type': 'donor',
-          'isAdmin': false,
-        });
+        String typeOfUser= 'donor';
+        String documentUrl;
+
+        if(userType==UserType.organization) {
+          typeOfUser= 'organization';
+          await ImageUploader()
+              .uploadImage(
+                  image: documentImage, path: CloudPath.document, userId: uid)
+              .then((String value) {
+            documentUrl = value;
+          });
+        }
+        Map <String,dynamic> userDetails;
+        if(typeOfUser == 'donor') {
+          userDetails = {
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'address': address,
+            'profile_image': imageUrl,
+            'user_type': typeOfUser,
+            'isAdmin': false,
+          };
+        } else if(typeOfUser == 'organization') {
+          userDetails= {
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'address': address,
+            'established_date': establishedDate,
+            'type': type,
+            'profile_image': imageUrl,
+            'document_image': documentUrl,
+            'user_type': typeOfUser,
+          };
+        }
+
+        await Firestore.instance.collection('users').document(uid).setData(userDetails);
       }
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';

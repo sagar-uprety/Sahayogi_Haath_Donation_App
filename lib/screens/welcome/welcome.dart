@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../routes.dart';
 import '../../components/HrDivider.dart';
 import '../../constants.dart';
 import '../../components/RoundedButton.dart';
-import '../login/login_main.dart';
-import '../signup/signup_main.dart';
 import './WelcomeBackground.dart';
-import '../signup/signup_org_main.dart';
 
 class Welcome extends StatelessWidget {
-  static const id = 'welcome';
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,7 +32,7 @@ class Welcome extends StatelessWidget {
               RoundButton(
                 text: 'Login',
                 onPress: () {
-                  Navigator.pushNamed(context, LoginMain.id);
+                  Navigator.pushNamed(context, Routes.login);
                 },
               ),
               RoundButton(
@@ -42,7 +40,7 @@ class Welcome extends StatelessWidget {
                 color: kPrimaryLightColor,
                 textColor: Colors.black,
                 onPress: () {
-                  Navigator.pushNamed(context, SignUpMain.id);
+                  Navigator.pushNamed(context, Routes.signup);
                 },
               ),
               HrDivider(),
@@ -51,7 +49,7 @@ class Welcome extends StatelessWidget {
                 color: kPrimaryLightColor,
                 textColor: Colors.black,
                 onPress: () {
-                  Navigator.pushNamed(context, SignUpOrganizationMain.id);
+                  Navigator.pushNamed(context, Routes.signupOrganization);
                 },
               ),
             ],

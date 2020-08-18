@@ -35,8 +35,12 @@ class _DocumentPickerState extends State<DocumentPicker> {
     Size size= MediaQuery.of(context).size;
     return Column(
       children: <Widget>[
-        Text(
-          'Add a document image to prove that you are a valid organization.',
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            'Add a document image to prove that you are a valid organization.',
+            textAlign: TextAlign.center,
+          ),
         ),
         SizedBox(
           height: size.height*0.012,

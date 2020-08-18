@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/auth_provider.dart';
-import 'package:sahayogihaath/screens/dashboard/dashboard_main.dart';
 
+import '../../routes.dart';
+import '../../provider/auth_provider.dart';
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
 import '../../components/HaveAnAccount.dart';
-import '../signup/signup_main.dart';
 import './LoginBackground.dart';
 
 class Login extends StatefulWidget {
@@ -101,7 +100,7 @@ class _LoginState extends State<Login> {
                     if(isValid){
                       _formKey.currentState.save();
                       await authProvider.signInWithEmailAndPassword(userEmail.trim(), userPassword.trim(), context);
-                      Navigator.pushReplacementNamed(context, DashboardMain.id);
+                      Navigator.pushReplacementNamed(context, Routes.dashboard);
                     }
                   },
                 ),
@@ -109,7 +108,7 @@ class _LoginState extends State<Login> {
               if (authProvider.status != Status.Authenticating)
                 HaveAnAccountCheck(
                   onPress: () {
-                    Navigator.pushNamed(context, SignUpMain.id);
+                    Navigator.pushNamed(context, Routes.signup);
                   },
                 )
             ],

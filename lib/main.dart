@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
+import './routes.dart';
 import './screens/welcome/welcome.dart';
 import './screens/signup/signup_main.dart';
 import './screens/signup/signup_org_main.dart';
@@ -55,13 +56,7 @@ class SahayogiHaath extends StatelessWidget {
             return Welcome();
           },
         ),
-        routes: {
-          Welcome.id: (ctx) => Welcome(),
-          LoginMain.id: (ctx) => LoginMain(),
-          SignUpMain.id: (ctx) => SignUpMain(),
-          SignUpOrganizationMain.id: (ctx) => SignUpOrganizationMain(),
-          DashboardMain.id: (ctx) => DashboardMain(),
-          Explore.id: (ctx) => Explore(),
-        });
+        routes: Routes.routes,
+    );
   }
 }

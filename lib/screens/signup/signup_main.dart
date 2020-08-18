@@ -7,7 +7,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import './signup.dart';
 
 class SignUpMain extends StatefulWidget {
-  static const id = 'signupmain';
   @override
   _SignUpMainState createState() => _SignUpMainState();
 }

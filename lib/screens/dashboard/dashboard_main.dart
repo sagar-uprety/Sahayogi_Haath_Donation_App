@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/auth_provider.dart';
+
+import '../../provider/auth_provider.dart';
 import '../splash.dart';
 import './dashboard.dart';
 
 class DashboardMain extends StatefulWidget {
-  static const id = 'dashboard';
 
   @override
   _DashboardMainState createState() => _DashboardMainState();
