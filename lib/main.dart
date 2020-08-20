@@ -13,7 +13,6 @@ import './screens/login/login_main.dart';
 import './screens/explore.dart';
 import './constants.dart';
 
-
 void main() {
   runApp(SahayogiHaath());
 }
@@ -26,11 +25,14 @@ class SahayogiHaath extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context)=> ProductProvider(),)
-StreamProvider(create: (context) => firestoreService.getProducts() ),
+        ChangeNotifierProvider(
+          create: (context) => ProductProvider(),
+        ),
+        StreamProvider(
+          create: (context) => firestoreService.getProducts(),
+        ),
       ],
-      create: (context) =>ProductProvider(),
-          child: MaterialApp(
+      child: MaterialApp(
           title: 'Sahayogi Haath',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
