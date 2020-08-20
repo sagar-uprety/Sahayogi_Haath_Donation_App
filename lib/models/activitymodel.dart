@@ -1,8 +1,8 @@
-class Product {
+class Activity {
   final String description;
   final String name;
 
-  Product({
+  Activity({
     this.description,
     this.name,
   });
@@ -14,7 +14,7 @@ class Product {
     };
   }
 
-  Product.fromFirestore(Map<String, dynamic> firestore)
+  Activity.fromFirestore(Map<String, dynamic> firestore)
       : description = firestore['description'],
         name = firestore['name'];
 }

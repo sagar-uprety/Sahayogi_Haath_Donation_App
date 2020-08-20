@@ -4,17 +4,17 @@ import '../models/activitymodel.dart';
 class FirestoreService {
   Firestore _db = Firestore.instance;
 
-  Future<void> saveProduct(Product product) {
+  Future<void> saveActivity(Activity activity) {
     return _db
-        .collection('products')
-        .document(product.description)
-        .setData(product.toMap());
+        .collection('activities')
+        .document(activity.description)
+        .setData(activity.toMap());
   }
 
-  Stream<List<Product>> getProducts() {
-    return _db.collection('products').snapshots().map((snapshot) => snapshot
+  Stream<List<Activity>> getActivities() {
+    return _db.collection('activities').snapshots().map((snapshot) => snapshot
         .documents
-        .map((document) => Product.fromFirestore(document.data))
+        .map((document) => Activity.fromFirestore(document.data))
         .toList());
   }
 }

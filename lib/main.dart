@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sahayogihaath/provider_/product_provider.dart';
+import 'package:sahayogihaath/provider_/activity_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/screens/activities_screen/activity_info.dart';
 import 'package:sahayogihaath/services/firestore_service.dart';
 
 import './screens/welcome/welcome.dart';
@@ -11,8 +12,9 @@ import './screens/splash.dart';
 import './screens/dashboard.dart';
 import './screens/login/login_main.dart';
 import './screens/explore.dart';
-import './screens/Activities/Activities.dart';
-import './screens/Activities/product.dart';
+import '././screens/activities_screen/activity_info.dart';
+import './screens/activities_screen/acitivity_list.dart';
+import './screens/activities_screen/edit_activity.dart';
 import './constants.dart';
 
 void main() {
@@ -28,10 +30,10 @@ class SahayogiHaath extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => ProductProvider(),
+          create: (context) => ActivityProvider(),
         ),
         StreamProvider(
-          create: (context) => firestoreService.getProducts(),
+          create: (context) => firestoreService.getActivities(),
         ),
       ],
       child: MaterialApp(
@@ -66,8 +68,9 @@ class SahayogiHaath extends StatelessWidget {
           SignUpMain.id: (ctx) => SignUpMain(),
           Dashboard.id: (ctx) => Dashboard(),
           Explore.id: (ctx) => Explore(),
-          ActivitiesScreen.id: (ctx) => ActivitiesScreen(),
-          Products.id: (ctx) => Products(),
+          ActivityInfo.id: (ctx) => ActivityInfo(),
+          Activities_List.id: (ctx) => Activities_List(),
+          EditActivity.id: (ctx) => EditActivity(),
         },
       ),
     );

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:sahayogihaath/services/firestore_service.dart';
 import '../models/activitymodel.dart';
 
-class ProductProvider with ChangeNotifier {
+class ActivityProvider with ChangeNotifier {
   final firestoreService = FirestoreService();
   String _name;
   String _description;
@@ -20,13 +20,13 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  loadValues(Product product) {
-    _name = product.name;
-    _description = product.description;
+  loadValues(Activity activity) {
+    _name = activity.name;
+    _description = activity.description;
   }
 
-  saveProduct() {
-    var newProduct = Product(name: name, description: description);
-    firestoreService.saveProduct(newProduct);
+  saveActivity() {
+    var newActivity = Activity(name: name, description: description);
+    firestoreService.saveActivity(newActivity);
   }
 }

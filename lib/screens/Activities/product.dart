@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import '../Activities/Activities.dart';
+import 'Activitiy.dart';
 import 'package:provider/provider.dart';
 import '../../models/activitymodel.dart';
 
-class Products extends StatefulWidget {
+class Activities extends StatefulWidget {
   static const id = "show";
   @override
-  _ProductsState createState() => _ProductsState();
+  _ActivitiesState createState() => _ActivitiesState();
 }
 
-class _ProductsState extends State<Products> {
+class _ActivitiesState extends State<Activities> {
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<List<Product>>(context);
+    final products = Provider.of<List<Activity>>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
+        title: Text('Activities'),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.add),

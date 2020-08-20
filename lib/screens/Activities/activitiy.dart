@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../provider_/product_provider.dart';
-import './product.dart';
+import '../../provider_/activity_provider.dart';
+import 'product.dart';
 
 class ActivitiesScreen extends StatefulWidget {
   static const id = "activities_form";
@@ -12,7 +12,7 @@ class ActivitiesScreen extends StatefulWidget {
 class _ActivitiesScreenState extends State<ActivitiesScreen> {
   @override
   Widget build(BuildContext context) {
-    final productProvider = Provider.of<ProductProvider>(context);
+    final productProvider = Provider.of<ActivityProvider>(context);
     return Scaffold(
       body: ListView(
         children: <Widget>[
@@ -38,7 +38,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
           RaisedButton(
             child: Text('Submit'),
             onPressed: () {
-              productProvider.saveProduct();
+              productProvider.saveActivity();
               Navigator.pushNamed(context, Products.id);
             },
           ),
