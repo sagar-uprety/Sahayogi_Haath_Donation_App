@@ -40,18 +40,18 @@ class Dashboard extends StatelessWidget {
 
 initEpayment() async {
   ESewaConfiguration _configuration = ESewaConfiguration(
-    clientID: "JB0BBQ4aD0UqIThFJwAKBgAXEUkEGQUBBAwdOgABHD4DChwUAB0R",
-    secretKey: "BhwIWQQADhIYSxILExMcAgFXFhcOBwAKBgAXEQ==",
+    clientID: "NhINFhgcDAxZLRIEAwlTLwoXBAcMGA9JJTVUICBIJCA7Kjw2Ijo=",
+    secretKey: "NhINFhgcDAxZLRIEAwk=",
     environment: ESewaConfiguration.ENVIRONMENT_TEST,
   );
 
   ESewaPnp _eSewaPnp = ESewaPnp(configuration: _configuration);
 
   ESewaPayment _payment = ESewaPayment(
-    amount: 10,
-    productName: 'Sagar',
-    productID: '1',
-    callBackURL: 'https://exampl234234e.com',
+    amount: 500,
+    productName: 'Demo_org',
+    productID: '001',
+    callBackURL: 'https://sahayaogi_haath.com',
   );
 
   final _res = await _eSewaPnp.initPayment(payment: _payment);
