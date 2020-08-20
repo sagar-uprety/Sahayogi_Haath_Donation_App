@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sahayogihaath/screens/Activities/Activities.dart';
+import 'package:sahayogihaath/screens/Activities/product.dart';
 
 class Dashboard extends StatelessWidget {
   static const id = 'dashboard';
@@ -15,6 +17,18 @@ class Dashboard extends StatelessWidget {
                 'Dashboard',
               ),
             ),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, ActivitiesScreen.id);
+            },
+            child: Text('Create Activites'),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, Products.id);
+            },
+            child: Text('See Activites'),
           ),
           RaisedButton(
             onPressed: () {

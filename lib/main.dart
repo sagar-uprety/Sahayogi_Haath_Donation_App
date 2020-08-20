@@ -11,6 +11,8 @@ import './screens/splash.dart';
 import './screens/dashboard.dart';
 import './screens/login/login_main.dart';
 import './screens/explore.dart';
+import './screens/Activities/Activities.dart';
+import './screens/Activities/product.dart';
 import './constants.dart';
 
 void main() {
@@ -33,38 +35,41 @@ class SahayogiHaath extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-          title: 'Sahayogi Haath',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primaryColor: kPrimaryColor,
-            accentColor: Color(0xFFf1f3f6),
-            scaffoldBackgroundColor: Colors.white,
-            textTheme: GoogleFonts.sarabunTextTheme(textTheme).copyWith(
-              bodyText1: GoogleFonts.lobster(
-                textStyle: textTheme.bodyText1,
-              ),
-              // TODO:set app-wide text theme
+        title: 'Sahayogi Haath',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: kPrimaryColor,
+          accentColor: Color(0xFFf1f3f6),
+          scaffoldBackgroundColor: Colors.white,
+          textTheme: GoogleFonts.sarabunTextTheme(textTheme).copyWith(
+            bodyText1: GoogleFonts.lobster(
+              textStyle: textTheme.bodyText1,
             ),
+            // TODO:set app-wide text theme
           ),
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.onAuthStateChanged,
-            builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
-              if (userSnapshot.hasData) {
-                return Dashboard();
-              }
-              if (userSnapshot.connectionState == ConnectionState.waiting) {
-                return SplashScreen();
-              }
-              return Welcome();
-            },
-          ),
-          routes: {
-            Welcome.id: (ctx) => Welcome(),
-            LoginMain.id: (ctx) => LoginMain(),
-            SignUpMain.id: (ctx) => SignUpMain(),
-            Dashboard.id: (ctx) => Dashboard(),
-            Explore.id: (ctx) => Explore(),
-          }),
+        ),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.onAuthStateChanged,
+          builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
+            if (userSnapshot.hasData) {
+              return Dashboard();
+            }
+            if (userSnapshot.connectionState == ConnectionState.waiting) {
+              return SplashScreen();
+            }
+            return Welcome();
+          },
+        ),
+        routes: {
+          Welcome.id: (ctx) => Welcome(),
+          LoginMain.id: (ctx) => LoginMain(),
+          SignUpMain.id: (ctx) => SignUpMain(),
+          Dashboard.id: (ctx) => Dashboard(),
+          Explore.id: (ctx) => Explore(),
+          ActivitiesScreen.id: (ctx) => ActivitiesScreen(),
+          Products.id: (ctx) => Products(),
+        },
+      ),
     );
   }
 }

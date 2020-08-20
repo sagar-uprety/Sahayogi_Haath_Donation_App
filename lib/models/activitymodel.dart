@@ -1,19 +1,20 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-class Product{
-  final String activitydescription;
+class Product {
+  final String description;
   final String name;
 
-  Product({this. activitydescription, this.name});
-  Map<String, dynamic> toMap(){
+  Product({
+    this.description,
+    this.name,
+  });
+
+  Map<String, dynamic> toMap() {
     return {
-      'activityDescription': activitydescription,
+      'description': description,
       'name': name,
     };
-
   }
-  Product.fromFirestore(Map<String, dynamic> firestore)
-  : activitydescription= firestore['activitydescription'],
-    name =  firestore['name'];
 
+  Product.fromFirestore(Map<String, dynamic> firestore)
+      : description = firestore['description'],
+        name = firestore['name'];
 }

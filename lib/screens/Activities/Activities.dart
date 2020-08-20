@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../provider_/product_provider.dart'
+import '../../provider_/product_provider.dart';
+import './product.dart';
 
 class ActivitiesScreen extends StatefulWidget {
+  static const id = "activities_form";
   @override
   _ActivitiesScreenState createState() => _ActivitiesScreenState();
 }
@@ -35,7 +37,10 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
           ),
           RaisedButton(
             child: Text('Submit'),
-            onPressed: () {},
+            onPressed: () {
+              productProvider.saveProduct();
+              Navigator.pushNamed(context, Products.id);
+            },
           ),
         ],
       ),
