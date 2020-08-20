@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Activities/Activities.dart';
 import 'package:provider/provider.dart';
-import '../models/activitymodel.dart';
+import '../../models/activitymodel.dart';
 
 class Products extends StatelessWidget {
   @override
