@@ -13,7 +13,7 @@ class FormInput extends StatelessWidget {
   final int maxlength;
   final bool autofocus;
   const FormInput({
-    this.key, //TODO: have a look at these key value
+    this.key, //have a look at these key value
     this.hintText,
     this.onSaved,
     this.keyboardType,

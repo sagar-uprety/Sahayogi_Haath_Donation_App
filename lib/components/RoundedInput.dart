@@ -12,7 +12,7 @@ class RoundedInput extends StatelessWidget {
   final FormFieldValidator<String> validator;
   final Key key;
   const RoundedInput({
-    this.key, //TODO: have a look at these key value
+    this.key, // have a look at these key value
     this.hintText,
     this.icon,
     this.onSaved,

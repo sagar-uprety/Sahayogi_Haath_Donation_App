@@ -43,12 +43,8 @@ class SahayogiHaath extends StatelessWidget {
           primaryColor: kPrimaryColor,
           accentColor: Color(0xFFf1f3f6),
           scaffoldBackgroundColor: Colors.white,
-          textTheme: GoogleFonts.sarabunTextTheme(textTheme).copyWith(
-            bodyText1: GoogleFonts.lobster(
-              textStyle: textTheme.bodyText1,
-            ),
-            // TODO:set app-wide text theme
-          ),
+          textTheme: GoogleFonts.sarabunTextTheme(),
+          // set app-wide text theme
         ),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,

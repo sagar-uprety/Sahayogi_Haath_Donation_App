@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
-import '../../components/HaveAnAccount.dart';
+import '../../components/Registration/HaveAnAccount.dart';
 import '../signup/signup_main.dart';
 import './LoginBackground.dart';
 
