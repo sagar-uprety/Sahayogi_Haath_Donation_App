@@ -7,7 +7,7 @@ class FirestoreService {
   Future<void> saveActivity(Activity activity) {
     return _db
         .collection('activities')
-        .document(activity.description)
+        .document(activity.activityID)
         .setData(activity.toMap());
   }
 

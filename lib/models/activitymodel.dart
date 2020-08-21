@@ -1,20 +1,24 @@
 class Activity {
+  final String activityID;
   final String description;
-  final String name;
+  final String title;
 
   Activity({
+    this.activityID,
     this.description,
-    this.name,
+    this.title,
   });
 
   Map<String, dynamic> toMap() {
     return {
+      'activityID': activityID,
       'description': description,
-      'name': name,
+      'title': title,
     };
   }
 
   Activity.fromFirestore(Map<String, dynamic> firestore)
-      : description = firestore['description'],
-        name = firestore['name'];
+      : activityID = firestore['activityID'],
+        description = firestore['description'],
+        title = firestore['title'];
 }

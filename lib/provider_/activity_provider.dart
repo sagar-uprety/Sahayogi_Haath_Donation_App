@@ -1,17 +1,23 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sahayogihaath/services/firestore_service.dart';
+import 'package:uuid/uuid.dart';
+
+import '../services/firestore_service.dart';
 import '../models/activitymodel.dart';
 
 class ActivityProvider with ChangeNotifier {
   final firestoreService = FirestoreService();
-  String _name;
+  String _title;
   String _description;
+  String _activityID;
+  var uuid = Uuid();
 
-  String get name => _name;
+  //getters
+  String get title => _title;
   String get description => _description;
 
-  changeName(String value) {
-    _name = value;
+  //setters
+  changeTitle(String value) {
+    _title = value;
     notifyListeners();
   }
 
@@ -21,12 +27,13 @@ class ActivityProvider with ChangeNotifier {
   }
 
   loadValues(Activity activity) {
-    _name = activity.name;
+    _title = activity.title;
     _description = activity.description;
   }
 
   saveActivity() {
-    var newActivity = Activity(name: name, description: description);
+    var newActivity =
+        Activity(title: title, description: description, activityID: uuid.v4());
     firestoreService.saveActivity(newActivity);
   }
 }

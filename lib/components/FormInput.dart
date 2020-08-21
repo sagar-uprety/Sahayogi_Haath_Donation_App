@@ -6,8 +6,9 @@ class FormInput extends StatelessWidget {
   final TextInputType keyboardType;
   final TextCapitalization capitalization;
   final bool enableSuggesstion;
-  final FormFieldSetter<String> onSaved;
-  final FormFieldValidator<String> validator;
+  // final FormFieldSetter<String> onSaved;
+  // final FormFieldValidator<String> validator;
+  final void Function(String) onChanged;
   final Key key;
   final int maxlines;
   final int maxlength;
@@ -15,11 +16,12 @@ class FormInput extends StatelessWidget {
   const FormInput({
     this.key, //have a look at these key value
     this.hintText,
-    this.onSaved,
+    // this.onSaved,
+    // this.validator,
+    this.onChanged,
     this.keyboardType,
     this.capitalization = TextCapitalization.none,
     this.enableSuggesstion = false,
-    this.validator,
     this.maxlines,
     this.maxlength,
     this.autofocus = false,
@@ -28,15 +30,15 @@ class FormInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextInputController(
-      child: TextFormField(
+      child: TextField(
         key: key,
         autocorrect: false,
         autofocus: autofocus,
         textCapitalization: capitalization,
         enableSuggestions: enableSuggesstion,
         keyboardType: keyboardType,
-        onSaved: onSaved,
-        validator: validator,
+        onChanged: onChanged,
+        // validator: validator,
         maxLength: maxlength,
         maxLines: maxlines,
         decoration: InputDecoration(

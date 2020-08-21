@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sahayogihaath/theme/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider_/activity_provider.dart';
+import 'package:sahayogihaath/screens/activities_screen/activity_info.dart';
+
+import '../../theme/theme.dart';
 import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
 
@@ -14,9 +18,8 @@ class EditActivity extends StatefulWidget {
 
 class _EditActivityState extends State<EditActivity> {
   final _formKey = GlobalKey<FormState>();
-  var _activityTitle = '';
-  var _activityDescription = '';
 
+  void _submitActivity() {}
   Widget _appBar() {
     return AppBar(
       elevation: 0,
@@ -45,6 +48,7 @@ class _EditActivityState extends State<EditActivity> {
 
   @override
   Widget build(BuildContext context) {
+    final activityProvider = Provider.of<ActivityProvider>(context);
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Color(0XFFfefefe),
@@ -70,15 +74,8 @@ class _EditActivityState extends State<EditActivity> {
                     maxlength: 30,
                     autofocus: true,
                     keyboardType: TextInputType.name,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please name your activity';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _activityTitle = value;
-                      print(_activityTitle);
+                    onChanged: (value) {
+                      activityProvider.changeTitle(value);
                     },
                   ),
                   FormInput(
@@ -88,15 +85,8 @@ class _EditActivityState extends State<EditActivity> {
                     maxlines: 20,
                     enableSuggesstion: false,
                     keyboardType: TextInputType.multiline,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Enter description';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _activityDescription = value;
-                      print(_activityDescription);
+                    onChanged: (value) {
+                      activityProvider.changeDescription(value);
                     },
                   ),
                   RoundButton(
@@ -104,14 +94,9 @@ class _EditActivityState extends State<EditActivity> {
                       onPress: () {
                         _formKey.currentState.validate();
                         FocusScope.of(context).unfocus();
-                        _formKey.currentState.save();
-                        print(_activityTitle);
-                        print(_activityDescription);
-                        print(_activityTitle);
-                        print(_activityDescription);
-                        //provider function
-                      } //do something
-                      ).alignBottomCenter,
+                        // _formKey.currentState.save();
+                        activityProvider.saveActivity();
+                      }).alignBottomCenter,
                 ],
               ),
             ),

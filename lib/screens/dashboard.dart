@@ -5,8 +5,14 @@ import '../screens/activities_screen/acitivity_list.dart';
 import '../screens/activities_screen/activity_info.dart';
 import '../screens/activities_screen/edit_activity.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   static const id = 'dashboard';
+
+  @override
+  _DashboardState createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
