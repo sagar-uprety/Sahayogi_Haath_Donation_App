@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 
 import 'light_color.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   const AppTheme();
   static ThemeData lightTheme = ThemeData(
-      backgroundColor: LightColor.background,
-      primaryColor: LightColor.purple,
-      cardTheme: CardTheme(color: LightColor.background),
-      textTheme: TextTheme(headline4: TextStyle(color: LightColor.black)),
-      iconTheme: IconThemeData(color: LightColor.iconColor),
-      bottomAppBarColor: LightColor.background,
-      dividerColor: LightColor.grey,
-      primaryTextTheme:
-          TextTheme(bodyText2: TextStyle(color: LightColor.titleTextColor)));
+    backgroundColor: LightColor.background,
+    primaryColor: LightColor.purple,
+    accentColor: LightColor.purpleExtraLight,
+    cardTheme: CardTheme(color: LightColor.background),
+    textTheme: TextTheme(headline4: TextStyle(color: LightColor.black)),
+    iconTheme: IconThemeData(color: LightColor.iconColor),
+    bottomAppBarColor: LightColor.background,
+    dividerColor: LightColor.grey,
+    primaryTextTheme: GoogleFonts.sarabunTextTheme().copyWith(
+      bodyText2: TextStyle(color: LightColor.titleTextColor),
+    ),
+  );
 
   static TextStyle titleStyle =
       const TextStyle(color: LightColor.titleTextColor, fontSize: 16);

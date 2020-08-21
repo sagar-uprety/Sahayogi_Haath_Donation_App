@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sahayogihaath/provider_/activity_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/screens/activities_screen/activity_info.dart';
 import 'package:sahayogihaath/services/firestore_service.dart';
+import 'package:sahayogihaath/theme/theme.dart';
 
 import './screens/welcome/welcome.dart';
 import './screens/signup/signup_main.dart';
@@ -15,7 +15,6 @@ import './screens/explore.dart';
 import '././screens/activities_screen/activity_info.dart';
 import './screens/activities_screen/acitivity_list.dart';
 import './screens/activities_screen/edit_activity.dart';
-import './constants.dart';
 
 void main() {
   runApp(SahayogiHaath());
@@ -24,7 +23,6 @@ void main() {
 class SahayogiHaath extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final firestoreService = FirestoreService();
 
     return MultiProvider(
@@ -39,13 +37,7 @@ class SahayogiHaath extends StatelessWidget {
       child: MaterialApp(
         title: 'Sahayogi Haath',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: kPrimaryColor,
-          accentColor: Color(0xFFf1f3f6),
-          scaffoldBackgroundColor: Colors.white,
-          textTheme: GoogleFonts.sarabunTextTheme(),
-          // set app-wide text theme
-        ),
+        theme: AppTheme.lightTheme,
         home: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {

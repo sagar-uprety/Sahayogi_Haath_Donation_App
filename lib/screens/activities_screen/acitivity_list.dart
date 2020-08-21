@@ -3,7 +3,6 @@ import 'package:sahayogihaath/screens/activities_screen/activity_info.dart';
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
 import '../../theme/text_styles.dart';
-// import '../../theme/theme.dart';
 
 class ActivitiesList extends StatefulWidget {
   static const id = "activities_list";
@@ -119,10 +118,15 @@ class _ActivitiesListState extends State<ActivitiesList> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-      ).ripple(() {
-        // Navigator.pushNamed(context, "/DetailPage", arguments: model);
-        Navigator.pushNamed(context, ActivityInfo.id);
-      }, borderRadius: BorderRadius.all(Radius.circular(20))),
+      ).ripple(
+        () {
+          // Navigator.pushNamed(context, "/DetailPage", arguments: model);
+          Navigator.pushNamed(context, ActivityInfo.id);
+        },
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
     );
   }
 
