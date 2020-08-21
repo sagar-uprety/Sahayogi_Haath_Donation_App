@@ -67,6 +67,7 @@ class _LoginState extends State<Login> {
               RoundedInput(
                 hintText: "Enter Your Email",
                 key: ValueKey('email'),
+                icon: Icons.person,
                 enableSuggesstion: false,
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {

@@ -27,7 +27,7 @@ class Dashboard extends StatelessWidget {
           ),
           RaisedButton(
             onPressed: () {
-              Navigator.pushNamed(context, Activities_List.id);
+              Navigator.pushNamed(context, ActivitiesList.id);
             },
             child: Text('See Activites'),
           ),

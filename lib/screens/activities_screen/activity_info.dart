@@ -19,18 +19,6 @@ class _ActivityInfoState extends State<ActivityInfo> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         BackButton(color: Theme.of(context).primaryColor),
-        IconButton(
-            icon: Icon(
-              // model.isfavourite ? Icons.favorite : Icons.favorite_border, //ambigious
-              Icons.favorite,
-              // color: model.isfavourite ? Colors.red : LightColor.grey,
-              color: Colors.red,
-            ),
-            onPressed: () {
-              // setState(() {
-              //   model.isfavourite = !model.isfavourite;
-              // });
-            })
       ],
     );
   }
@@ -42,12 +30,17 @@ class _ActivityInfoState extends State<ActivityInfo> {
       titleStyle = TextStyles.title.copyWith(fontSize: 23).bold;
     }
     return Scaffold(
-      backgroundColor: LightColor.extraLightBlue,
       body: SafeArea(
         bottom: false,
         child: Stack(
           children: <Widget>[
-            Image.asset('assets/images1/ben.jpg'),
+            Container(
+              height: AppTheme.fullHeight(context) * 0.42,
+              child: Image.asset(
+                'assets/images1/children.jpg',
+                fit: BoxFit.fill,
+              ),
+            ),
             DraggableScrollableSheet(
               maxChildSize: .8,
               initialChildSize: .6,
@@ -75,41 +68,49 @@ class _ActivityInfoState extends State<ActivityInfo> {
                           contentPadding: EdgeInsets.all(0),
                           title: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
-                                "Demo Activity", //name
+                                "Demo Activity", //name //avoid overflow problem
                                 style: titleStyle,
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              // Icon(Icons.check_circle,
-                              //     size: 18,
-                              //     color: Theme.of(context).primaryColor),
-                              // Spacer(),
-                              // RatingStar(
-                              //   rating: model.rating,
-                              // )
+                              IconButton(
+                                  icon: Icon(
+                                    // model.isfavourite ? Icons.favorite : Icons.favorite_border, //ambigious
+                                    Icons.favorite,
+                                    // color: model.isfavourite ? Colors.red : LightColor.grey,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () {
+                                    // setState(() {
+                                    //   model.isfavourite = !model.isfavourite;
+                                    // });
+                                  })
                             ],
                           ),
-                          subtitle: Text(
-                            "Org Name, Published On: 08/20/2020",
-                            style: TextStyles.bodySm.subTitleColor.bold,
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Org Name",
+                                style: TextStyles.bodySm.subTitleColor.bold,
+                              ),
+                              Text(
+                                "Published On: 08/20/2020",
+                                style: TextStyles.bodySm.subTitleColor.bold,
+                              ),
+                            ],
                           ),
                         ),
                         Divider(
                           thickness: .3,
                           color: LightColor.grey,
                         ),
-                        Text("About", style: titleStyle).vP16,
                         Text(
-                          "Lorem Ipsum", //description
+                          "Lorem IpsumLorem ipsum dolor sit amet, lobortis tristique", //test this for multiline and paragraph
                           textAlign: TextAlign.justify,
                           style: TextStyles.body.subTitleColor,
-                        ),
-                        RoundButton(
-                          text: "Donate",
-                          color: Theme.of(context).primaryColor,
+                          maxLines: 100,
                         ),
                       ],
                     ),
@@ -117,6 +118,14 @@ class _ActivityInfoState extends State<ActivityInfo> {
                 );
               },
             ),
+            Positioned(
+                bottom: 10,
+                left: AppTheme.fullWidth(context) * .08,
+                right: AppTheme.fullWidth(context) * .08,
+                child: RoundButton(
+                  text: "Donate",
+                  onPress: () {},
+                )),
             _appbar(),
           ],
         ),

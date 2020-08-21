@@ -69,7 +69,7 @@ class SahayogiHaath extends StatelessWidget {
           Dashboard.id: (ctx) => Dashboard(),
           Explore.id: (ctx) => Explore(),
           ActivityInfo.id: (ctx) => ActivityInfo(),
-          Activities_List.id: (ctx) => Activities_List(),
+          ActivitiesList.id: (ctx) => ActivitiesList(),
           EditActivity.id: (ctx) => EditActivity(),
         },
       ),

@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-class RoundedInput extends StatelessWidget {
+class FormInput extends StatelessWidget {
   final String hintText;
-  final IconData icon, suffixIcon;
-  final bool obscureText;
   final TextInputType keyboardType;
   final TextCapitalization capitalization;
   final bool enableSuggesstion;
   final FormFieldSetter<String> onSaved;
   final FormFieldValidator<String> validator;
   final Key key;
-  const RoundedInput({
+  final int maxlines;
+  final int maxlength;
+  final bool autofocus;
+  const FormInput({
     this.key, //TODO: have a look at these key value
     this.hintText,
-    this.icon,
     this.onSaved,
-    this.obscureText = false,
-    this.suffixIcon,
     this.keyboardType,
     this.capitalization = TextCapitalization.none,
     this.enableSuggesstion = false,
     this.validator,
+    this.maxlines,
+    this.maxlength,
+    this.autofocus = false,
   }) : super(key: key);
 
   @override
@@ -30,22 +31,16 @@ class RoundedInput extends StatelessWidget {
       child: TextFormField(
         key: key,
         autocorrect: false,
+        autofocus: autofocus,
         textCapitalization: capitalization,
         enableSuggestions: enableSuggesstion,
-        obscureText: obscureText,
         keyboardType: keyboardType,
         onSaved: onSaved,
         validator: validator,
+        maxLength: maxlength,
+        maxLines: maxlines,
         decoration: InputDecoration(
           hintText: hintText,
-          icon: Icon(
-            icon,
-            color: kPrimaryColor,
-          ),
-          suffixIcon: Icon(
-            suffixIcon,
-            color: kPrimaryColor,
-          ),
           border: InputBorder.none,
         ),
       ),
@@ -65,12 +60,12 @@ class TextInputController extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      width: size.width * 0.8,
+      width: size.width * 0.9,
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       decoration: BoxDecoration(
         color: kPrimaryLightColor,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: child,
     );

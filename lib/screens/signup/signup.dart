@@ -101,7 +101,7 @@ class _SignUpState extends State<SignUp> {
               RoundedInput(
                 hintText: "Full Name",
                 key: ValueKey('name'),
-                // icon: Icons.user,
+                icon: Icons.person,
                 keyboardType: TextInputType.name,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -116,6 +116,7 @@ class _SignUpState extends State<SignUp> {
               ),
               RoundedInput(
                 hintText: "Enter Your Email",
+                icon: Icons.person,
                 key: ValueKey('email'),
                 enableSuggesstion: false,
                 keyboardType: TextInputType.emailAddress,
