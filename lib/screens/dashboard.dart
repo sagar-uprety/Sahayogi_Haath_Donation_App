@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sahayogihaath/screens/activities_screen/acitivity_list.dart';
-import 'package:sahayogihaath/screens/activities_screen/edit_activity.dart';
+import '../screens/activities_screen/acitivity_list.dart';
+import '../screens/activities_screen/activity_info.dart';
+import '../screens/activities_screen/edit_activity.dart';
 
 class Dashboard extends StatelessWidget {
   static const id = 'dashboard';
@@ -29,6 +30,12 @@ class Dashboard extends StatelessWidget {
               Navigator.pushNamed(context, Activities_List.id);
             },
             child: Text('See Activites'),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, ActivityInfo.id);
+            },
+            child: Text('See Demo Activity Info'),
           ),
           RaisedButton(
             onPressed: () {

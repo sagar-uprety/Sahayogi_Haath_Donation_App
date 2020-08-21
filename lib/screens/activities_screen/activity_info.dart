@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../model_demo/dactor_model.dart';
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
 import '../../theme/text_styles.dart';
@@ -10,20 +9,11 @@ import '../../components/RoundedButton.dart';
 class ActivityInfo extends StatefulWidget {
   static const id = "activity_info";
 
-  ActivityInfo({Key key, this.model}) : super(key: key);
-  final DoctorModel model;
   @override
   _ActivityInfoState createState() => _ActivityInfoState();
 }
 
 class _ActivityInfoState extends State<ActivityInfo> {
-  DoctorModel model;
-  @override
-  void initState() {
-    model = widget.model;
-    super.initState();
-  }
-
   Widget _appbar() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,13 +21,15 @@ class _ActivityInfoState extends State<ActivityInfo> {
         BackButton(color: Theme.of(context).primaryColor),
         IconButton(
             icon: Icon(
-              model.isfavourite ? Icons.favorite : Icons.favorite_border,
-              color: model.isfavourite ? Colors.red : LightColor.grey,
+              // model.isfavourite ? Icons.favorite : Icons.favorite_border, //ambigious
+              Icons.favorite,
+              // color: model.isfavourite ? Colors.red : LightColor.grey,
+              color: Colors.red,
             ),
             onPressed: () {
-              setState(() {
-                model.isfavourite = !model.isfavourite;
-              });
+              // setState(() {
+              //   model.isfavourite = !model.isfavourite;
+              // });
             })
       ],
     );
@@ -85,7 +77,7 @@ class _ActivityInfoState extends State<ActivityInfo> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                model.name,
+                                "Demo Activity", //name
                                 style: titleStyle,
                               ),
                               SizedBox(
@@ -101,7 +93,7 @@ class _ActivityInfoState extends State<ActivityInfo> {
                             ],
                           ),
                           subtitle: Text(
-                            model.type,
+                            "Org Name, Published On: 08/20/2020",
                             style: TextStyles.bodySm.subTitleColor.bold,
                           ),
                         ),
@@ -111,11 +103,14 @@ class _ActivityInfoState extends State<ActivityInfo> {
                         ),
                         Text("About", style: titleStyle).vP16,
                         Text(
-                          model.description,
+                          "Lorem Ipsum", //description
                           textAlign: TextAlign.justify,
                           style: TextStyles.body.subTitleColor,
                         ),
-                        RoundButton(text: "Donate")
+                        RoundButton(
+                          text: "Donate",
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ],
                     ),
                   ),
