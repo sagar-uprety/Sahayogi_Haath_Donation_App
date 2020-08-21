@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sahayogihaath/screens/activities_screen/acitivity_list.dart';
 import '../models/activitymodel.dart';
 
 class FirestoreService {
@@ -16,5 +17,8 @@ class FirestoreService {
         .documents
         .map((document) => Activity.fromFirestore(document.data))
         .toList());
+  }
+  Future<void> removeActivity(String description){
+    return _db.collection('activities').document(ActivitiesList.id).delete();
   }
 }

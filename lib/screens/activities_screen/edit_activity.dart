@@ -1,21 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:sahayogihaath/provider_/activity_provider.dart';
 import 'package:sahayogihaath/theme/theme.dart';
 import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
-
+import 'package:sahayogihaath/models/activitymodel.dart';
 import '../../components/FormInput.dart';
 import '../../components/RoundedButton.dart';
+import 'package:provider/provider.dart';
+
 
 class EditActivity extends StatefulWidget {
+  final Activity activity;
+
+  EditActivity([this.activity]);
+
   static const id = "edit_activities";
   @override
   _EditActivityState createState() => _EditActivityState();
 }
 
 class _EditActivityState extends State<EditActivity> {
+   final activityTitleController = TextEditingController();
+  final  activityDescriptionController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   var _activityTitle = '';
   var _activityDescription = '';
+
+  @override
+  void dispose() { 
+ activityTitleController.dispose();
+ activityDescriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() { 
+    if (widget.activity == null){
+      activityTitleController.text = "";
+      activityDescriptionController.text = "";
+      new Future.delayed(Duration.zero, (){
+        final activityProvider = Provider.of<ActivityProvider>(context,listen:false);
+        activityProvider.loadValues(Activity());
+      });
+    }else{
+      //CONTROLLer update
+      activityTitleController.text = widget.activity.activityTitle;
+      activityDescriptionController.text = widget.activity.description;
+      //state update
+      new Future.delayed(Duration.zero, (){
+        final activityProvider = Provider.of<ActivityProvider>(context, listen:false);
+        activityProvider.loadValues(Activity());
+      });
+
+    }
+    super.initState();
+    
+  }
 
   Widget _appBar() {
     return AppBar(
@@ -45,6 +86,7 @@ class _EditActivityState extends State<EditActivity> {
 
   @override
   Widget build(BuildContext context) {
+    final activityProvider = Provider.of<ActivityProvider>(context);
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Color(0XFFfefefe),
@@ -64,6 +106,7 @@ class _EditActivityState extends State<EditActivity> {
                   ),
                   SizedBox(height: AppTheme.fullHeight(context) * 0.02),
                   FormInput(
+                    
                     hintText: "Activity Title",
                     key: ValueKey('activity_title'),
                     maxlines: 1,
@@ -82,6 +125,7 @@ class _EditActivityState extends State<EditActivity> {
                     },
                   ),
                   FormInput(
+
                     hintText: "Describe your Activity",
                     key: ValueKey('activity_description'),
                     maxlength: 1000,
@@ -98,12 +142,14 @@ class _EditActivityState extends State<EditActivity> {
                       _activityDescription = value;
                       print(_activityDescription);
                     },
+                   
                   ),
                   RoundButton(
                       text: 'Submit Activity',
                       onPress: () {
                         _formKey.currentState.validate();
                         FocusScope.of(context).unfocus();
+                        activityProvider.saveActivity();
                         //provider function
                       } //do something
                       ),

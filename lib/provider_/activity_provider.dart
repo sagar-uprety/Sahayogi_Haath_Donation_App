@@ -4,14 +4,14 @@ import '../models/activitymodel.dart';
 
 class ActivityProvider with ChangeNotifier {
   final firestoreService = FirestoreService();
-  String _name;
+  String _activityTitle;
   String _description;
 
-  String get name => _name;
+  String get name => _activityTitle;
   String get description => _description;
 
   changeName(String value) {
-    _name = value;
+    _activityTitle = value;
     notifyListeners();
   }
 
@@ -21,12 +21,30 @@ class ActivityProvider with ChangeNotifier {
   }
 
   loadValues(Activity activity) {
-    _name = activity.name;
+    _activityTitle = activity.activityTitle;
     _description = activity.description;
   }
 
   saveActivity() {
-    var newActivity = Activity(name: name, description: description);
+    if(_description == null){
+  var newActivity = Activity(
+      activityTitle: _activityTitle,
+      description: _description,
+    );
     firestoreService.saveActivity(newActivity);
+    }else{
+      var updatedActivity = 
+      Activity(
+          activityTitle: _activityTitle,
+      description: _description,
+      );
+        firestoreService.saveActivity(updatedActivity);
+
+    }
+  
+  }
+  removeActivity(String description){
+            firestoreService.removeActivity (description);
+
   }
 }
