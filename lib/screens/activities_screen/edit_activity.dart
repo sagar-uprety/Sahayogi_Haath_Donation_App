@@ -104,9 +104,12 @@ class _EditActivityState extends State<EditActivity> {
                       onPress: () {
                         _formKey.currentState.validate();
                         FocusScope.of(context).unfocus();
+                        _formKey.currentState.save();
+                        print(_activityTitle);
+                        print(_activityDescription);
                         //provider function
                       } //do something
-                      ),
+                      ).alignBottomCenter,
                 ],
               ),
             ),

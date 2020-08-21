@@ -108,7 +108,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
               ),
               Text(
                 "08/21/2020",
-                style: TextStyles.bodySm.subTitleColor.bold,
+                style: TextStyles.bodySm.subTitleColor,
               ),
             ],
           ),

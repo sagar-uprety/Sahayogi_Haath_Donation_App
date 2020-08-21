@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sahayogihaath/provider_/activity_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/screens/activities_screen/activity_info.dart';
+import 'package:sahayogihaath/screens/donate_screen/donate_main.dart';
+import 'package:sahayogihaath/screens/donate_screen/donate_success.dart';
 import 'package:sahayogihaath/services/firestore_service.dart';
 import 'package:sahayogihaath/theme/theme.dart';
 
@@ -59,6 +61,8 @@ class SahayogiHaath extends StatelessWidget {
           ActivityInfo.id: (ctx) => ActivityInfo(),
           ActivitiesList.id: (ctx) => ActivitiesList(),
           EditActivity.id: (ctx) => EditActivity(),
+          DonateScreen.id: (ctx) => DonateScreen(),
+          DonateSuccess.id: (ctx) => DonateSuccess(),
         },
       ),
     );

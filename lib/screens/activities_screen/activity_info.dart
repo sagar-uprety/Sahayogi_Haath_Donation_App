@@ -109,7 +109,7 @@ class _ActivityInfoState extends State<ActivityInfo> {
                         Text(
                           "Lorem IpsumLorem ipsum dolor sit amet, lobortis tristique", //test this for multiline and paragraph
                           textAlign: TextAlign.justify,
-                          style: TextStyles.body.subTitleColor,
+                          style: TextStyles.body,
                           maxLines: 100,
                         ),
                       ],

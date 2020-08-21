@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/light_color.dart';
 
 extension TextStyleHelpers on TextStyle {
-  TextStyle get bold => copyWith(fontWeight: FontWeight.bold);
+  TextStyle get bold => copyWith(fontWeight: FontWeight.w600);
   TextStyle get white => copyWith(color: Colors.white);
   TextStyle get subTitleColor => copyWith(color: LightColor.subTitleTextColor);
 }
