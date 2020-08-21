@@ -107,6 +107,8 @@ class _EditActivityState extends State<EditActivity> {
                         _formKey.currentState.save();
                         print(_activityTitle);
                         print(_activityDescription);
+                        print(_activityTitle);
+                        print(_activityDescription);
                         //provider function
                       } //do something
                       ).alignBottomCenter,
