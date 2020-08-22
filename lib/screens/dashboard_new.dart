@@ -309,3 +309,29 @@
 //     );
 //   }
 // }
+
+//  Container(
+//               decoration: cGreyBoxDecoration,
+//               padding: EdgeInsets.symmetric(horizontal: size.width*0.035, vertical: size.height*0.02),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: <Widget>[
+//                   OverviewDetail(info: 'Rs. 1500.0', title: 'Total Donation'),
+//                   OverviewDetail(info: '3', title: 'Organization'),
+//                   Padding(
+//                     padding: EdgeInsets.only(right: size.width*0.028),
+//                     child: Container(
+//                       decoration: BoxDecoration(
+//                         border: Border.all(color: Color(0xffffffff), width: 4, style: BorderStyle.solid),
+//                         borderRadius: BorderRadius.all(Radius.circular(size.width*0.116)),
+//                       ),
+//                       child: CircleAvatar(
+//                         backgroundColor: Colors.blue,
+//                         backgroundImage: NetworkImage(user['profile_image']),
+//                         radius: size.width*0.093
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
