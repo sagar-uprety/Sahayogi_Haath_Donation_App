@@ -7,20 +7,23 @@ import 'package:sahayogihaath/screens/activities_screen/acitivity_list.dart';
 import '../../theme/theme.dart';
 import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
-
 import '../../components/FormInput.dart';
 import '../../components/RoundedButton.dart';
 
 class EditActivity extends StatefulWidget {
-  static const id = "edit_activities";
   final Activity activity;
   EditActivity([this.activity]);
+
+  static const id = "edit_activities";
 
   @override
   _EditActivityState createState() => _EditActivityState();
 }
 
 class _EditActivityState extends State<EditActivity> {
+  final activityTitleController = TextEditingController();
+  final activityDescriptionController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -60,7 +63,6 @@ class _EditActivityState extends State<EditActivity> {
   @override
   Widget build(BuildContext context) {
     final activityProvider = Provider.of<ActivityProvider>(context);
-
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Color(0XFFfefefe),
