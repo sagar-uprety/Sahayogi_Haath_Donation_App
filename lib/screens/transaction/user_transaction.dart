@@ -15,7 +15,6 @@ class UserTransaction extends StatefulWidget {
 
 class _UserTransactionState extends State<UserTransaction> {
   final _auth = FirebaseAuth.instance;
-
   FirebaseUser loggedInUser;
   MyChoice selectedChoice;
   void getCurrentUser() async{
@@ -34,6 +33,7 @@ class _UserTransactionState extends State<UserTransaction> {
   void initState() {
     super.initState();
     getCurrentUser();
+    selectedChoice = MyChoice.my;
   }
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _UserTransactionState extends State<UserTransaction> {
                       ShowTransactionButton(
                         onpressed: (){
                           setState(() {
-                            selectedChoice = MyChoice.my;
+                          selectedChoice = MyChoice.my;
                           });
                         },
                         text: 'My',
@@ -89,7 +89,7 @@ class _UserTransactionState extends State<UserTransaction> {
                   ),
                 Container(
                     margin: EdgeInsets.symmetric(horizontal: width ),
-                    child: DonationStream()
+                    child: DonationStream(stateChoice: selectedChoice,)
                   ),  
               ]
             ),

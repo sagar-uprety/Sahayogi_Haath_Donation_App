@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/transaction_const.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
+    String donor = "";
   @override
   Widget build(BuildContext context) {
      MediaQueryData queryData;
@@ -23,12 +25,15 @@ class _SearchBarState extends State<SearchBar> {
             flex:4,
             child: SearchTextField(
               onchange: (value){
-                print(value);
+                donor = value;
               },
             ),
           ),
           SearchButton(
             onPress: (value){
+              setState(() {
+                Text(value);
+              });
               print(value);
             },
           ),
@@ -38,15 +43,10 @@ class _SearchBarState extends State<SearchBar> {
   }
 }
 
-class SearchTextField extends StatefulWidget {
+class SearchTextField extends StatelessWidget {
   final Function onchange;
   SearchTextField({this.onchange});
 
-  @override
-  _SearchTextFieldState createState() => _SearchTextFieldState();
-}
-
-class _SearchTextFieldState extends State<SearchTextField> {
   var queryResultSet = [];
 
   var tempSearchStore = [];
@@ -83,9 +83,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
       )
     )
         ),
-        onChanged: (value){
-          //print
-        },
+        onChanged: onchange,
       );
   }
 }
@@ -110,3 +108,6 @@ class SearchButton extends StatelessWidget {
   }
 }
 
+
+      
+   
