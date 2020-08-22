@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'transaction_card.dart';
+import '../screens/transaction/transaction_card.dart';
 class DonationStream extends StatelessWidget {
     String day;
     String donor;

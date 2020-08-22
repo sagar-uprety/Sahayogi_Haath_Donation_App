@@ -1,6 +1,7 @@
-import '../../components/transaction_components/Organization/dropdown.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../components/transaction_components/Organization/sortByDate.dart';
 import '../../components/transaction_components/search_bar.dart';
-import '../../components/transaction_components/Organization/transactioncardCreator.dart';
+import '../../services/transactioncardCreator.dart';
 import 'package:flutter/material.dart';
 
 class OrganizationTransaction extends StatefulWidget {
@@ -10,7 +11,28 @@ class OrganizationTransaction extends StatefulWidget {
 }
 
 class  _OrganizationTransaction extends State< OrganizationTransaction> {
-   TransactionCardCreator cardCreator = TransactionCardCreator();
+  final _auth = FirebaseAuth.instance;
+
+  FirebaseUser loggedInUser;
+
+  void getCurrentUser() async{
+    try{
+      final user=await _auth.currentUser();
+
+      if(user != null){
+        loggedInUser=user;
+      }
+    }
+    catch(e){
+      print(e);
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
@@ -33,7 +55,7 @@ class  _OrganizationTransaction extends State< OrganizationTransaction> {
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: width ),
-                  child: cardCreator.donationData()
+                  child: DonationStream(),
                 ),  
               ]
             ),

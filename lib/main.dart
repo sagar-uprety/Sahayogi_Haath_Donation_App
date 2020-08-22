@@ -41,7 +41,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return Dashboard();
+              return OrganizationTransaction();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
