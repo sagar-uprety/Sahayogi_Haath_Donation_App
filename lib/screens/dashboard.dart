@@ -40,12 +40,6 @@ class _DashboardState extends State<Dashboard> {
           ),
           RaisedButton(
             onPressed: () {
-              Navigator.pushNamed(context, ActivityInfo.id);
-            },
-            child: Text('See Demo Activity Info'),
-          ),
-          RaisedButton(
-            onPressed: () {
               Navigator.pushNamed(context, DonateScreen.id);
             },
             child: Text('Donate'),

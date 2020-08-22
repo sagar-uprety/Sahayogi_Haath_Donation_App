@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sahayogihaath/screens/activities_screen/acitivity_list.dart';
 import '../models/activitymodel.dart';
 
 class FirestoreService {

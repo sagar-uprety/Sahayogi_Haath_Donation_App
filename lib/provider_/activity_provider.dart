@@ -44,11 +44,11 @@ class ActivityProvider with ChangeNotifier {
           title: title, description: description, activityID: _activityID);
       firestoreService.saveActivity(updatedActivity);
     }
-    // notifyListeners();
+    notifyListeners(); //check
   }
 
   removeActivity(String activityID) {
     firestoreService.removeActivity(activityID);
-    // notifyListeners();
+    notifyListeners(); //checl
   }
 }

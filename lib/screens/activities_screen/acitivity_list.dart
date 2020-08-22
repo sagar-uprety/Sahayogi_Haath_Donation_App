@@ -18,10 +18,12 @@ class ActivitiesList extends StatefulWidget {
 class _ActivitiesListState extends State<ActivitiesList> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(),
-      backgroundColor: Color(0XFFfefefe),
-      body: _activitiesList(),
+    return SafeArea(
+      child: Scaffold(
+        appBar: _appBar(),
+        backgroundColor: Color(0XFFfefefe),
+        body: _activitiesList(),
+      ),
     );
   }
 

@@ -9,6 +9,7 @@ import 'package:sahayogihaath/services/firestore_service.dart';
 import 'package:sahayogihaath/theme/theme.dart';
 import 'package:flutter/services.dart';
 
+import './provider_/auth_provider.dart';
 import './screens/welcome/welcome.dart';
 import './screens/signup/signup_main.dart';
 import './screens/splash.dart';
@@ -38,6 +39,9 @@ class SahayogiHaath extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => ActivityProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
         ),
         StreamProvider(
           create: (context) => firestoreService.getActivities(),
