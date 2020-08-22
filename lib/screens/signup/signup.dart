@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../components/HrDivider.dart';
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
 import '../../components/HaveAnAccount.dart';
-import '../../components/SocialIcons.dart';
 import './SignUpBackground.dart';
 import '../pickers/user_image_picker.dart';
 import '../../provider/auth_provider.dart';
@@ -16,9 +14,6 @@ import '../../models/usermodel.dart';
 import '../../routes.dart';
 
 class SignUp extends StatefulWidget {
-  SignUp(this.loginWithGoogle);
-
-  final Future<bool> Function() loginWithGoogle;
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -184,9 +179,9 @@ class _SignUpState extends State<SignUp> {
                         profileImage: _userImage,
                         userType: UserType.donor,
                         ctx: context,
-                      );
-                      
-                      Navigator.of(context).pushReplacementNamed(Routes.dashboard);
+                      ).catchError((e){
+                        print(e);
+                      });
                     }
                   },
                 ),
@@ -198,22 +193,6 @@ class _SignUpState extends State<SignUp> {
                     Navigator.pushNamed(context, Routes.login);
                   },
                 ),
-
-              if(authProvider.status !=Status.Registering) HrDivider(),
-
-              if(authProvider.status !=Status.Registering)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SocialIcon(
-                      iconSource: 'assets/icons/google-plus.svg',
-                      onPress: () async {
-                        bool res = await widget.loginWithGoogle();
-                        if (!res) print('Error with Google');
-                      },
-                    )
-                  ],
-                )
             ],
           ),
         ),

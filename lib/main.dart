@@ -5,24 +5,18 @@ import 'package:provider/provider.dart';
 
 import './routes.dart';
 import './screens/welcome/welcome.dart';
-import './screens/signup/signup_main.dart';
-import './screens/signup/signup_org_main.dart';
 import './screens/splash.dart';
-import 'screens/dashboard/dashboard_main.dart';
-import './screens/login/login_main.dart';
-import './screens/explore.dart';
+import './screens/dashboard/dashboard_main.dart';
 import './constants.dart';
 import './provider/auth_provider.dart';
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
+  runApp(
       ChangeNotifierProvider<AuthProvider>(
         create: (context) => AuthProvider(),
+        child: SahayogiHaath(),
       ),
-    ],
-    child: SahayogiHaath(),
-  ));
+  );
 }
 
 class SahayogiHaath extends StatelessWidget {

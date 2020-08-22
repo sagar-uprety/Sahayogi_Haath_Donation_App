@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants.dart';
+import '../../screens/forgot_password.dart';
 import '../../routes.dart';
 import '../../provider/auth_provider.dart';
 import '../../components/RoundedInput.dart';
@@ -10,9 +12,6 @@ import '../../components/HaveAnAccount.dart';
 import './LoginBackground.dart';
 
 class Login extends StatefulWidget {
-  Login(this.loginWithGoogle);
-
-  final Future<bool> Function() loginWithGoogle;
 
   @override
   _LoginState createState() => _LoginState();
@@ -99,8 +98,9 @@ class _LoginState extends State<Login> {
                 
                     if(isValid){
                       _formKey.currentState.save();
-                      await authProvider.signInWithEmailAndPassword(userEmail.trim(), userPassword.trim(), context);
-                      Navigator.pushReplacementNamed(context, Routes.dashboard);
+                      await authProvider.signInWithEmailAndPassword(userEmail.trim(), userPassword.trim(), context).catchError((error){
+                        print(error);
+                      });
                     }
                   },
                 ),
@@ -110,6 +110,23 @@ class _LoginState extends State<Login> {
                   onPress: () {
                     Navigator.pushNamed(context, Routes.signup);
                   },
+                ),
+              if (authProvider.status != Status.Authenticating)
+                FlatButton(
+                  textColor: Colors.blue,
+                  onPressed: (){
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => ForgotPassword(),
+                    );
+                  },
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
                 )
             ],
           ),

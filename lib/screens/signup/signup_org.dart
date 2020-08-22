@@ -280,9 +280,10 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                           type: _type,
                           userType: UserType.organization,
                           ctx: context,
-                        );
+                        ).catchError((e){
+                          print(e);
+                        });
 
-                        Navigator.of(context).pushReplacementNamed(Routes.dashboard);
                       }
                     }
                   ),

@@ -4,6 +4,7 @@ import '../constants.dart';
 class RoundedInput extends StatelessWidget {
   final String hintText;
   final IconData icon,suffixIcon;
+  final bool autofocus;
   final TextEditingController controller;
   final bool obscureText;
   final Function onClickedSuffixIcon;
@@ -17,6 +18,7 @@ class RoundedInput extends StatelessWidget {
     this.key, //TODO: have a look at these key value
     this.hintText,
     this.controller,
+    this.autofocus=false,
     this.icon = Icons.person,
     this.onSaved,
     this.obscureText = false,
@@ -35,6 +37,7 @@ class RoundedInput extends StatelessWidget {
         controller: controller,
         key: key,
         autocorrect: false,
+        autofocus: autofocus,
         textCapitalization: capitalization,
         enableSuggestions: enableSuggesstion,
         obscureText: obscureText,

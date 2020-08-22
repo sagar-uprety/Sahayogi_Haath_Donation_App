@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../routes.dart';
 import '../models/usermodel.dart';
 import '../image_upload.dart';
 
@@ -21,6 +22,8 @@ class AuthProvider extends ChangeNotifier {
   FirebaseAuth _auth;
 
   Status _status = Status.Uninitialized;
+
+  FirebaseUser user;
 
   Status get status => _status;
 
@@ -92,8 +95,9 @@ class AuthProvider extends ChangeNotifier {
             'user_type': typeOfUser,
           };
         }
-
         await Firestore.instance.collection('users').document(uid).setData(userDetails);
+
+        sendEmailVerification(ctx);
       }
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';
@@ -115,12 +119,13 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> signInWithEmailAndPassword(String email, String password, BuildContext ctx) async {
+  Future signInWithEmailAndPassword(String email, String password, BuildContext ctx) async {
     try {
       _status = Status.Authenticating;
       notifyListeners();
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      return true;
+      
+      sendEmailVerification(ctx);
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';
 
@@ -134,18 +139,66 @@ class AuthProvider extends ChangeNotifier {
         ),
       );
       _status = Status.Unauthenticated;
-      return false;
     } catch (e) {
       print("Error on the sign in = " +e.toString());
       _status = Status.Unauthenticated;
       notifyListeners();
-      return false;
     }
+  }
+
+  Future sendEmailVerification(BuildContext ctx) async{
+    try{
+      user= await _auth.currentUser();
+      if(!user.isEmailVerified){
+        Scaffold.of(ctx).showSnackBar(
+          SnackBar(
+            content: Text('Please verify your email first and then try logging in again.'),
+            backgroundColor: Colors.red[600],
+          ),
+        );
+        
+        await user.sendEmailVerification().whenComplete(() => print('Mail Sent')).catchError((e){
+          Scaffold.of(ctx).showSnackBar(
+            SnackBar(
+              content: Text('Error sending mail. Make sure the email address is correct and please try again later.'),
+              backgroundColor: Colors.red[600],
+            ),
+          );
+        });
+        
+        await signOut();
+        Navigator.of(ctx).pushReplacementNamed(Routes.login);
+      } else{
+        print('Verified User');
+        Navigator.of(ctx).pushReplacementNamed(Routes.dashboard);
+      }
+    } catch(e){
+      print(e);
+    }
+  }
+
+  Future sendPasswordResetEmail(email,ctx) async{
+    await _auth.sendPasswordResetEmail(email: email).whenComplete(() {
+      Scaffold.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text('A link to reset the password has been sent to your email.'),
+          backgroundColor: Colors.green[600],
+        ),
+      );
+    }).catchError((error){
+      Scaffold.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text('Error sending mail. Make sure the email address is correct and please try again later.'),
+          backgroundColor: Colors.red[600],
+        ),
+      );
+    });
   }
 
   Future signOut() async {
     _auth.signOut();
     _status = Status.Unauthenticated;
+    user=null;
     notifyListeners();
     return Future.delayed(Duration.zero);
   }

@@ -1,11 +1,13 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:sahayogihaath/screens/dashboard/dashboard_main.dart';
-import 'package:sahayogihaath/screens/login/login_main.dart';
-import 'package:sahayogihaath/screens/signup/signup_main.dart';
-import 'package:sahayogihaath/screens/signup/signup_org_main.dart';
-import 'package:sahayogihaath/screens/splash.dart';
-import 'package:sahayogihaath/screens/welcome/welcome.dart';
+
+import './screens/dashboard/dashboard_main.dart';
+import './screens/edit_user_details.dart';
+import './screens/login/login_main.dart';
+import './screens/signup/signup_main.dart';
+import './screens/signup/signup_org_main.dart';
+import './screens/splash.dart';
+import './screens/welcome/welcome.dart';
 
 class Routes{
   Routes._();
@@ -16,6 +18,7 @@ class Routes{
   static const String signup='/signup';
   static const String signupOrganization='/signupOrganization';
   static const String dashboard='/dashboard';
+  static const String editData='/editData';
 
   static final routes = <String, WidgetBuilder> {
     splash: (context) => SplashScreen(),
@@ -24,5 +27,6 @@ class Routes{
     signup: (context) => SignUpMain(),
     signupOrganization: (context) => SignUpOrganizationMain(),
     dashboard: (context) => DashboardMain(),
+    editData: (context) => EditData(),
   };
 }

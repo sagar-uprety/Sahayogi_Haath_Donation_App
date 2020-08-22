@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
+import '../../routes.dart';
 import '../../provider/auth_provider.dart';
 import '../splash.dart';
 import './dashboard.dart';
@@ -84,6 +85,13 @@ class _DashboardMainState extends State<DashboardMain> {
           ),
         ),
         actions: [
+          IconButton(
+            icon: Icon(Icons.edit,color: Colors.black,),
+            tooltip: 'Edit Your Profile',
+            onPressed: () {
+              Navigator.of(context).pushNamed(Routes.editData);
+            },
+          ),
           FlatButton(
             onPressed: (){
               authProvider.signOut();
