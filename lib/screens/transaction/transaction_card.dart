@@ -9,7 +9,6 @@ class TransactionCard extends StatelessWidget {
    double amount;
   String donorImage;
   TransactionCard({this.day,@required this.donor, @required this.donee, @required this.time, @required this.donorImage, @required this.amount});
-  //responsive spacing instead of sized box
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -38,7 +37,7 @@ class TransactionCard extends StatelessWidget {
                     child: Container(
                       width: cardWidth*0.12,
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('images/$donorImage'),
+                        backgroundImage: NetworkImage('https://image.shutterstock.com/image-photo/mountains-during-sunset-beautiful-natural-260nw-407021107.jpg'),
                       ),
                     ),
                   ),
@@ -117,6 +116,9 @@ class TransactionCard extends StatelessWidget {
                   
         
         ),
+        SizedBox(
+                    height: height*0.02,
+                  ),
       ],
     );
   }
