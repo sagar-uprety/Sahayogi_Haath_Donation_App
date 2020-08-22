@@ -22,12 +22,11 @@ class _LoginMainState extends State<LoginMain> {
     String password,
     BuildContext ctx,
   ) async {
-    AuthResult authResult;
     try {
       setState(() {
         _isLoading = true;
       });
-      authResult = await _auth.signInWithEmailAndPassword(
+      AuthResult authResult = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );

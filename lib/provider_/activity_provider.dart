@@ -29,11 +29,26 @@ class ActivityProvider with ChangeNotifier {
   loadValues(Activity activity) {
     _title = activity.title;
     _description = activity.description;
+    _activityID = activity.activityID;
   }
 
   saveActivity() {
-    var newActivity =
-        Activity(title: title, description: description, activityID: uuid.v4());
-    firestoreService.saveActivity(newActivity);
+    if (_activityID == null) {
+      //create new activity
+      var newActivity = Activity(
+          title: title, description: description, activityID: uuid.v4());
+      firestoreService.saveActivity(newActivity);
+    } else {
+      //update
+      var updatedActivity = Activity(
+          title: title, description: description, activityID: _activityID);
+      firestoreService.saveActivity(updatedActivity);
+    }
+    // notifyListeners();
+  }
+
+  removeActivity(String activityID) {
+    firestoreService.removeActivity(activityID);
+    // notifyListeners();
   }
 }

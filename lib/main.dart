@@ -7,6 +7,7 @@ import 'package:sahayogihaath/screens/donate_screen/donate_main.dart';
 import 'package:sahayogihaath/screens/donate_screen/donate_success.dart';
 import 'package:sahayogihaath/services/firestore_service.dart';
 import 'package:sahayogihaath/theme/theme.dart';
+import 'package:flutter/services.dart';
 
 import './screens/welcome/welcome.dart';
 import './screens/signup/signup_main.dart';
@@ -25,6 +26,12 @@ void main() {
 class SahayogiHaath extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //device orientation portrait only
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     final firestoreService = FirestoreService();
 
     return MultiProvider(

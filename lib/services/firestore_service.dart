@@ -17,4 +17,8 @@ class FirestoreService {
         .map((document) => Activity.fromFirestore(document.data))
         .toList());
   }
+
+  Future<void> removeActivity(String activityId) {
+    return _db.collection('activities').document(activityId).delete();
+  }
 }

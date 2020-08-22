@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider_/activity_provider.dart';
+import 'package:sahayogihaath/screens/activities_screen/edit_activity.dart';
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
 import '../../theme/text_styles.dart';
 import '../../theme/theme.dart';
 
 import '../../components/RoundedButton.dart';
+import '../../models/activitymodel.dart';
 
 class ActivityInfo extends StatefulWidget {
   static const id = "activity_info";
-
   @override
   _ActivityInfoState createState() => _ActivityInfoState();
 }
@@ -25,6 +28,9 @@ class _ActivityInfoState extends State<ActivityInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final activityProvider = Provider.of<ActivityProvider>(context);
+    final Activity passedActivity = ModalRoute.of(context).settings.arguments;
+
     TextStyle titleStyle = TextStyles.title.copyWith(fontSize: 25).bold;
     if (AppTheme.fullWidth(context) < 393) {
       titleStyle = TextStyles.title.copyWith(fontSize: 23).bold;
@@ -71,7 +77,8 @@ class _ActivityInfoState extends State<ActivityInfo> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
-                                "Demo Activity", //name //avoid overflow problem
+                                passedActivity
+                                    .title, //name //avoid overflow problem
                                 style: titleStyle,
                               ),
                               IconButton(
@@ -107,7 +114,7 @@ class _ActivityInfoState extends State<ActivityInfo> {
                           color: LightColor.grey,
                         ),
                         Text(
-                          "Lorem IpsumLorem ipsum dolor sit amet, lobortis tristique", //test this for multiline and paragraph
+                          passedActivity.description,
                           textAlign: TextAlign.justify,
                           style: TextStyles.body,
                           maxLines: 100,
@@ -119,13 +126,49 @@ class _ActivityInfoState extends State<ActivityInfo> {
               },
             ),
             Positioned(
-                bottom: 10,
-                left: AppTheme.fullWidth(context) * .08,
-                right: AppTheme.fullWidth(context) * .08,
-                child: RoundButton(
-                  text: "Donate",
-                  onPress: () {},
-                )),
+              bottom: 10,
+              left: AppTheme.fullWidth(context) * .05,
+              right: AppTheme.fullWidth(context) * .05,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    flex: 5,
+                    child: RoundButton(
+                      radius: 10,
+                      text: "Edit",
+                      onPress: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                EditActivity(passedActivity)));
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: 45,
+                        width: 55,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: LightColor.grey.withAlpha(200)),
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.red[400],
+                        ),
+                      )).ripple(() {
+                    activityProvider.removeActivity(passedActivity.activityID);
+                    Navigator.of(context).pop();
+                  },
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      )),
+                ],
+              ).vP16,
+            ),
             _appbar(),
           ],
         ),
