@@ -6,16 +6,11 @@ import '../models/activitymodel.dart';
 
 class ActivityProvider with ChangeNotifier {
   final firestoreService = FirestoreService();
-<<<<<<< HEAD
   String _title;
-=======
-  String _activityTitle;
->>>>>>> 5d38c0432e9704ac7aed239884a6a461d9894f0f
   String _description;
   String _activityID;
   var uuid = Uuid();
 
-<<<<<<< HEAD
   //getters
   String get title => _title;
   String get description => _description;
@@ -23,13 +18,6 @@ class ActivityProvider with ChangeNotifier {
   //setters
   changeTitle(String value) {
     _title = value;
-=======
-  String get name => _activityTitle;
-  String get description => _description;
-
-  changeName(String value) {
-    _activityTitle = value;
->>>>>>> 5d38c0432e9704ac7aed239884a6a461d9894f0f
     notifyListeners();
   }
 
@@ -39,17 +27,12 @@ class ActivityProvider with ChangeNotifier {
   }
 
   loadValues(Activity activity) {
-<<<<<<< HEAD
     _title = activity.title;
-=======
-    _activityTitle = activity.activityTitle;
->>>>>>> 5d38c0432e9704ac7aed239884a6a461d9894f0f
     _description = activity.description;
     _activityID = activity.activityID;
   }
 
   saveActivity() {
-<<<<<<< HEAD
     if (_activityID == null) {
       //create new activity
       var newActivity = Activity(
@@ -67,27 +50,5 @@ class ActivityProvider with ChangeNotifier {
   removeActivity(String activityID) {
     firestoreService.removeActivity(activityID);
     // notifyListeners();
-=======
-    if(_description == null){
-  var newActivity = Activity(
-      activityTitle: _activityTitle,
-      description: _description,
-    );
-    firestoreService.saveActivity(newActivity);
-    }else{
-      var updatedActivity = 
-      Activity(
-          activityTitle: _activityTitle,
-      description: _description,
-      );
-        firestoreService.saveActivity(updatedActivity);
-
-    }
-  
-  }
-  removeActivity(String description){
-            firestoreService.removeActivity (description);
-
->>>>>>> 5d38c0432e9704ac7aed239884a6a461d9894f0f
   }
 }
