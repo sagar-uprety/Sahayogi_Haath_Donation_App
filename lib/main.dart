@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import './screens/transaction/admin_transaction.dart';
-import './screens/transaction/organization.dart';
-import './screens/transaction/user_transaction.dart';
 
 import './screens/welcome/welcome.dart';
 import './screens/signup/signup_main.dart';
@@ -11,6 +8,9 @@ import './screens/splash.dart';
 import './screens/dashboard.dart';
 import './screens/login/login_main.dart';
 import './screens/explore.dart';
+import './screens/transaction/admin_transaction.dart';
+import './screens/transaction/user_transaction.dart';
+import './screens/transaction/organization.dart';
 import './constants.dart';
 
 void main() {
@@ -40,7 +40,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return Dashboard();
+              return UserTransaction();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
@@ -48,9 +48,8 @@ class SahayogiHaath extends StatelessWidget {
             return Welcome();
           },
         ),
-        //home: UserTransaction(),
         routes: {
-          Welcome.id: (ctx) => Welcome(),
+         Welcome.id: (ctx) => Welcome(),
           LoginMain.id: (ctx) => LoginMain(),
           SignUpMain.id: (ctx) => SignUpMain(),
           Dashboard.id: (ctx) => Dashboard(),
