@@ -47,7 +47,7 @@ class _UserTransactionState extends State<UserTransaction> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget> [
-                SearchBar(),
+               SearchBar(),
                 SizedBox(
                     height:MediaQuery.of(context).size.height*0.015,
                   ),
