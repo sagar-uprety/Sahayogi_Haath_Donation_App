@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 class OrganizationName extends StatelessWidget {
   const OrganizationName({
     Key key,
@@ -7,9 +8,18 @@ class OrganizationName extends StatelessWidget {
   
   final MediaQueryData queryData;
 
-
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('transaction').orderBy('dateTime').snapshots(),
+        builder: (BuildContext, snapshot){
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'),);
+                  }
+                  if (!snapshot.hasData) {
+                    return  Text('Loading');
+                  }
+       
     return Container(
       width: queryData.size.width*0.5,
       alignment: Alignment.center,
@@ -24,20 +34,30 @@ class OrganizationName extends StatelessWidget {
         color: Color(0x22A6AAB4),
       ),
       child: Center(
-        child: DropdownButton<String>(
+        child: DropdownButton(
+          hint: Text('All Transaction'),
           isExpanded: false,
           underline:SizedBox(),
-          items: [
-            DropdownMenuItem(child: Text('Helping Hand',),)
-          ],
+          items: snapshot.data.documents.map((DocumentSnapshot document){
+            return DropdownMenuItem (
+              value: document.data['donee'],
+              child: Container(
+                child: Text(document.data['donee'],style: TextStyle(
+                fontSize: 18,
+                  color: Colors.black),),
+              ),
+            );
+          }).toList(),
           style: TextStyle(
             fontSize: 18,
             color: Colors.black),
-          onChanged: (value){
+            onChanged: (value){
             print(value);
           },
         ),
       ),
+    );
+     }
     );
   }
 }
