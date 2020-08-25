@@ -1,4 +1,4 @@
-import '../../services/transactioncardCreator.dart';
+import 'usertransaction_main.dart';
 import '../../components/transaction_components/search_bar.dart';
 import '../../components/transaction_components/showtransactionButton.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +89,7 @@ class _UserTransactionState extends State<UserTransaction> {
                   ),
                 Container(
                     margin: EdgeInsets.symmetric(horizontal: width ),
-                    child: DonationStream(stateChoice: selectedChoice,)
+                    child: UserDonationStream(stateChoice: selectedChoice,)
                   ),  
               ]
             ),

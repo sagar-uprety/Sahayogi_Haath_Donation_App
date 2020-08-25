@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../components/transaction_components/sortByDate.dart';
 import '../../components/transaction_components/search_bar.dart';
-import '../../services/transactioncardCreator.dart';
+import '../transactioncardCreator.dart';
 import 'package:flutter/material.dart';
 
 class OrganizationTransaction extends StatefulWidget {

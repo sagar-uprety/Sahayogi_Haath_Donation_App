@@ -8,9 +8,9 @@ import './screens/splash.dart';
 import './screens/dashboard.dart';
 import './screens/login/login_main.dart';
 import './screens/explore.dart';
-import './screens/transaction/admin_transaction.dart';
-import './screens/transaction/user_transaction.dart';
-import './screens/transaction/organization.dart';
+import 'screens/admintransaction/admin_transaction.dart';
+import './screens/usertransaction/user_transaction.dart';
+import 'screens/orgtransaction/organization.dart';
 import './constants.dart';
 
 void main() {
@@ -40,7 +40,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return UserTransaction();
+              return AdminTransaction();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();

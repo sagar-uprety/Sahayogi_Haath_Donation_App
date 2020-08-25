@@ -1,31 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sahayogihaath/screens/transaction/user_transaction.dart';
-import '../screens/transaction/transaction_card.dart';
-import '../screens/splash.dart';
+import 'organization.dart';
+import '../../components/transaction_components/transaction_card.dart';
 import 'package:intl/intl.dart';
-class DonationStream extends StatelessWidget {
-    MyChoice stateChoice;
-    DonationStream({this.stateChoice});
+class OrgDonationStream extends StatelessWidget {
     DateTime day;
     String donor;
     String donorImage;
     String time;
     String donee;
     double amount;
-    chooseState(MyChoice data){
-      String data;
-      if(stateChoice == MyChoice.my){
-        data = 'shreya shrestha';
-      }
-      else{
-        data = null;
-      }
-      return data;
-    }
   Widget build(BuildContext context) {
     return StreamBuilder <QuerySnapshot>(
-      stream: Firestore.instance.collection('transaction').where('donor', isEqualTo : chooseState(MyChoice.my)).orderBy('dateTime').snapshots(),
+      stream: Firestore.instance.collection('transaction').orderBy('dateTime').snapshots(),
               builder: (context, snapshot){
                   if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'),);

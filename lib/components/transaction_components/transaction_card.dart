@@ -16,33 +16,19 @@ class TransactionCard extends StatelessWidget {
 String setDate(DateTime day){
   
   DateTime now = DateTime.now();
-  int day1 = now.difference(day).inDays;
-  int day2 = int.parse(DateFormat('H').format(day));
+  final day2 = DateTime(day.year,day.month,day.day);
+  int day1 = now.difference(day2).inDays;
   final today = DateTime(now.year, now.month, now.day);
+  final yesterday = DateTime(now.year,now.month,now.day-1);
   var timeAgo = day1.toString();
   String ago ;
-  if(day == today){
+  if(day2 == today){
     ago = 'Today';
   }
-  else if(day1 == 0){
-    if(day2 >12 && day2< 24){
+  else if(day2 == yesterday){
       ago = 'Yesterday';
-    }
-    else{
-      ago = 'Today';
-    }
   }
-  else if(day1 == 1 && day1 < 2){
-    if(day2 > 12 && day2< 24){
-      var timeToday = day1+1; 
-      print(timeToday);
-      ago = timeToday.toString() + ' days ago';
-    }
-    else{
-      ago = 'Yesterday';
-    }
-  }
-  else if(day1 < 30 && day1 > 2){
+  else if(day1 >=2  && day1 < 30){
     ago = '$timeAgo days ago';
   } 
 
