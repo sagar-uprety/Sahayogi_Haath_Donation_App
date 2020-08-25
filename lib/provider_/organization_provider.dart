@@ -42,6 +42,7 @@ class OrganizationProvider with ChangeNotifier{
       firestoreService.saveInfo(newInfo);
 
     }
+  
     else{
       var updateInfo = OrganizationModel(name: name, description:description, infoId:uuid.v4());
           firestoreService.saveInfo(updateInfo);

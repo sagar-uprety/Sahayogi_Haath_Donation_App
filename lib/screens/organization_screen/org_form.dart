@@ -73,6 +73,11 @@ organizationProvider.changeName(value);
                 organizationProvider.changeDescription(value);
               },
           ),
+          //    RaisedButton(child: Text('Upload a image'),
+          //  onPressed: (){
+             
+          //  }
+          //  ),
           RaisedButton(child: Text('Submit'),
            onPressed: (){
              organizationProvider.saveInfo();
@@ -105,4 +110,11 @@ organizationProvider.changeName(value);
       ),
     );
   }
+
+
+  // uploadImage(){
+  //   //checkpermisiion
+
+  //   //Select image
+  // }
 }
