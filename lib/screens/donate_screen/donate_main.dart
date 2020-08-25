@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sahayogihaath/components/RoundedButton.dart';
-import 'package:sahayogihaath/provider_/auth_provider.dart';
 import '../../theme/extention.dart';
 
 enum medium { eSewa, khalti }

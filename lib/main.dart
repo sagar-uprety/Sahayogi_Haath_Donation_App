@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sahayogihaath/screens/activities_screen/activity_info.dart';
 import 'package:sahayogihaath/screens/donate_screen/donate_main.dart';
 import 'package:sahayogihaath/screens/donate_screen/donate_success.dart';
+import 'package:sahayogihaath/screens/organization_screen/org_form.dart';
 import 'package:sahayogihaath/services/firestore_service.dart';
 import 'package:sahayogihaath/theme/theme.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,9 @@ import './screens/explore.dart';
 import '././screens/activities_screen/activity_info.dart';
 import './screens/activities_screen/acitivity_list.dart';
 import './screens/activities_screen/edit_activity.dart';
+import './provider_/organization_provider.dart';
+import './services/org_firestore_service.dart';
+import './screens/organization_screen/org_form.dart';
 
 void main() {
   runApp(SahayogiHaath());
@@ -38,13 +42,14 @@ class SahayogiHaath extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => ActivityProvider(),
+          // create: (context) => ActivityProvider(),
+          create: (context) => OrganizationProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => AuthProvider(),
         ),
         StreamProvider(
-          create: (context) => firestoreService.getActivities(),
+          create: (context) => firestoreService.getInfo(),
         ),
       ],
       child: MaterialApp(
@@ -74,6 +79,8 @@ class SahayogiHaath extends StatelessWidget {
           EditActivity.id: (ctx) => EditActivity(),
           DonateScreen.id: (ctx) => DonateScreen(),
           DonateSuccess.id: (ctx) => DonateSuccess(),
+          EditOrganization.id:(ctx) => EditOrganization(),
+
         },
       ),
     );

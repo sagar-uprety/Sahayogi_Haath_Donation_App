@@ -21,4 +21,6 @@ class FirestoreService {
   Future<void> removeActivity(String activityId) {
     return _db.collection('activities').document(activityId).delete();
   }
+
+
 }
