@@ -3,10 +3,12 @@ import '../../components/transaction_components/search_bar.dart';
 import '../../components/transaction_components/showtransactionButton.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 enum MyChoice {
   my,
   all,
 }
+
 class UserTransaction extends StatefulWidget {
   static const id = 'usertransaction';
   @override
