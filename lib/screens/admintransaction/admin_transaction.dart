@@ -1,5 +1,3 @@
-import 'package:firebase_database/firebase_database.dart';
-import 'package:sahayogihaath/components/RoundedButton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../constants/transaction_const.dart';
 import '../../components/transaction_components/search_bar.dart';
@@ -38,7 +36,7 @@ class _AdminTransactionState extends State<AdminTransaction> {
   void initState() {
     super.initState();
     getCurrentUser();
-    
+    holder = null; 
   }
 
  getCurrentData(String orgName){
