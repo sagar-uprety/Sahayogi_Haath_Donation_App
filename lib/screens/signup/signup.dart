@@ -6,13 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
-<<<<<<< HEAD
 import '../../components/Registration/HaveAnAccount.dart';
-import '../../components/Registration/SocialIcons.dart';
-import '../login/login_main.dart';
-=======
-import '../../components/HaveAnAccount.dart';
->>>>>>> dipesh-test
 import './SignUpBackground.dart';
 import '../pickers/user_image_picker.dart';
 import '../../provider/auth_provider.dart';
@@ -20,7 +14,6 @@ import '../../models/usermodel.dart';
 import '../../routes.dart';
 
 class SignUp extends StatefulWidget {
-
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -34,9 +27,9 @@ class _SignUpState extends State<SignUp> {
   var _address = '';
   File _userImage;
 
-  bool obscurePassword= true;
+  bool obscurePassword = true;
 
-  void _toggleVisibility(){
+  void _toggleVisibility() {
     setState(() {
       obscurePassword = !obscurePassword;
     });
@@ -90,7 +83,6 @@ class _SignUpState extends State<SignUp> {
               ),
               RoundedInput(
                 hintText: "Enter Your Email",
-                icon: Icons.person,
                 key: ValueKey('email'),
                 icon: Icons.email,
                 enableSuggesstion: false,
@@ -111,7 +103,8 @@ class _SignUpState extends State<SignUp> {
                 key: ValueKey('password'),
                 icon: Icons.lock,
                 obscureText: obscurePassword,
-                suffixIcon: obscurePassword ? Icons.visibility : Icons.visibility_off,
+                suffixIcon:
+                    obscurePassword ? Icons.visibility : Icons.visibility_off,
                 onClickedSuffixIcon: _toggleVisibility,
                 validator: (value) {
                   if (value.isEmpty || value.length < 8) {
@@ -156,44 +149,44 @@ class _SignUpState extends State<SignUp> {
                   print(_address);
                 },
               ),
-              authProvider.status==Status.Registering 
-                ? CircularProgressIndicator()
-                : RoundButton(
-                  text: 'SIGN UP',
-                  onPress: () async{
-
-                    final isValid = _formKey.currentState.validate();
-                    FocusScope.of(context).unfocus();
-
-                    //TODO: Default Image
-                    if (_userImage == null) {
-                      Scaffold.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Please pick an image.'),
-                          backgroundColor: Theme.of(context).errorColor,
-                        ),
-                      );
-                      return;
-                    }
-                    if(isValid) {
-                      _formKey.currentState.save();
-                      await authProvider.registerWithEmailAndPasword(
-                        name: _name.trim(),
-                        email: _userEmail.trim(),
-                        password: _userPassword,
-                        phone: _phone.trim(),
-                        address: _address.trim(),
-                        profileImage: _userImage,
-                        userType: UserType.donor,
-                        ctx: context,
-                      ).catchError((e){
-                        print(e);
-                      });
-                    }
-                  },
-                ),
+              authProvider.status == Status.Registering
+                  ? CircularProgressIndicator()
+                  : RoundButton(
+                      text: 'SIGN UP',
+                      onPress: () async {
+                        final isValid = _formKey.currentState.validate();
+                        FocusScope.of(context).unfocus();
+                        //TODO: Default Image
+                        if (_userImage == null) {
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Please pick an image.'),
+                              backgroundColor: Theme.of(context).errorColor,
+                            ),
+                          );
+                          return;
+                        }
+                        if (isValid) {
+                          _formKey.currentState.save();
+                          await authProvider
+                              .registerWithEmailAndPasword(
+                            name: _name.trim(),
+                            email: _userEmail.trim(),
+                            password: _userPassword,
+                            phone: _phone.trim(),
+                            address: _address.trim(),
+                            profileImage: _userImage,
+                            userType: UserType.donor,
+                            ctx: context,
+                          )
+                              .catchError((e) {
+                            print(e);
+                          });
+                        }
+                      },
+                    ),
               SizedBox(height: size.height * 0.03),
-              if(authProvider.status != Status.Registering)
+              if (authProvider.status != Status.Registering)
                 HaveAnAccountCheck(
                   login: false,
                   onPress: () {

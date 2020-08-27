@@ -64,7 +64,6 @@ class _DashboardMainState extends State<DashboardMain> {
     } catch (error) {
       print('ERROR getting user details.' + error);
     }
-    ;
   }
 
   @override

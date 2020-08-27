@@ -8,16 +8,10 @@ import '../../routes.dart';
 import '../../provider/auth_provider.dart';
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
-<<<<<<< HEAD
 import '../../components/Registration/HaveAnAccount.dart';
-import '../signup/signup_main.dart';
-=======
-import '../../components/HaveAnAccount.dart';
->>>>>>> dipesh-test
 import './LoginBackground.dart';
 
 class Login extends StatefulWidget {
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -27,9 +21,9 @@ class _LoginState extends State<Login> {
   var userEmail = '';
   var userPassword = '';
 
-  bool obscurePassword= true;
+  bool obscurePassword = true;
 
-  void _toggleVisibility(){
+  void _toggleVisibility() {
     setState(() {
       obscurePassword = !obscurePassword;
     });
@@ -82,7 +76,8 @@ class _LoginState extends State<Login> {
                 key: ValueKey('password'),
                 icon: Icons.lock,
                 obscureText: obscurePassword,
-                suffixIcon: obscurePassword ? Icons.visibility : Icons.visibility_off,
+                suffixIcon:
+                    obscurePassword ? Icons.visibility : Icons.visibility_off,
                 onClickedSuffixIcon: _toggleVisibility,
                 validator: (value) {
                   if (value.isEmpty || value.length < 8) {
@@ -95,21 +90,25 @@ class _LoginState extends State<Login> {
                   print(userPassword);
                 },
               ),
-              authProvider.status == Status.Authenticating ? CircularProgressIndicator() :
-                RoundButton(
-                  text: 'LOGIN',
-                  onPress: ()async{
-                    final isValid = _formKey.currentState.validate();
-                    FocusScope.of(context).unfocus();
-                
-                    if(isValid){
-                      _formKey.currentState.save();
-                      await authProvider.signInWithEmailAndPassword(userEmail.trim(), userPassword.trim(), context).catchError((error){
-                        print(error);
-                      });
-                    }
-                  },
-                ),
+              authProvider.status == Status.Authenticating
+                  ? CircularProgressIndicator()
+                  : RoundButton(
+                      text: 'LOGIN',
+                      onPress: () async {
+                        final isValid = _formKey.currentState.validate();
+                        FocusScope.of(context).unfocus();
+
+                        if (isValid) {
+                          _formKey.currentState.save();
+                          await authProvider
+                              .signInWithEmailAndPassword(userEmail.trim(),
+                                  userPassword.trim(), context)
+                              .catchError((error) {
+                            print(error);
+                          });
+                        }
+                      },
+                    ),
               SizedBox(height: size.height * 0.03),
               if (authProvider.status != Status.Authenticating)
                 HaveAnAccountCheck(
@@ -120,7 +119,7 @@ class _LoginState extends State<Login> {
               if (authProvider.status != Status.Authenticating)
                 FlatButton(
                   textColor: Colors.blue,
-                  onPressed: (){
+                  onPressed: () {
                     showModalBottomSheet(
                       context: context,
                       builder: (context) => ForgotPassword(),

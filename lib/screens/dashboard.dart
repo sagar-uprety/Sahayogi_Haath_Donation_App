@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sahayogihaath/screens/donate_screen/donate_main.dart';
 import '../screens/activities_screen/acitivity_list.dart';
-import '../screens/activities_screen/activity_info.dart';
 import '../screens/activities_screen/edit_activity.dart';
 
 class Dashboard extends StatefulWidget {
