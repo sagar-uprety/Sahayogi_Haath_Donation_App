@@ -1,36 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../screens/usertransaction/user_transaction.dart';
-import '../components/transaction_components/transaction_card.dart';
+import '../../constants/transaction_const.dart';
+import '../../components/transaction_components/transaction_card.dart';
 import 'package:intl/intl.dart';
 class DonationStream extends StatelessWidget {
-    MyChoice stateChoice;
-    DonationStream({this.stateChoice});
+    String orgName ;
+    DonationStream({this.orgName});
     DateTime day;
     String donor;
     String donorImage;
     String time;
     String donee;
     double amount;
-    chooseState(MyChoice data){
-      String data;
-      if(stateChoice == MyChoice.my){
-        data = 'shreya shrestha';
+
+    String viewdata(){
+      if(orgName == null){
+        print(null);
+        return null;
+      }else{
+        return orgName;
       }
-      else{
-        data = null;
-      }
-      return data;
     }
+    
   Widget build(BuildContext context) {
     return StreamBuilder <QuerySnapshot>(
-      stream: Firestore.instance.collection('transaction').where('donor', isEqualTo : chooseState(MyChoice.my)).orderBy('dateTime').snapshots(),
+      stream: viewdata() == null ? Firestore.instance.collection('transaction').orderBy('dateTime').snapshots()
+             : Firestore.instance.collection('transaction').where('donee', isEqualTo: orgName).orderBy('dateTime').snapshots(),
               builder: (context, snapshot){
                   if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'),);
                   }
                   if (!snapshot.hasData) {
-                    return  Text('Loading');
+                    return  Container(height:50,child: Text('Select Organization',style: kAdminTransactionCard,));
                   }
                   final donations = snapshot.data.documents.reversed;
                   List <TransactionCard> donationLists = [];

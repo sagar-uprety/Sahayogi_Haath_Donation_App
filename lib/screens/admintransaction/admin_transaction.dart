@@ -1,7 +1,9 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:sahayogihaath/components/RoundedButton.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../constants/transaction_const.dart';
 import '../../components/transaction_components/search_bar.dart';
-import '../../components/transaction_components/sortOrganization.dart';
-import '../transactioncardCreator.dart';
+import 'admintransaction_main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -12,10 +14,11 @@ class AdminTransaction extends StatefulWidget {
 }
   
 class _AdminTransactionState extends State<AdminTransaction> {  
+
    final _auth = FirebaseAuth.instance;
-
   FirebaseUser loggedInUser;
-
+  String orgName;
+  String holder ='';
   void getCurrentUser() async{
     try{
       final user=await _auth.currentUser();
@@ -28,13 +31,23 @@ class _AdminTransactionState extends State<AdminTransaction> {
       print(e);
     }
   }
+
+  
+
   @override
   void initState() {
     super.initState();
     getCurrentUser();
+    
   }
 
+ getCurrentData(String orgName){
+        holder = orgName;
+     return holder;
+  }
+  
   @override
+  
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
     double width = queryData.size.width*0.02;
@@ -44,14 +57,68 @@ class _AdminTransactionState extends State<AdminTransaction> {
         body: Padding(
           padding: EdgeInsets.all(width) ,
           child: SingleChildScrollView(
-            child: Column(
+            child:StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('transaction').orderBy('donee').snapshots(),
+        builder: (context, snapshot){
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'),);
+                  }
+                  if (!snapshot.hasData) {
+                    return  Text('Loading');
+                  }
+    return              Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget> [
                 SearchBar(),
                 SizedBox(
                     height:MediaQuery.of(context).size.height*0.015,
                 ),
-                OrganizationName(queryData: queryData),
+                 Container(
+      width: queryData.size.width*0.5,
+      alignment: Alignment.center,
+       height: queryData.size.height*0.07,
+      margin: EdgeInsets.symmetric(horizontal:50, vertical: 0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+          width: 1,
+          color: Color(0xFFA6AAB4),
+        ),
+        color: Color(0x22A6AAB4),
+      ),
+      child: Center(
+        child: DropdownButton(
+          value: orgName,
+          hint: Text('View Transaction'),
+          isExpanded: false,
+          underline:SizedBox(),
+          items: snapshot.data.documents.map((DocumentSnapshot document){
+            return DropdownMenuItem (
+              value: document.data['donee'],
+              child: Container(
+                child: Text(document.data['donee'],style: TextStyle(
+                fontSize: 18,
+                  color: Colors.black),),
+              ),
+            );
+          }).toList(),
+           onChanged: (value){
+              
+              setState(() {
+                orgName = value;
+                getCurrentData(orgName);
+              });
+               
+
+           
+          },
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.black),
+           
+        ),
+      ),
+    ),
                 SizedBox(
                     height:MediaQuery.of(context).size.height*0.015,
                   ),
@@ -85,7 +152,7 @@ class _AdminTransactionState extends State<AdminTransaction> {
                       ),
                       CircleAvatar(
                         child: CircleAvatar(
-                          backgroundImage: AssetImage('images/download.jpg'),
+                          backgroundImage: NetworkImage('https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png'),
                           radius: 45,
                         ),
                         backgroundColor: Color(0xFFFFFFFF),
@@ -100,12 +167,17 @@ class _AdminTransactionState extends State<AdminTransaction> {
                   ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: width ),
-                  child: DonationStream(),
-                ),  
+                  child: DonationStream(orgName: holder,),
+                ), 
+                
               ]
-            ),
-          ),
+          );
+    
+     }
+    ),
+
         ),
+      ),
       ),
     );
   }
