@@ -7,6 +7,7 @@ import 'package:sahayogihaath/screens/donate_screen/donate_main.dart';
 import 'package:sahayogihaath/screens/donate_screen/donate_success.dart';
 import 'package:sahayogihaath/screens/organization_screen/org_form.dart';
 import 'package:sahayogihaath/services/firestore_service.dart';
+import 'services/org_firestore_service.dart';
 import 'package:sahayogihaath/theme/theme.dart';
 import 'package:flutter/services.dart';
 
@@ -79,8 +80,7 @@ class SahayogiHaath extends StatelessWidget {
           EditActivity.id: (ctx) => EditActivity(),
           DonateScreen.id: (ctx) => DonateScreen(),
           DonateSuccess.id: (ctx) => DonateSuccess(),
-          EditOrganization.id:(ctx) => EditOrganization(),
-
+          EditOrganization.id: (ctx) => EditOrganization(),
         },
       ),
     );
