@@ -28,6 +28,8 @@ class _DashboardState extends State<Dashboard> {
   }
 
   int _amount = 0;
+  String _orgName = '';
+  String _referenceID = '';
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +80,8 @@ class _DashboardState extends State<Dashboard> {
               SizedBox(
                 height: 84,
               ),
+              Text(_orgName),
+              Text(_referenceID),
               RaisedButton(
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
@@ -100,9 +104,10 @@ class _DashboardState extends State<Dashboard> {
     );
     try {
       final res = await _esewaPnp.initPayment(payment: eSewaPayment);
-      print(res.productId);
-      print(res.referenceId);
-      print(res.date);
+      setState(() {
+        _orgName = res.date;
+        _referenceID = res.referenceId;
+      });
       _scaffoldKey.currentState.showSnackBar(
           _buildSnackBar(Color.fromRGBO(65, 161, 36, 1), res.message));
     } on ESewaPaymentException catch (e) {
