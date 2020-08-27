@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/models/activitymodel.dart';
-import 'package:sahayogihaath/provider_/activity_provider.dart';
+import 'package:sahayogihaath/provider/activity_provider.dart';
 import 'package:sahayogihaath/screens/activities_screen/acitivity_list.dart';
 
 import '../../theme/theme.dart';

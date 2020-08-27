@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider_/activity_provider.dart';
+import 'package:sahayogihaath/provider/activity_provider.dart';
 import 'package:sahayogihaath/screens/activities_screen/edit_activity.dart';
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';

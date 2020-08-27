@@ -8,6 +8,7 @@ import '../../theme/light_color.dart';
 import '../../theme/text_styles.dart';
 
 import '../../models/activitymodel.dart';
+import '../../components/TopAppBar.dart';
 
 class ActivitiesList extends StatefulWidget {
   static const id = "activities_list";
@@ -20,7 +21,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: _appBar(),
+        appBar: TopAppBar.getAppBar(),
         backgroundColor: Color(0XFFfefefe),
         body: _activitiesList(),
       ),
@@ -28,31 +29,31 @@ class _ActivitiesListState extends State<ActivitiesList> {
   }
 
   //appbar
-  Widget _appBar() {
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Color(0XFFfefefe), //manage all theme color
-      leading: BackButton(color: Theme.of(context).primaryColor),
-      actions: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          child: Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-            ),
-            child: Image.asset(
-              "assets/images1/janko.jpg", //user profile image
-              fit: BoxFit.fill,
-            ),
-          ),
-        ).p(9),
-      ],
-    );
-  }
+  // Widget _appBar() {
+  //   return AppBar(
+  //     elevation: 0,
+  //     backgroundColor: Color(0XFFfefefe), //manage all theme color
+  //     leading: BackButton(color: Theme.of(context).primaryColor),
+  //     actions: <Widget>[
+  //       ClipRRect(
+  //         borderRadius: BorderRadius.all(
+  //           Radius.circular(20),
+  //         ),
+  //         child: Container(
+  //           height: 40,
+  //           width: 40,
+  //           decoration: BoxDecoration(
+  //             color: Theme.of(context).backgroundColor,
+  //           ),
+  //           child: Image.asset(
+  //             "assets/images1/janko.jpg", //user profile image
+  //             fit: BoxFit.fill,
+  //           ),
+  //         ),
+  //       ).p(9),
+  //     ],
+  //   );
+  // }
 
   Widget _activitiesList() {
     return Column(
