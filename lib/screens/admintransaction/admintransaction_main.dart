@@ -46,7 +46,7 @@ class DonationStream extends StatelessWidget {
                      donorImage = donation.data[userImage];
                      DateTime date = donation.data[dateTime].toDate();
                       time = DateFormat('dd MMM yyyy').format(date);
-                      amount = donation.data['amount'].toDouble();
+                      amount = donation.data[donationAmount].toDouble();
                       DateTime day = donation.data[dateTime].toDate();     
                     donationLists.add(TransactionCard(day: day, donor: donor, donorImage: donorImage, time: time, donee: donee,amount: amount,));
                   }
