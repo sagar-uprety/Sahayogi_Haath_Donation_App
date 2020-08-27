@@ -3,16 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UserImagePicker extends StatefulWidget {
-  UserImagePicker(this.imagePickFn);
+class DocumentPicker extends StatefulWidget {
+  DocumentPicker(this.imagePickFn);
 
   final void Function(File pickedImage) imagePickFn;
 
   @override
-  _UserImagePickerState createState() => _UserImagePickerState();
+  _DocumentPickerState createState() => _DocumentPickerState();
 }
 
-class _UserImagePickerState extends State<UserImagePicker> {
+class _DocumentPickerState extends State<DocumentPicker> {
   File _pickedImage;
 
   Future<void> _pickImage() async {
@@ -32,13 +32,26 @@ class _UserImagePickerState extends State<UserImagePicker> {
 
   @override
   Widget build(BuildContext context) {
+    Size size= MediaQuery.of(context).size;
     return Column(
       children: <Widget>[
-        CircleAvatar(
-          radius: 50,
-          backgroundColor: Theme.of(context).primaryColor,
-          backgroundImage:
-              _pickedImage != null ? FileImage(_pickedImage) : null,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            'Add a document image to prove that you are a valid organization.',
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SizedBox(
+          height: size.height*0.012,
+        ),
+        Container(
+          height: _pickedImage != null ?  size.height*0.196 : 0,
+          width: _pickedImage != null ? size.width*0.28 : 0,
+          decoration: BoxDecoration(
+            image: _pickedImage != null ?  DecorationImage(image:FileImage(_pickedImage),fit: BoxFit.cover) : null,
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
         FlatButton.icon(
           textColor: Theme.of(context).primaryColor,

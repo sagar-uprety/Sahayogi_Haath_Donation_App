@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+<<<<<<< HEAD
 import 'package:sahayogihaath/provider_/activity_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/screens/activities_screen/activity_info.dart';
@@ -10,18 +11,33 @@ import 'package:sahayogihaath/theme/theme.dart';
 import 'package:flutter/services.dart';
 
 import './provider_/auth_provider.dart';
+=======
+import 'package:provider/provider.dart';
+
+import './routes.dart';
+>>>>>>> dipesh-test
 import './screens/welcome/welcome.dart';
-import './screens/signup/signup_main.dart';
 import './screens/splash.dart';
+<<<<<<< HEAD
 import './screens/dashboard.dart';
 import './screens/login/login_main.dart';
 import './screens/explore.dart';
 import '././screens/activities_screen/activity_info.dart';
 import './screens/activities_screen/acitivity_list.dart';
 import './screens/activities_screen/edit_activity.dart';
+=======
+import './screens/dashboard/dashboard_main.dart';
+import './constants.dart';
+import './provider/auth_provider.dart';
+>>>>>>> dipesh-test
 
 void main() {
-  runApp(SahayogiHaath());
+  runApp(
+      ChangeNotifierProvider<AuthProvider>(
+        create: (context) => AuthProvider(),
+        child: SahayogiHaath(),
+      ),
+  );
 }
 
 class SahayogiHaath extends StatelessWidget {
@@ -55,7 +71,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return Dashboard();
+              return DashboardMain();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
@@ -63,6 +79,7 @@ class SahayogiHaath extends StatelessWidget {
             return Welcome();
           },
         ),
+<<<<<<< HEAD
         routes: {
           Welcome.id: (ctx) => Welcome(),
           LoginMain.id: (ctx) => LoginMain(),
@@ -76,6 +93,9 @@ class SahayogiHaath extends StatelessWidget {
           DonateSuccess.id: (ctx) => DonateSuccess(),
         },
       ),
+=======
+        routes: Routes.routes,
+>>>>>>> dipesh-test
     );
   }
 }

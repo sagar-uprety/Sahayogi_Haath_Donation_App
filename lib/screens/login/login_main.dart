@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import './login.dart';
-import '../dashboard.dart';
 
 class LoginMain extends StatefulWidget {
-  static const id = 'login';
   @override
   _LoginMainState createState() => _LoginMainState();
 }
 
 class _LoginMainState extends State<LoginMain> {
+<<<<<<< HEAD
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   var _isLoading = false;
@@ -79,11 +75,13 @@ class _LoginMainState extends State<LoginMain> {
       return false;
     }
   }
+=======
+>>>>>>> dipesh-test
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Login(_submitLoginForm, loginWithGoogle, _isLoading),
+      body: Login(),
     );
   }
 }
