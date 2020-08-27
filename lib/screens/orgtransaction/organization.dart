@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../components/transaction_components/sortByDate.dart';
 import '../../components/transaction_components/search_bar.dart';
-import '../admintransaction/admintransaction_main.dart';
+import 'organization_main.dart';
 import 'package:flutter/material.dart';
 
 class OrganizationTransaction extends StatefulWidget {
@@ -54,7 +54,7 @@ class  _OrganizationTransaction extends State< OrganizationTransaction> {
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: width ),
-                  child: DonationStream(),
+                  child: OrgDonationStream(),
                 ),  
               ]
             ),
