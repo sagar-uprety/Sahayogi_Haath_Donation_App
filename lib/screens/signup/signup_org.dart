@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import '../../routes.dart';
 import '../../models/usermodel.dart';
 import '../../provider/auth_provider.dart';
-import '../pickers/document_picker.dart';
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
 import '../../components/Registration/HaveAnAccount.dart';
@@ -89,7 +88,7 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                     ),
                   ),
                   SizedBox(height: size.height * 0.04),
-                  UserImagePicker(_pickedImage),
+                  UserImagePicker(_pickedImage,imageType: ImageType.userProfile,),
                   RoundedInput(
                     hintText: "Name",
                     key: ValueKey('name'),
@@ -241,7 +240,7 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                       },
                     ),
                   ),
-                  DocumentPicker(_pickedDocument),
+                  UserImagePicker(_pickedDocument,imageType: ImageType.document,),
                   authProvider.status == Status.Registering
                       ? CircularProgressIndicator()
                       : RoundButton(
