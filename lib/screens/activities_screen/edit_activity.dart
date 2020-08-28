@@ -30,11 +30,10 @@ class _EditActivityState extends State<EditActivity> {
   String imageUrl;
   File _activityImage;
 
-
   void _pickedImage(File image) {
     _activityImage = image;
   }
-  
+
   @override
   void dispose() {
     titleController.dispose();
@@ -106,7 +105,11 @@ class _EditActivityState extends State<EditActivity> {
                       activityProvider.changeTitle(value);
                     },
                   ),
-                  UserImagePicker(_pickedImage,imageType: ImageType.activity, existingImage: imageUrl,),
+                  UserImagePicker(
+                    _pickedImage,
+                    imageType: ImageType.activity,
+                    existingImage: imageUrl,
+                  ),
                   FormInput(
                     controller: descriptionController,
                     hintText: "Describe your Activity",
@@ -125,20 +128,20 @@ class _EditActivityState extends State<EditActivity> {
                       activityProvider.changeDescription(value);
                     },
                   ),
-                  activityProvider.saveState == SaveState.Saving ?
-                    CircularProgressIndicator() :
-                    RoundButton(
-                        text: 'Submit Activity',
-                        onPress: () async{
-                          bool validated = _formKey.currentState.validate();
-                          FocusScope.of(context).unfocus();
-                          // _formKey.currentState.save();
-                          if (validated) {
-                            await activityProvider.saveActivity();
-                            Navigator.pushReplacementNamed(
-                                context, Routes.activities_list);
-                          }
-                        }).alignBottomCenter,
+                  activityProvider.saveState == SaveState.Saving
+                      ? CircularProgressIndicator()
+                      : RoundButton(
+                          text: 'Submit Activity',
+                          onPress: () async {
+                            bool validated = _formKey.currentState.validate();
+                            FocusScope.of(context).unfocus();
+                            // _formKey.currentState.save();
+                            if (validated) {
+                              await activityProvider.saveActivity();
+                              Navigator.pushReplacementNamed(
+                                  context, Routes.activities_list);
+                            }
+                          }).alignBottomCenter,
                 ],
               ),
             ),

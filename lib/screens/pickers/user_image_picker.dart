@@ -7,10 +7,10 @@ import 'package:sahayogihaath/image_upload.dart';
 import 'package:sahayogihaath/provider/activity_provider.dart';
 import 'package:sahayogihaath/theme/theme.dart';
 
-enum ImageType{userProfile,document,activity}
+enum ImageType { userProfile, document, activity }
 
 class UserImagePicker extends StatefulWidget {
-  UserImagePicker(this.imagePickFn , {this.imageType, this.existingImage});
+  UserImagePicker(this.imagePickFn, {this.imageType, this.existingImage});
 
   final void Function(File pickedImage) imagePickFn;
 
@@ -25,20 +25,20 @@ class UserImagePicker extends StatefulWidget {
 class _UserImagePickerState extends State<UserImagePicker> {
   File _pickedImage;
 
-  bool isLoading=true;
+  bool isLoading = true;
 
   @override
-  void initState(){
-    if(widget.existingImage != null){
-      ConvertUrl().urlToFile(widget.existingImage).then((value){
+  void initState() {
+    if (widget.existingImage != null) {
+      ConvertUrl().urlToFile(widget.existingImage).then((value) {
         setState(() {
           _pickedImage = value;
-          isLoading=false;
+          isLoading = false;
         });
         print('success');
       });
-    } else{
-      isLoading=false;
+    } else {
+      isLoading = false;
     }
 
     super.initState();
@@ -58,8 +58,9 @@ class _UserImagePickerState extends State<UserImagePicker> {
       _pickedImage = pickedImageFile;
     });
 
-    if(widget.imageType == ImageType.activity){
-    final activityProvider = Provider.of<ActivityProvider>(context,listen: false);
+    if (widget.imageType == ImageType.activity) {
+      final activityProvider =
+          Provider.of<ActivityProvider>(context, listen: false);
 
       activityProvider.changeImage(pickedImageFile);
     }
@@ -70,37 +71,38 @@ class _UserImagePickerState extends State<UserImagePicker> {
   @override
   Widget build(BuildContext context) {
     print(widget.existingImage);
-    return  isLoading ?
-      CircularProgressIndicator() :
-      Column(
-        children: <Widget>[
-          if(widget.imageType == ImageType.userProfile)
-            _userImage(context),
-          if(widget.imageType == ImageType.document)
-            _documentImage(context),
-          if(widget.imageType == ImageType.activity)
-            _activityImage(context),
-
-          FlatButton.icon(
-            textColor: Theme.of(context).primaryColor,
-            onPressed: _pickImage,
-            icon: Icon(_pickedImage == null ? Icons.add_photo_alternate : Icons.image),
-            label: Text(_pickedImage == null ? 'Add Image' : 'Change Image'),
-          ),
-        ],
-      );
+    return isLoading
+        ? CircularProgressIndicator()
+        : Column(
+            children: <Widget>[
+              if (widget.imageType == ImageType.userProfile)
+                _userImage(context),
+              if (widget.imageType == ImageType.document)
+                _documentImage(context),
+              if (widget.imageType == ImageType.activity)
+                _activityImage(context),
+              FlatButton.icon(
+                textColor: Theme.of(context).primaryColor,
+                onPressed: _pickImage,
+                icon: Icon(_pickedImage == null
+                    ? Icons.add_photo_alternate
+                    : Icons.image),
+                label:
+                    Text(_pickedImage == null ? 'Add Image' : 'Change Image'),
+              ),
+            ],
+          );
   }
 
   Widget _userImage(BuildContext context) {
     return CircleAvatar(
       radius: 50,
       backgroundColor: Theme.of(context).primaryColor,
-      backgroundImage:
-          _pickedImage != null ? FileImage(_pickedImage) : null,
+      backgroundImage: _pickedImage != null ? FileImage(_pickedImage) : null,
     );
   }
 
-  Widget _documentImage(BuildContext context){
+  Widget _documentImage(BuildContext context) {
     return Column(
       children: <Widget>[
         Padding(
@@ -111,13 +113,17 @@ class _UserImagePickerState extends State<UserImagePicker> {
           ),
         ),
         SizedBox(
-          height: AppTheme.fullWidth(context)*0.012,
+          height: AppTheme.fullWidth(context) * 0.012,
         ),
         Container(
-          height: _pickedImage != null ?  AppTheme.fullHeight(context)*0.196 : 0,
-          width: _pickedImage != null ? AppTheme.fullWidth(context)*0.28 : 0,
+          height:
+              _pickedImage != null ? AppTheme.fullHeight(context) * 0.196 : 0,
+          width: _pickedImage != null ? AppTheme.fullWidth(context) * 0.28 : 0,
           decoration: BoxDecoration(
-            image: _pickedImage != null ?  DecorationImage(image:FileImage(_pickedImage),fit: BoxFit.cover) : null,
+            image: _pickedImage != null
+                ? DecorationImage(
+                    image: FileImage(_pickedImage), fit: BoxFit.cover)
+                : null,
             borderRadius: BorderRadius.circular(10),
           ),
         ),
@@ -125,14 +131,19 @@ class _UserImagePickerState extends State<UserImagePicker> {
     );
   }
 
-  Widget _activityImage(BuildContext context){
+  Widget _activityImage(BuildContext context) {
     return Container(
-      height: _pickedImage != null ?  AppTheme.fullHeight(context)*0.30 : 0,
-      width: _pickedImage != null ? AppTheme.fullWidth(context)*0.90 : 0,
+      height: _pickedImage != null ? AppTheme.fullHeight(context) * 0.30 : 0,
+      width: _pickedImage != null ? AppTheme.fullWidth(context) * 0.90 : 0,
       decoration: BoxDecoration(
-        image: _pickedImage != null ?  DecorationImage(image:FileImage(_pickedImage),fit: BoxFit.cover) : null,
+        image: _pickedImage != null
+            ? DecorationImage(
+                image: FileImage(_pickedImage),
+                fit: BoxFit.cover,
+              )
+            : null,
         borderRadius: BorderRadius.circular(10),
       ),
     );
-}
+  }
 }
