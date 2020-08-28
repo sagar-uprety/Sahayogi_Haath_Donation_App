@@ -1,57 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import './services/firestore_service.dart';
+import './provider/auth_provider.dart';
+import './provider/activity_provider.dart';
+import './theme/theme.dart';
+
+import './routes.dart';
 import './screens/welcome/welcome.dart';
-import './screens/signup/signup_main.dart';
 import './screens/splash.dart';
 import './screens/dashboard.dart';
-import './screens/login/login_main.dart';
-import './screens/explore.dart';
-import './constants.dart';
+// import './screens/dashboard/dashboard_d_main.dart';
 
 void main() {
-  runApp(SahayogiHaath());
+  runApp(
+    ChangeNotifierProvider<AuthProvider>(
+      create: (context) => AuthProvider(),
+      child: SahayogiHaath(),
+    ),
+  );
 }
 
 class SahayogiHaath extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    //device orientation portrait only
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
 
-    return MaterialApp(
-      title: 'Sahayogi Haath',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: kPrimaryColor,
-        accentColor: Color(0xFFf1f3f6),
-        scaffoldBackgroundColor: Colors.white,
-        textTheme: GoogleFonts.sarabunTextTheme(textTheme).copyWith(
-          bodyText1: GoogleFonts.lobster(
-            textStyle: textTheme.bodyText1,
+    final firestoreService = FirestoreService();
+
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => ActivityProvider(),
           ),
-          // TODO:set app-wide text theme
-        ),
-      ),
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.onAuthStateChanged,
-        builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
-          if (userSnapshot.hasData) {
-            return Dashboard();
-          }
-          if (userSnapshot.connectionState == ConnectionState.waiting) {
-            return SplashScreen();
-          }
-          return Welcome();
-        },
-      ),
-      routes: {
-        Welcome.id: (ctx) => Welcome(),
-        LoginMain.id: (ctx) => LoginMain(),
-        SignUpMain.id: (ctx) => SignUpMain(),
-        Dashboard.id: (ctx) => Dashboard(),
-        Explore.id: (ctx) => Explore(),
-      },
-    );
+          StreamProvider(
+            create: (context) => firestoreService.getActivities(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Sahayogi Haath',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          home: StreamBuilder(
+            stream: FirebaseAuth.instance.onAuthStateChanged,
+            builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
+              if (userSnapshot.hasData) {
+                return Dashboard();
+              }
+              if (userSnapshot.connectionState == ConnectionState.waiting) {
+                return SplashScreen();
+              }
+              return Welcome();
+            },
+          ),
+          routes: Routes.routes,
+        ));
   }
 }
