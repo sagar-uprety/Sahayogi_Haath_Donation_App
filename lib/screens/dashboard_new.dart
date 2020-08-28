@@ -1,17 +1,42 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:provider/provider.dart';
+
 import '../theme/extention.dart';
 import '../theme/light_color.dart';
 import '../theme/text_styles.dart';
 import '../theme/theme.dart';
+import '../routes.dart';
 
-class ActivitiesList extends StatefulWidget {
-  static const id = "activities_list";
+import '../models/activitymodel.dart';
+
+class Dashboard extends StatefulWidget {
   @override
-  _ActivitiesListState createState() => _ActivitiesListState();
+  _DashboardState createState() => _DashboardState();
 }
 
-class _ActivitiesListState extends State<ActivitiesList> {
+class _DashboardState extends State<Dashboard> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _appBar(),
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                _header(),
+                _searchField(),
+                _category(),
+              ],
+            ),
+          ),
+          _doctorsList()
+        ],
+      ),
+    );
+  }
+
   //appbar
   Widget _appBar() {
     return AppBar(
@@ -33,7 +58,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
             decoration: BoxDecoration(
               color: Theme.of(context).backgroundColor,
             ),
-            child: Image.asset("assets/children.png", fit: BoxFit.fill),
+            child: Image.asset("assets/images1/children.jpg", fit: BoxFit.fill),
           ),
         ).p(8),
       ],
@@ -100,17 +125,19 @@ class _ActivitiesListState extends State<ActivitiesList> {
           ),
         ),
         SizedBox(
-          height: AppTheme.fullHeight(context) * .28,
+          height: AppTheme.fullHeight(context) * .27,
           width: AppTheme.fullWidth(context),
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: <Widget>[
-              _categoryCard("Chemist & Drugist", "350 + Stores",
+              _categoryCard("Orphanage", "350 +",
                   color: LightColor.green, lightColor: LightColor.lightGreen),
-              _categoryCard("Covid - 19 Specilist", "899 Doctors",
+              _categoryCard("Elderly Care", "250+",
                   color: LightColor.skyBlue, lightColor: LightColor.lightBlue),
-              _categoryCard("Cardiologists Specilist", "500 + Doctors",
-                  color: LightColor.orange, lightColor: LightColor.lightOrange)
+              _categoryCard("Child Care", "500+",
+                  color: LightColor.orange, lightColor: LightColor.lightOrange),
+              _categoryCard("Women Welfare", "300+",
+                  color: LightColor.green, lightColor: LightColor.lightGreen)
             ],
           ),
         ),
@@ -160,7 +187,11 @@ class _ActivitiesListState extends State<ActivitiesList> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Flexible(
-                      child: Text(title, style: titleStyle).hP8,
+                      child: Text(
+                        title,
+                        style: titleStyle,
+                        textAlign: TextAlign.center,
+                      ).hP8,
                     ),
                     SizedBox(
                       height: 10,
@@ -198,113 +229,92 @@ class _ActivitiesListState extends State<ActivitiesList> {
               // .p(12).ripple(() {}, borderRadius: BorderRadius.all(Radius.circular(20))),
             ],
           ).hP16,
-          getdoctorWidgetList()
+          _getOrgList()
         ],
       ),
     );
   }
 
-  Widget getdoctorWidgetList() {
-    return Column(
-      children: [_doctorTile(), _doctorTile(), _doctorTile()],
-    );
-  }
-
-  Widget _doctorTile() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            offset: Offset(4, 4),
-            blurRadius: 10,
-            color: LightColor.grey.withOpacity(.2),
-          ),
-          BoxShadow(
-            offset: Offset(-3, 0),
-            blurRadius: 15,
-            color: LightColor.grey.withOpacity(.1),
+  Widget _getOrgList() {
+    final activities = Provider.of<List<Activity>>(context);
+    return (activities != null)
+        ? Container(
+            height:
+                AppTheme.fullHeight(context) * 0.8, //check this. is it perfect?
+            child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: activities.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          offset: Offset(4, 4),
+                          blurRadius: 10,
+                          color: LightColor.grey.withOpacity(.2),
+                        ),
+                        BoxShadow(
+                          offset: Offset(-3, 0),
+                          blurRadius: 15,
+                          color: LightColor.grey.withOpacity(.1),
+                        )
+                      ],
+                    ),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                      child: ListTile(
+                        isThreeLine: true,
+                        contentPadding: EdgeInsets.all(0),
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          child: Container(
+                            height: 55,
+                            width: 55,
+                            //org image
+                            child: Image.asset('assets/images1/ben.jpg',
+                                fit: BoxFit.fill),
+                          ),
+                        ),
+                        title: Text(
+                          activities[index].title,
+                          style: TextStyles.title.bold,
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              activities[index].description,
+                              style: TextStyles.bodySm.subTitleColor.bold,
+                            ),
+                            Text(
+                              "08/21/2020",
+                              style: TextStyles.bodySm.subTitleColor,
+                            ),
+                          ],
+                        ),
+                        trailing: Icon(
+                          Icons.keyboard_arrow_right,
+                          size: 30,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ).ripple(
+                      () {
+                        Navigator.pushNamed(context, Routes.activity_info,
+                            arguments: activities[index]);
+                      },
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                    ),
+                  );
+                }),
           )
-        ],
-      ),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-        child: ListTile(
-          contentPadding: EdgeInsets.all(0),
-          leading: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(13)),
-            child: Container(
-              height: 55,
-              width: 55,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: randomColor(),
-              ),
-              child: Image.asset(
-                'assets/images1/pham.jpg',
-                height: 50,
-                width: 50,
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          title: Text("Demo Name", style: TextStyles.title.bold),
-          subtitle: Text(
-            "Demo Type",
-            style: TextStyles.bodySm.subTitleColor.bold,
-          ),
-          trailing: Icon(
-            Icons.keyboard_arrow_right,
-            size: 30,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-      ).ripple(() {
-        Navigator.pushNamed(context, "/DetailPage");
-      }, borderRadius: BorderRadius.all(Radius.circular(20))),
-    );
-  }
-
-  Color randomColor() {
-    var random = Random();
-    final colorList = [
-      Theme.of(context).primaryColor,
-      LightColor.orange,
-      LightColor.green,
-      LightColor.grey,
-      LightColor.lightOrange,
-      LightColor.skyBlue,
-      LightColor.titleTextColor,
-      Colors.red,
-      Colors.brown,
-      LightColor.purpleExtraLight,
-      LightColor.skyBlue,
-    ];
-    var color = colorList[random.nextInt(colorList.length)];
-    return color;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(),
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                _header(),
-                _searchField(),
-                _category(),
-              ],
-            ),
-          ),
-          _doctorsList()
-        ],
-      ),
-    );
+        : Center(child: CircularProgressIndicator());
   }
 }

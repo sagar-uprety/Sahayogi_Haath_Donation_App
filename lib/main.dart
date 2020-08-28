@@ -11,7 +11,8 @@ import './theme/theme.dart';
 import './routes.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
-import './screens/dashboard.dart';
+// import './screens/dashboard.dart';
+import './screens/dashboard_new.dart';
 // import './screens/dashboard/dashboard_d_main.dart';
 
 void main() {
@@ -35,31 +36,32 @@ class SahayogiHaath extends StatelessWidget {
     final firestoreService = FirestoreService();
 
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => ActivityProvider(),
-          ),
-          StreamProvider(
-            create: (context) => firestoreService.getActivities(),
-          ),
-        ],
-        child: MaterialApp(
-          title: 'Sahayogi Haath',
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.onAuthStateChanged,
-            builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
-              if (userSnapshot.hasData) {
-                return Dashboard();
-              }
-              if (userSnapshot.connectionState == ConnectionState.waiting) {
-                return SplashScreen();
-              }
-              return Welcome();
-            },
-          ),
-          routes: Routes.routes,
-        ));
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ActivityProvider(),
+        ),
+        StreamProvider(
+          create: (context) => firestoreService.getActivities(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Sahayogi Haath',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.onAuthStateChanged,
+          builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
+            if (userSnapshot.hasData) {
+              return Dashboard();
+            }
+            if (userSnapshot.connectionState == ConnectionState.waiting) {
+              return SplashScreen();
+            }
+            return Welcome();
+          },
+        ),
+        routes: Routes.routes,
+      ),
+    );
   }
 }
