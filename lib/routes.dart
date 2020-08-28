@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
-import './screens/activities_screen/activity_info.dart';
-import './screens/activities_screen/acitivity_list.dart';
-import './screens/activities_screen/edit_activity.dart';
-import './screens/donate_screen/donate_success.dart';
-import './screens/donate_screen/donate_main.dart';
-import './screens/dashboard/dashboard_d_main.dart';
 import './screens/edit_user_details.dart';
 import './screens/login/login_main.dart';
 import './screens/signup/signup_main.dart';
 import './screens/signup/signup_org_main.dart';
 import './screens/splash.dart';
 import './screens/welcome/welcome.dart';
+import './screens/dashboard/dashboard_new.dart';
+import './screens/activities_screen/activity_info.dart';
+import './screens/activities_screen/acitivity_list.dart';
+import './screens/activities_screen/edit_activity.dart';
+import './screens/donate_screen/donate_success.dart';
+import './screens/donate_screen/donate_main.dart';
 
 class Routes {
   Routes._();
@@ -37,7 +37,7 @@ class Routes {
     login: (context) => LoginMain(),
     signup: (context) => SignUpMain(),
     signupOrganization: (context) => SignUpOrganizationMain(),
-    dashboard: (context) => DashboardMain(),
+    dashboard: (context) => Dashboard(),
     editData: (context) => EditData(),
     donate: (context) => DonateScreen(),
     donate_success: (context) => DonateSuccess(),

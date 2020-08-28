@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../theme/extention.dart';
-import '../theme/light_color.dart';
-import '../theme/text_styles.dart';
-import '../theme/theme.dart';
-import '../routes.dart';
+import '../../theme/extention.dart';
+import '../../theme/light_color.dart';
+import '../../theme/text_styles.dart';
+import '../../theme/theme.dart';
+import '../../routes.dart';
 
-import '../models/activitymodel.dart';
+import '../../models/activitymodel.dart';
+import '../../components/overview_detail.dart';
+import '../../components/ActivitiesListTiles.dart';
+import '../../components/DonationListTiles.dart';
+import '../../constants.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -21,17 +25,17 @@ class _DashboardState extends State<Dashboard> {
       appBar: _appBar(),
       backgroundColor: Theme.of(context).backgroundColor,
       body: CustomScrollView(
+        scrollDirection: Axis.vertical,
         slivers: <Widget>[
           SliverList(
             delegate: SliverChildListDelegate(
               [
                 _header(),
-                _searchField(),
                 _category(),
               ],
             ),
           ),
-          _doctorsList()
+          _activitiesList(),
         ],
       ),
     );
@@ -50,11 +54,11 @@ class _DashboardState extends State<Dashboard> {
       actions: <Widget>[
         ClipRRect(
           borderRadius: BorderRadius.all(
-            Radius.circular(13),
+            Radius.circular(20),
           ),
           child: Container(
             // height: 40,
-            // width: 40,
+            width: 40,
             decoration: BoxDecoration(
               color: Theme.of(context).backgroundColor,
             ),
@@ -66,45 +70,38 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _header() {
+    Size size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text("Hello,", style: TextStyles.title.subTitleColor),
         Text("Peter Parker", style: TextStyles.h1Style),
+        Container(
+          decoration: cGreyBoxDecoration,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              OverviewDetail(info: 'Rs. 1500.0', title: 'Total Donation'),
+              OverviewDetail(info: '3', title: 'Organization'),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Color(0xffffffff),
+                      width: 3,
+                      style: BorderStyle.solid),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(size.width * 0.10)),
+                ),
+                child: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    // backgroundImage: NetworkImage(user['profile_image']),
+                    radius: size.width * 0.10),
+              ),
+            ],
+          ).p16,
+        ).vP4,
       ],
     ).p16;
-  }
-
-  Widget _searchField() {
-    return Container(
-      height: 55,
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(13)),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: LightColor.grey.withOpacity(.3),
-            blurRadius: 15,
-            offset: Offset(5, 5),
-          )
-        ],
-      ),
-      child: TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          border: InputBorder.none,
-          hintText: "Search",
-          hintStyle: TextStyles.body.subTitleColor,
-          suffixIcon: SizedBox(
-              width: 50,
-              child: Icon(Icons.search, color: LightColor.purple)
-                  .alignCenter
-                  .ripple(() {}, borderRadius: BorderRadius.circular(13))),
-        ),
-      ),
-    );
   }
 
   Widget _category() {
@@ -139,7 +136,7 @@ class _DashboardState extends State<Dashboard> {
               _categoryCard("Women Welfare", "300+",
                   color: LightColor.green, lightColor: LightColor.lightGreen)
             ],
-          ),
+          ).hP4,
         ),
       ],
     );
@@ -207,29 +204,73 @@ class _DashboardState extends State<Dashboard> {
               ],
             ),
           ),
-        ).ripple(() {}, borderRadius: BorderRadius.all(Radius.circular(20))),
+        ).ripple(() {
+          Navigator.pushNamed(context, Routes.donate); //test only
+        }, borderRadius: BorderRadius.all(Radius.circular(20))),
       ),
     );
   }
 
-  Widget _doctorsList() {
+  Widget _activitiesList() {
     return SliverList(
       delegate: SliverChildListDelegate(
         [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("Top Doctors", style: TextStyles.title.bold),
-              IconButton(
-                  icon: Icon(
+              Text("Activities", style: TextStyles.title.bold).p(4),
+              FlatButton(
+                color: Theme.of(context).backgroundColor,
+                child: Row(children: [
+                  Text(
+                    "View All",
+                  ).hP8,
+                  Icon(
                     Icons.sort,
                     color: Theme.of(context).primaryColor,
-                  ),
-                  onPressed: () {})
-              // .p(12).ripple(() {}, borderRadius: BorderRadius.all(Radius.circular(20))),
+                  )
+                ]),
+                onPressed: () {
+                  // Navigator.pushNamed(context, Routes.activities_list);
+                },
+              ).ripple(
+                () {
+                  Navigator.pushNamed(context, Routes.activities_list);
+                },
+                borderRadius: BorderRadius.all(
+                  Radius.circular(13),
+                ),
+              )
             ],
           ).hP16,
-          _getOrgList()
+          _getOrgList(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text("Recent Donations", style: TextStyles.title.bold).p(4),
+              FlatButton(
+                color: Theme.of(context).backgroundColor,
+                child: Row(children: [
+                  Text(
+                    "View All",
+                  ).hP8,
+                  Icon(
+                    Icons.sort,
+                    color: Theme.of(context).primaryColor,
+                  )
+                ]),
+                onPressed: () {},
+              ).ripple(
+                () {
+                  Navigator.pushNamed(context, Routes.activities_list);
+                },
+                borderRadius: BorderRadius.all(
+                  Radius.circular(13),
+                ),
+              ),
+            ],
+          ).p16,
+          _getTransactionList()
         ],
       ),
     );
@@ -238,82 +279,21 @@ class _DashboardState extends State<Dashboard> {
   Widget _getOrgList() {
     final activities = Provider.of<List<Activity>>(context);
     return (activities != null)
-        ? Container(
-            height:
-                AppTheme.fullHeight(context) * 0.8, //check this. is it perfect?
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: activities.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          offset: Offset(4, 4),
-                          blurRadius: 10,
-                          color: LightColor.grey.withOpacity(.2),
-                        ),
-                        BoxShadow(
-                          offset: Offset(-3, 0),
-                          blurRadius: 15,
-                          color: LightColor.grey.withOpacity(.1),
-                        )
-                      ],
-                    ),
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-                      child: ListTile(
-                        isThreeLine: true,
-                        contentPadding: EdgeInsets.all(0),
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          child: Container(
-                            height: 55,
-                            width: 55,
-                            //org image
-                            child: Image.asset('assets/images1/ben.jpg',
-                                fit: BoxFit.fill),
-                          ),
-                        ),
-                        title: Text(
-                          activities[index].title,
-                          style: TextStyles.title.bold,
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              activities[index].description,
-                              style: TextStyles.bodySm.subTitleColor.bold,
-                            ),
-                            Text(
-                              "08/21/2020",
-                              style: TextStyles.bodySm.subTitleColor,
-                            ),
-                          ],
-                        ),
-                        trailing: Icon(
-                          Icons.keyboard_arrow_right,
-                          size: 30,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ).ripple(
-                      () {
-                        Navigator.pushNamed(context, Routes.activity_info,
-                            arguments: activities[index]);
-                      },
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    ),
-                  );
-                }),
+        ? ActivitiesListTiles(
+            listprovider: activities,
+            itemCount: 5,
+            heightPercent: 0.4,
+          )
+        : Center(child: CircularProgressIndicator());
+  }
+
+  Widget _getTransactionList() {
+    final activities = Provider.of<List<Activity>>(context);
+    return (activities != null)
+        ? DonationListTiles(
+            listprovider: activities,
+            itemCount: 5,
+            heightPercent: 0.4,
           )
         : Center(child: CircularProgressIndicator());
   }

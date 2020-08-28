@@ -11,9 +11,7 @@ import './theme/theme.dart';
 import './routes.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
-// import './screens/dashboard.dart';
-import './screens/dashboard_new.dart';
-// import './screens/dashboard/dashboard_d_main.dart';
+import './screens/dashboard/dashboard_new.dart';
 
 void main() {
   runApp(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
+import '../theme/text_styles.dart';
 
 class OverviewDetail extends StatelessWidget {
-
-  OverviewDetail({@required this.info,@required this.title});
+  OverviewDetail({@required this.info, @required this.title});
 
   final dynamic info;
   final String title;
@@ -17,14 +17,15 @@ class OverviewDetail extends StatelessWidget {
       children: <Widget>[
         Text(
           '$info',
-          style: tOverviewHeadStyle.copyWith(fontSize: size.width*0.055),
+          // style: tOverviewHeadStyle.copyWith(fontSize: size.width*0.055),
+          style: TextStyles.titleM,
         ),
         SizedBox(
           height: 5,
         ),
         Text(
           '$title',
-          style: tOverviewTitleStyle.copyWith(fontSize: size.width*0.028),
+          style: tOverviewTitleStyle.copyWith(fontSize: size.width * 0.028),
         ),
       ],
     );

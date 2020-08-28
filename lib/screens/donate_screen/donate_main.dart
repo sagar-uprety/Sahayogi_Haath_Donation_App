@@ -3,8 +3,8 @@ import 'package:sahayogihaath/components/RoundedButton.dart';
 import 'package:esewa_pnp/esewa.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:esewa_pnp/esewa_pnp.dart';
-
-enum medium { eSewa, khalti }
+import 'package:sahayogihaath/screens/donate_screen/donate_success.dart';
+import '../../routes.dart';
 
 class DonateScreen extends StatefulWidget {
   @override
@@ -104,12 +104,8 @@ class _DonateScreenState extends State<DonateScreen> {
     );
     try {
       final res = await _esewaPnp.initPayment(payment: eSewaPayment);
-      setState(() {
-        _orgName = res.date;
-        _referenceID = res.referenceId;
-      });
-      _scaffoldKey.currentState.showSnackBar(
-          _buildSnackBar(Color.fromRGBO(65, 161, 36, 1), res.message));
+      Navigator.pushReplacementNamed(context, Routes.donate_success,
+          arguments: res);
     } on ESewaPaymentException catch (e) {
       _scaffoldKey.currentState
           .showSnackBar(_buildSnackBar(Colors.red, e.message));
