@@ -54,7 +54,7 @@ class AuthProvider extends ChangeNotifier {
         String imageUrl;
         await ImageUploader()
             .uploadImage(
-                image: profileImage, path: CloudPath.profile, userId: uid)
+                image: profileImage, path: CloudPath.profile, id: uid)
             .then((String value) {
           imageUrl = value;
         });
@@ -66,7 +66,7 @@ class AuthProvider extends ChangeNotifier {
           typeOfUser= 'organization';
           await ImageUploader()
               .uploadImage(
-                  image: documentImage, path: CloudPath.document, userId: uid)
+                  image: documentImage, path: CloudPath.document, id: uid)
               .then((String value) {
             documentUrl = value;
           });
