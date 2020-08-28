@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sahayogihaath/screens/donate_screen/donate_main.dart';
 import '../screens/activities_screen/acitivity_list.dart';
 import '../screens/activities_screen/edit_activity.dart';
+import '../routes.dart';
 
 class Dashboard extends StatefulWidget {
   static const id = 'dashboard';
@@ -27,19 +28,19 @@ class _DashboardState extends State<Dashboard> {
           ),
           RaisedButton(
             onPressed: () {
-              Navigator.pushNamed(context, EditActivity.id);
+              Navigator.pushNamed(context, Routes.edit_activity);
             },
             child: Text('Create Activites'),
           ),
           RaisedButton(
             onPressed: () {
-              Navigator.pushNamed(context, ActivitiesList.id);
+              Navigator.pushNamed(context, Routes.activities_list);
             },
             child: Text('See Activites'),
           ),
           RaisedButton(
             onPressed: () {
-              Navigator.pushNamed(context, DonateScreen.id);
+              Navigator.pushNamed(context, Routes.donate);
             },
             child: Text('Donate'),
           ),

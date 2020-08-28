@@ -9,9 +9,9 @@ import '../../theme/text_styles.dart';
 
 import '../../models/activitymodel.dart';
 import '../../components/TopAppBar.dart';
+import '../../routes.dart';
 
 class ActivitiesList extends StatefulWidget {
-  static const id = "activities_list";
   @override
   _ActivitiesListState createState() => _ActivitiesListState();
 }
@@ -21,7 +21,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: TopAppBar.getAppBar(),
+        // appBar: TopAppBar.getAppBar(),
         backgroundColor: Color(0XFFfefefe),
         body: _activitiesList(),
       ),
@@ -146,7 +146,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
                       ),
                     ).ripple(
                       () {
-                        Navigator.pushNamed(context, ActivityInfo.id,
+                        Navigator.pushNamed(context, Routes.activity_info,
                             arguments: activities[index]);
                       },
                       borderRadius: BorderRadius.all(

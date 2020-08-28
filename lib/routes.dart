@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'screens/dashboard/dashboard_d_main.dart';
+import './screens/activities_screen/activity_info.dart';
+import './screens/activities_screen/acitivity_list.dart';
+import './screens/activities_screen/edit_activity.dart';
+import './screens/donate_screen/donate_success.dart';
+import './screens/donate_screen/donate_main.dart';
+import './screens/dashboard/dashboard_d_main.dart';
 import './screens/edit_user_details.dart';
 import './screens/login/login_main.dart';
 import './screens/signup/signup_main.dart';
@@ -15,8 +20,16 @@ class Routes {
   static const String login = '/login';
   static const String signup = '/signup';
   static const String signupOrganization = '/signupOrganization';
+
   static const String dashboard = '/dashboard';
   static const String editData = '/editData';
+
+  static const String donate = "/donate_screen";
+  static const String donate_success = "/donate_success";
+
+  static const String activities_list = "/activities_list";
+  static const String activity_info = "/activity_info";
+  static const String edit_activity = "/edit_activity";
 
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
@@ -26,5 +39,10 @@ class Routes {
     signupOrganization: (context) => SignUpOrganizationMain(),
     dashboard: (context) => DashboardMain(),
     editData: (context) => EditData(),
+    donate: (context) => DonateScreen(),
+    donate_success: (context) => DonateSuccess(),
+    activities_list: (context) => ActivitiesList(),
+    activity_info: (context) => ActivityInfo(),
+    edit_activity: (context) => EditActivity(),
   };
 }

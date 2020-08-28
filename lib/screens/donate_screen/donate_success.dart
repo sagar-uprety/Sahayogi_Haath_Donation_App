@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class DonateSuccess extends StatefulWidget {
-  static const id = "donate_success";
   @override
   _DonateSuccessState createState() => _DonateSuccessState();
 }

@@ -1,61 +1,93 @@
 import 'package:flutter/material.dart';
 import 'package:sahayogihaath/components/RoundedButton.dart';
 import '../../theme/extention.dart';
+import 'package:esewa_pnp/esewa.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:esewa_pnp/esewa_pnp.dart';
 
 enum medium { eSewa, khalti }
 
 class DonateScreen extends StatefulWidget {
-  static const id = "donate_screen";
   @override
   _DonateScreenState createState() => _DonateScreenState();
 }
 
 class _DonateScreenState extends State<DonateScreen> {
-  int donateAmount;
-  DateTime date;
-  String username;
-  String selectedmedium;
-  final _formKey = GlobalKey<FormState>();
+  ESewaPnp _esewaPnp;
+  ESewaConfiguration _configuration;
+  int _amount = 0;
+  String _orgName = '';
+  String _referenceID = '';
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _configuration = ESewaConfiguration(
+      clientID: "NhINFhgcDAxZLRIEAwlTLwoXBAcMGA9JJTVUICBIJCA7Kjw2Ijo=",
+      secretKey: "NhINFhgcDAxZLRIEAwk=",
+      environment: ESewaConfiguration.ENVIRONMENT_TEST,
+    );
+    _esewaPnp = ESewaPnp(configuration: _configuration);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: _appBar(),
-        body: Form(
-          key: _formKey,
+    return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Color.fromRGBO(65, 161, 36, 1),
+      ),
+      home: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          title: Text("ESewa PNP"),
+        ),
+        body: Container(
+          padding: EdgeInsets.all(20),
           child: Column(
-            children: [
-              TextFormField(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              TextField(
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
                   setState(() {
-                    donateAmount = int.parse(value);
+                    _amount = int.parse(value);
                   });
                 },
+                decoration: InputDecoration(
+                  labelText: "Enter amount",
+                ),
               ),
-              DropdownButtonFormField(
-                  items: [
-                    DropdownMenuItem(
-                      value: medium.eSewa,
-                      child: Text("eSewa"),
+              SizedBox(
+                height: 16,
+              ),
+              Container(
+                width: double.infinity,
+                child: RaisedButton(
+                  color: Color.fromRGBO(65, 161, 36, 1),
+                  onPressed: () {
+                    pay();
+                  },
+                  child: Text(
+                    "Pay",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
                     ),
-                    DropdownMenuItem(
-                      value: medium.khalti,
-                      child: Text("Khalti"),
-                    )
-                  ],
-                  onChanged: (value) {
-                    selectedmedium = value;
-                    print(value);
-                  }),
-              RoundButton(
-                text: "Donate Rs.${donateAmount.toString()} ",
-                onPress: () {
-                  _formKey.currentState.save();
-                  print(selectedmedium.toString());
-                  print(donateAmount);
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 84,
+              ),
+              Text(_orgName),
+              Text(_referenceID),
+              RaisedButton(
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
                 },
+                child: Text('Logout'),
               )
             ],
           ),
@@ -64,29 +96,31 @@ class _DonateScreenState extends State<DonateScreen> {
     );
   }
 
-  Widget _appBar() {
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Color(0XFFfefefe), //manage all theme color
-      leading: BackButton(color: Theme.of(context).primaryColor),
-      actions: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          child: Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-            ),
-            child: Image.asset(
-              "assets/images1/janko.jpg", //user profile image
-              fit: BoxFit.fill,
-            ),
-          ),
-        ).p(9),
-      ],
+  Future<void> pay() async {
+    ESewaPayment eSewaPayment = ESewaPayment(
+      amount: _amount,
+      productName: "Org Test 1",
+      productID: "abc123001",
+      callBackURL: "https://www.sagaruprety.com.np",
+    );
+    try {
+      final res = await _esewaPnp.initPayment(payment: eSewaPayment);
+      setState(() {
+        _orgName = res.date;
+        _referenceID = res.referenceId;
+      });
+      _scaffoldKey.currentState.showSnackBar(
+          _buildSnackBar(Color.fromRGBO(65, 161, 36, 1), res.message));
+    } on ESewaPaymentException catch (e) {
+      _scaffoldKey.currentState
+          .showSnackBar(_buildSnackBar(Colors.red, e.message));
+    }
+  }
+
+  Widget _buildSnackBar(Color color, String msg) {
+    return SnackBar(
+      backgroundColor: color,
+      content: Text(msg),
     );
   }
 }

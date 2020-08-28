@@ -9,13 +9,11 @@ import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
 import '../../components/FormInput.dart';
 import '../../components/RoundedButton.dart';
+import '../../routes.dart';
 
 class EditActivity extends StatefulWidget {
   final Activity activity;
   EditActivity([this.activity]);
-
-  static const id = "edit_activities";
-
   @override
   _EditActivityState createState() => _EditActivityState();
 }
@@ -125,7 +123,7 @@ class _EditActivityState extends State<EditActivity> {
                         if (validated) {
                           activityProvider.saveActivity();
                           Navigator.pushReplacementNamed(
-                              context, ActivitiesList.id);
+                              context, Routes.activities_list);
                         }
                       }).alignBottomCenter,
                 ],
