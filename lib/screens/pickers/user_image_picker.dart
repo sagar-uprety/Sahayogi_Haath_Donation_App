@@ -137,10 +137,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
       width: _pickedImage != null ? AppTheme.fullWidth(context) * 0.90 : 0,
       decoration: BoxDecoration(
         image: _pickedImage != null
-            ? DecorationImage(
-                image: FileImage(_pickedImage),
-                fit: BoxFit.cover,
-              )
+            ? DecorationImage(image: FileImage(_pickedImage), fit: BoxFit.cover)
             : null,
         borderRadius: BorderRadius.circular(10),
       ),

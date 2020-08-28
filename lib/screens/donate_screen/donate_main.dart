@@ -3,7 +3,6 @@ import 'package:sahayogihaath/components/RoundedButton.dart';
 import 'package:esewa_pnp/esewa.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:esewa_pnp/esewa_pnp.dart';
-import 'package:sahayogihaath/screens/donate_screen/donate_success.dart';
 import '../../routes.dart';
 
 class DonateScreen extends StatefulWidget {

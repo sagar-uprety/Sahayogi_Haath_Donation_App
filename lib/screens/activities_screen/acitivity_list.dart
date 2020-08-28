@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/components/RoundedButton.dart';
-import 'package:sahayogihaath/theme/theme.dart';
 
 import '../../theme/extention.dart';
-import '../../theme/light_color.dart';
 import '../../theme/text_styles.dart';
 
 import '../../models/activitymodel.dart';
