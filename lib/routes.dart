@@ -5,7 +5,7 @@ import './screens/signup/signup_main.dart';
 import './screens/signup/signup_org_main.dart';
 import './screens/splash.dart';
 import './screens/welcome/welcome.dart';
-import './screens/dashboard/dashboard_new.dart';
+import 'screens/dashboard/dashboard.dart';
 import './screens/activities_screen/activity_info.dart';
 import './screens/activities_screen/acitivity_list.dart';
 import './screens/activities_screen/edit_activity.dart';

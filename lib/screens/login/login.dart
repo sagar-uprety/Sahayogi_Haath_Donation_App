@@ -58,6 +58,7 @@ class _LoginState extends State<Login> {
                 hintText: "Enter Your Email",
                 key: ValueKey('email'),
                 icon: Icons.person,
+                autofocus: false,
                 enableSuggesstion: false,
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -75,6 +76,7 @@ class _LoginState extends State<Login> {
                 hintText: "Password",
                 key: ValueKey('password'),
                 icon: Icons.lock,
+                autofocus: false,
                 obscureText: obscurePassword,
                 suffixIcon:
                     obscurePassword ? Icons.visibility : Icons.visibility_off,

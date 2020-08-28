@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/auth_provider.dart';
 
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
@@ -52,19 +53,12 @@ class _DashboardState extends State<Dashboard> {
         color: Colors.black,
       ),
       actions: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          child: Container(
-            // height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-            ),
-            child: Image.asset("assets/images1/children.jpg", fit: BoxFit.fill),
-          ),
-        ).p(8),
+        FlatButton(
+          child: Text('Logout'), //make something cool
+          onPressed: () {
+            AuthProvider().signOut();
+          },
+        )
       ],
     );
   }
@@ -108,18 +102,13 @@ class _DashboardState extends State<Dashboard> {
     return Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top: 8, right: 16, left: 16, bottom: 4),
+          padding: EdgeInsets.only(top: 0, right: 16, left: 16, bottom: 4),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text("Category", style: TextStyles.title.bold),
-              Text(
-                "See All",
-                style: TextStyles.titleNormal
-                    .copyWith(color: Theme.of(context).primaryColor),
-              ).p(8).ripple(() {})
             ],
-          ),
+          ).vP4,
         ),
         SizedBox(
           height: AppTheme.fullHeight(context) * .27,
