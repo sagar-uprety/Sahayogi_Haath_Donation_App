@@ -3,6 +3,7 @@ import '../../screens/dashboard/dashboard.dart';
 import '../../screens/organization/exploreorg.dart';
 import '../../screens/donate_screen/donation_list.dart';
 import '../../screens/dashboard/UserProfile.dart';
+import '../../theme/theme.dart';
 
 class BottomTabBar extends StatefulWidget {
   @override
@@ -23,21 +24,25 @@ class _BottomTabBarState extends State<BottomTabBar> {
     return Scaffold(
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-         currentIndex: _currentIndex,
-         backgroundColor: Colors.grey,
+        currentIndex: _currentIndex,
+        backgroundColor: AppTheme.lightTheme.backgroundColor,
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
+            title: Text('Home'),
             icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
+            title: Text('Explore'),
             icon: Icon(Icons.search),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            title: Text('Donations'),
+            icon: Icon(Icons.monetization_on),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            title: Text('Profile'),
+            icon: Icon(Icons.account_circle),
           ),
         ],
         onTap: (index) {
