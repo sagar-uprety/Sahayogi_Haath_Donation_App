@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import '../../screens/donationDetail.dart';
 import '../../constants/transaction_const.dart';
 //transaction card
 class TransactionCard extends StatelessWidget {
@@ -132,14 +133,32 @@ String setDate(DateTime day){
                       alignment: Alignment(1.0,0.0),
                       width: cardWidth*0.40,
                       child: FittedBox(
-                              child: Text('Rs $amount',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight:FontWeight.bold,
-                                  color: Color(0xFFFA2E69),
+                              child: Row(
+                                children: [
+                                  FittedBox(
+                                                                      child: Text('Rs $amount',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight:FontWeight.bold,
+                                        color: Color(0xFFFA2E69),
+                                      ),
+                                    ),
+                                  ),
+                                  FittedBox(
+                                    child: IconButton(
+                                      iconSize: MediaQuery.of(context).size.width*0.09,
+                                      onPressed: (){
+                                        Navigator.pushNamed(context, DonationDetail.id);
+                                      },
+                                      icon:Icon(
+                                        Icons.arrow_right,
+                                      )
+                                    ),
                                 ),
+                                ],
                               ),
                             ),
+                             
                     ),  
                   ]
                   

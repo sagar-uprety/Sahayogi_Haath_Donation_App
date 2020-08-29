@@ -4,6 +4,9 @@ import '../../FireStoredata.dart';
 import '../../components/transaction_components/transaction_card.dart';
 import 'package:intl/intl.dart';
 class OrgDonationStream extends StatelessWidget {
+    DateTime startDate;
+    DateTime endDate;
+    OrgDonationStream({this.startDate,this.endDate});
     DateTime day;
     String donor;
     String donorImage;
@@ -12,7 +15,7 @@ class OrgDonationStream extends StatelessWidget {
     double amount;
   Widget build(BuildContext context) {
     return StreamBuilder <QuerySnapshot>(
-      stream: Firestore.instance.collection(collection).orderBy(dateTime).snapshots(),
+      stream: Firestore.instance.collection(collection).where(dateTime, isGreaterThan: startDate).where(dateTime,isLessThan: endDate).orderBy(dateTime).snapshots(),
               builder: (context, snapshot){
                   if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'),);
