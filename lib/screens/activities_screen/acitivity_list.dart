@@ -74,7 +74,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
         RoundButton(
           text: "Publish Activity",
           onPress: () {
-            Navigator.pushNamed(context, Routes.edit_activity);
+            Navigator.pushReplacementNamed(context, Routes.edit_activity);
           },
         ),
       ],

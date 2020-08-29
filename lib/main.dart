@@ -11,14 +11,7 @@ import './theme/theme.dart';
 import './routes.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
-<<<<<<< HEAD
 import 'screens/dashboard/dashboard.dart';
-=======
-// import './screens/dashboard.dart';
-// import './screens/dashboard_new.dart';
-// import './screens/dashboard/dashboard_d_main.dart';
-import './screens/organization/exploreorg.dart';
->>>>>>> exploreorg
 
 void main() {
   runApp(
@@ -57,7 +50,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return ExploreOrganization();
+              return Dashboard();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();

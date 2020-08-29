@@ -9,11 +9,9 @@ class ActivitiesListTiles extends StatefulWidget {
   final List listprovider;
   final int itemCount;
   final double heightPercent;
-  ActivitiesListTiles({
-    this.listprovider,
-    this.itemCount,
-    this.heightPercent,
-  });
+  final double hm;
+  ActivitiesListTiles(
+      {this.listprovider, this.itemCount, this.heightPercent, this.hm = 16});
   @override
   _ActivitiesListTilesState createState() => _ActivitiesListTilesState();
 }
@@ -22,6 +20,7 @@ class _ActivitiesListTilesState extends State<ActivitiesListTiles> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: AppTheme.lightTheme.backgroundColor,
       height: AppTheme.fullHeight(context) *
           widget.heightPercent, //check this. is it perfect?
       child: ListView.builder(
@@ -30,7 +29,7 @@ class _ActivitiesListTilesState extends State<ActivitiesListTiles> {
           itemCount: widget.itemCount,
           itemBuilder: (context, index) {
             return Container(
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: widget.hm),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(20)),
