@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/models/activitymodel.dart';
 import 'package:sahayogihaath/provider/activity_provider.dart';
+import 'package:sahayogihaath/screens/pickers/user_image_picker.dart';
 
 import '../../theme/theme.dart';
 import '../../theme/extention.dart';
@@ -24,6 +27,12 @@ class _EditActivityState extends State<EditActivity> {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+  String imageUrl;
+  File _activityImage;
+
+  void _pickedImage(File image) {
+    _activityImage = image;
+  }
 
   @override
   void dispose() {
@@ -47,6 +56,7 @@ class _EditActivityState extends State<EditActivity> {
       //Controller Update
       titleController.text = widget.activity.title;
       descriptionController.text = widget.activity.description;
+      imageUrl = widget.activity.image;
       // State Update
       new Future.delayed(Duration.zero, () {
         final productProvider =
@@ -95,6 +105,11 @@ class _EditActivityState extends State<EditActivity> {
                       activityProvider.changeTitle(value);
                     },
                   ),
+                  UserImagePicker(
+                    _pickedImage,
+                    imageType: ImageType.activity,
+                    existingImage: imageUrl,
+                  ),
                   FormInput(
                     controller: descriptionController,
                     hintText: "Describe your Activity",
@@ -113,18 +128,20 @@ class _EditActivityState extends State<EditActivity> {
                       activityProvider.changeDescription(value);
                     },
                   ),
-                  RoundButton(
-                      text: 'Submit Activity',
-                      onPress: () {
-                        bool validated = _formKey.currentState.validate();
-                        FocusScope.of(context).unfocus();
-                        // _formKey.currentState.save();
-                        if (validated) {
-                          activityProvider.saveActivity();
-                          Navigator.pushReplacementNamed(
-                              context, Routes.activities_list);
-                        }
-                      }).alignBottomCenter,
+                  activityProvider.saveState == SaveState.Saving
+                      ? CircularProgressIndicator()
+                      : RoundButton(
+                          text: 'Submit Activity',
+                          onPress: () async {
+                            bool validated = _formKey.currentState.validate();
+                            FocusScope.of(context).unfocus();
+                            // _formKey.currentState.save();
+                            if (validated) {
+                              await activityProvider.saveActivity();
+                              Navigator.pushReplacementNamed(
+                                  context, Routes.activities_list);
+                            }
+                          }).alignBottomCenter,
                 ],
               ),
             ),

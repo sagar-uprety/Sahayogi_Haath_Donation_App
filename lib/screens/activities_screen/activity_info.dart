@@ -42,8 +42,8 @@ class _ActivityInfoState extends State<ActivityInfo> {
           children: <Widget>[
             Container(
               height: AppTheme.fullHeight(context) * 0.42,
-              child: Image.asset(
-                'assets/images1/children.jpg',
+              child: Image.network(
+                passedActivity.image,
                 fit: BoxFit.fill,
               ),
             ),

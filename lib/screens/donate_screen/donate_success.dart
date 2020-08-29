@@ -1,6 +1,8 @@
+import 'package:esewa_pnp/esewa_pnp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../components/RoundedButton.dart';
+import '../../routes.dart';
 
 class DonateSuccess extends StatefulWidget {
   @override
@@ -11,6 +13,7 @@ class _DonateSuccessState extends State<DonateSuccess> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final ESewaResult response = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -42,14 +45,14 @@ class _DonateSuccessState extends State<DonateSuccess> {
                 ),
                 SizedBox(height: size.height * 0.02),
                 Text(
-                  "You successfully donated",
+                  "Thank You For Your Donation",
                   style: TextStyle(
                     fontSize: 17.0,
                   ),
                 ),
                 SizedBox(height: size.height * 0.025),
                 Text(
-                  "Rs.10000",
+                  response.totalAmount,
                   style: TextStyle(
                     fontSize: 17.0,
                     fontWeight: FontWeight.bold,
@@ -57,7 +60,7 @@ class _DonateSuccessState extends State<DonateSuccess> {
                 ),
                 SizedBox(height: size.height * 0.025),
                 Text(
-                  "Thank you for your donation .",
+                  response.productName,
                   style: TextStyle(
                     fontSize: 17.0,
                   ),
@@ -68,7 +71,7 @@ class _DonateSuccessState extends State<DonateSuccess> {
             RoundButton(
               text: 'Done',
               onPress: () {
-                //do something
+                Navigator.pushNamed(context, Routes.dashboard);
               },
             ),
           ],

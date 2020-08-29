@@ -64,7 +64,7 @@ class _SignUpState extends State<SignUp> {
                 height: size.height * 0.,
               ), */
               SizedBox(height: size.height * 0.04),
-              UserImagePicker(_pickedImage),
+              UserImagePicker(_pickedImage,imageType: ImageType.userProfile,),
               RoundedInput(
                 hintText: "Full Name",
                 key: ValueKey('name'),
