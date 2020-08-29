@@ -10,8 +10,8 @@ import '../../routes.dart';
 
 import '../../models/activitymodel.dart';
 import '../../components/overview_detail.dart';
-import '../../components/ActivitiesListTiles.dart';
-import '../../components/DonationListTiles.dart';
+import '../../components/ListTiles/ActivitiesListTiles.dart';
+import '../../components/ListTiles/DonationListTiles.dart';
 import '../../components/FlatButtonIcon.dart';
 import '../../constants.dart';
 

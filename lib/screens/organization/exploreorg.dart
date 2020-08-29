@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/theme/theme.dart';
 
 import '../../theme/extention.dart';
-import '../../theme/light_color.dart';
 import '../../theme/text_styles.dart';
 
 import '../../models/activitymodel.dart';
-import '../../routes.dart';
 import '../../components/caterogy_tile_single.dart';
-import '../../components/ActivitiesListTiles.dart';
+import '../../components/ListTiles/OrgListTiles.dart';
 
 String selectedCategory = "Orphanage";
 
@@ -90,10 +87,10 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
   Widget _getOrgList() {
     final activities = Provider.of<List<Activity>>(context);
     return (activities != null)
-        ? ActivitiesListTiles(
+        ? OrgListTiles(
             listprovider: activities,
-            itemCount: activities.length >= 5 ? 5 : 1,
-            heightPercent: activities.length >= 5 ? 0.7 : 0.15,
+            itemCount: activities.length,
+            heightPercent: 0.7,
             hm: 0,
           )
         : Center(child: CircularProgressIndicator());

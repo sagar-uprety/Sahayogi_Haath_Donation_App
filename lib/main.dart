@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/screens/organization/org_info.dart';
 
 import './services/firestore_service.dart';
 import './provider/auth_provider.dart';
@@ -12,7 +11,7 @@ import './theme/theme.dart';
 import './routes.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
-import 'screens/dashboard/dashboard.dart';
+import './components/AppBars/BottomTabBar.dart';
 
 void main() {
   runApp(
@@ -51,7 +50,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return OrganizationInfo();
+              return BottomTabBar();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();

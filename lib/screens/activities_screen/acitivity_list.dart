@@ -8,7 +8,7 @@ import '../../theme/text_styles.dart';
 import '../../models/activitymodel.dart';
 // import '../../components/TopAppBar.dart';
 import '../../routes.dart';
-import '../../components/ActivitiesListTiles.dart';
+import '../../components/ListTiles/ActivitiesListTiles.dart';
 
 class ActivitiesList extends StatefulWidget {
   @override
