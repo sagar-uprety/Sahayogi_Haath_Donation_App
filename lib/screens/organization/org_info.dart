@@ -9,6 +9,9 @@ import '../../theme/theme.dart';
 
 import '../../components/RoundedButton.dart';
 import '../../models/activitymodel.dart';
+import './tabs/about.dart';
+import './tabs/activities.dart';
+import './tabs/photos.dart';
 
 class OrganizationInfo extends StatefulWidget {
   static const id = "activity_info";
@@ -31,12 +34,11 @@ class _OrganizationInfoState extends State<OrganizationInfo> {
     // final activityProvider = Provider.of<ActivityProvider>(context);
     // final Activity passedActivity = ModalRoute.of(context).settings.arguments;
 
-    TextStyle titleStyle = TextStyles.title.copyWith(fontSize: 25).bold;
-    if (AppTheme.fullWidth(context) < 393) {
-      titleStyle = TextStyles.title.copyWith(fontSize: 23).bold;
-    }
+    // TextStyle titleStyle = TextStyles.title.copyWith(fontSize: 25).bold;
+    // if (AppTheme.fullWidth(context) < 393) {
+    //   titleStyle = TextStyles.title.copyWith(fontSize: 23).bold;
+    // }
     return Scaffold(
-      appBar: _appbar(),
       body: SafeArea(
         bottom: false,
         child: Stack(
@@ -49,32 +51,44 @@ class _OrganizationInfoState extends State<OrganizationInfo> {
               ),
             ),
             DraggableScrollableSheet(
-              maxChildSize: .8,
+              maxChildSize: 1,
               initialChildSize: .6,
               minChildSize: .6,
               builder: (context, scrollController) {
                 return Container(
-                  height: AppTheme.fullHeight(context) * .5,
+                  // height: AppTheme.fullHeight(context) * 0.5,
                   padding: EdgeInsets.only(
                       left: 19,
                       right: 19,
-                      top: 16), //symmetric(horizontal: 19, vertical: 16),
+                      top: 15), //symmetric(horizontal: 19, vertical: 16),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
                     color: Colors.white,
                   ),
-                  child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    controller: scrollController,
+                  child: DefaultTabController(
+                    length: 3,
+                    initialIndex: 1,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        //Tab
-                        Divider(
-                          thickness: .3,
-                          color: LightColor.grey,
+                        TabBar(
+                          indicatorColor: Colors.black,
+                          tabs: <Widget>[
+                            Tab(child: Text("About")),
+                            Tab(child: Text("Photos")),
+                            Tab(child: Text("Activities")),
+                          ],
+                        ),
+                        SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          controller: scrollController,
+                          child: Container(
+                            height: AppTheme.fullHeight(context) * 0.5,
+                            child: TabBarView(
+                                children: [About(), TabActvities(), Photos()]),
+                          ),
                         ),
                       ],
                     ),
@@ -82,6 +96,7 @@ class _OrganizationInfoState extends State<OrganizationInfo> {
                 );
               },
             ),
+            _appbar()
           ],
         ),
       ),
