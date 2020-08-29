@@ -6,7 +6,7 @@ import '../../theme/text_styles.dart';
 
 import '../../models/activitymodel.dart';
 import '../../components/caterogy_tile_single.dart';
-import '../../components/ActivitiesListTiles.dart';
+import '../../components/ListTiles/OrgListTiles.dart';
 
 String selectedCategory = "Orphanage";
 
@@ -87,7 +87,7 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
   Widget _getOrgList() {
     final activities = Provider.of<List<Activity>>(context);
     return (activities != null)
-        ? ActivitiesListTiles(
+        ? OrgListTiles(
             listprovider: activities,
             itemCount: activities.length,
             heightPercent: 0.7,

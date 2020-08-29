@@ -11,8 +11,7 @@ import './theme/theme.dart';
 import './routes.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
-import 'screens/dashboard/dashboard.dart';
-
+import './components/AppBars/BottomTabBar.dart';
 void main() {
   runApp(
     ChangeNotifierProvider<AuthProvider>(
@@ -50,7 +49,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return Dashboard();
+              return BottomTabBar();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
