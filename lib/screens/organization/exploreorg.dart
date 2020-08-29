@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/theme/theme.dart';
@@ -10,11 +9,7 @@ import '../../theme/text_styles.dart';
 import '../../models/activitymodel.dart';
 import '../../routes.dart';
 
-
-
-
-
-String selectedCategorie= "Adults";
+String selectedCategorie = "Orphanage";
 
 class ExploreOrganization extends StatefulWidget {
   @override
@@ -22,9 +17,12 @@ class ExploreOrganization extends StatefulWidget {
 }
 
 class _ExploreOrganizationState extends State<ExploreOrganization> {
-
-  List<String> categories = ["Adults","Childrens","Womens","Mens"];
-
+  List<String> categories = [
+    "Orphanage",
+    "Child Care",
+    "Nusring Home",
+    "Edlerly Care"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,94 +31,94 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
         backgroundColor: Colors.white,
         elevation: 0.0,
         brightness: Brightness.light,
-        iconTheme: IconThemeData(
-            color: Colors.black87
-        ),
+        iconTheme: IconThemeData(color: Colors.black87),
       ),
-      drawer: Drawer(
-          child: Container()// Populate the Drawer in the next step.
-      ),
+      drawer: Drawer(child: Container() // Populate the Drawer in the next step.
+          ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
-          padding: EdgeInsets.symmetric(vertical: 10,horizontal: 24),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               // SizedBox(height: 5,),
-              Text("Explore Organization", style: TextStyle(
-                color: Colors.black87.withOpacity(0.8),
-                fontSize: 30,
-                fontWeight: FontWeight.w600
-              ),
+              Text(
+                "Explore Organization",
+                style: TextStyle(
+                    color: Colors.black87.withOpacity(0.8),
+                    fontSize: 30,
+                    fontWeight: FontWeight.w600),
               ).vP16,
               //  SizedBox(height: 40,),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Color(0xffEFEFEF),
-                  borderRadius: BorderRadius.circular(14)
-                ),
+                    color: Color(0xffEFEFEF),
+                    borderRadius: BorderRadius.circular(14)),
                 child: Row(
                   children: <Widget>[
                     Icon(Icons.search),
-                    SizedBox(width: 10,),
-                    Text("Search", style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 19,
-                    ),)
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Search",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 19,
+                      ),
+                    )
                   ],
                 ),
               ).vP8,
-              
+
               // SizedBox(height: 30,),
-              Text("Categories", style: TextStyle(
-                  color: Colors.black87.withOpacity(0.8),
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600
-              ),
+              Text(
+                "Categories",
+                style: TextStyle(
+                    color: Colors.black87.withOpacity(0.8),
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600),
               ).vP16,
               // SizedBox(height: 20,),
               Container(
                 height: 30,
                 child: ListView.builder(
-                itemCount: categories.length,
+                    itemCount: categories.length,
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index){
-                  return CategorieTile(
-                    categorie: categories[index],
-                    isSelected: selectedCategorie == categories[index],
-                    context: this,
-                  );
+                    itemBuilder: (context, index) {
+                      return CategorieTile(
+                        categorie: categories[index],
+                        isSelected: selectedCategorie == categories[index],
+                        context: this,
+                      );
                     }),
               ).vP8,
-              // SizedBox(height: 20,),
-            
-              Text("Activities List", style: TextStyle(
-                  color: Colors.black87.withOpacity(0.8),
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600
-              ),
+              Text(
+                "Activities List",
+                style: TextStyle(
+                    color: Colors.black87.withOpacity(0.8),
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600),
               ).vP16,
-              
-             _activityTile(),
+              _activityTile(),
             ],
           ),
         ),
       ),
     );
   }
-  
+
   Widget _activityTile() {
     final activities = Provider.of<List<Activity>>(context);
     return (activities != null)
         ? Container(
             height:
                 AppTheme.fullHeight(context) * 0.8, //check this. is it perfect?
-
             child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
@@ -197,15 +195,13 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
           )
         : Center(child: CircularProgressIndicator());
   }
-
 }
 
 class CategorieTile extends StatefulWidget {
-
   final String categorie;
   final bool isSelected;
   _ExploreOrganizationState context;
-  CategorieTile({this.categorie, this.isSelected,this.context});
+  CategorieTile({this.categorie, this.isSelected, this.context});
 
   @override
   _CategorieTileState createState() => _CategorieTileState();
@@ -215,7 +211,7 @@ class _CategorieTileState extends State<CategorieTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         widget.context.setState(() {
           selectedCategorie = widget.categorie;
         });
@@ -226,15 +222,14 @@ class _CategorieTileState extends State<CategorieTile> {
         margin: EdgeInsets.only(left: 8),
         height: 30,
         decoration: BoxDecoration(
-          color: widget.isSelected ? Color(0xffFFD0AA) : Colors.white,
-          borderRadius: BorderRadius.circular(30)
-        ),
-        child: Text(widget.categorie, style: TextStyle(
-          color: widget.isSelected ?  Color(0xffFC9535) : Color(0xffA1A1A1)
-        ),
+            color: widget.isSelected ? Color(0xffFFD0AA) : Colors.white,
+            borderRadius: BorderRadius.circular(30)),
+        child: Text(
+          widget.categorie,
+          style: TextStyle(
+              color: widget.isSelected ? Color(0xffFC9535) : Color(0xffA1A1A1)),
         ),
       ),
     );
   }
 }
-
