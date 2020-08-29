@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/activity_provider.dart';
-import 'package:sahayogihaath/screens/activities_screen/edit_activity.dart';
+
+import '../../provider/activity_provider.dart';
+import '../../screens/activities_screen/edit_activity.dart';
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
 import '../../theme/text_styles.dart';
@@ -11,7 +12,6 @@ import '../../components/RoundedButton.dart';
 import '../../models/activitymodel.dart';
 
 class ActivityInfo extends StatefulWidget {
-  static const id = "activity_info";
   @override
   _ActivityInfoState createState() => _ActivityInfoState();
 }
@@ -30,7 +30,7 @@ class _ActivityInfoState extends State<ActivityInfo> {
   Widget build(BuildContext context) {
     final activityProvider = Provider.of<ActivityProvider>(context);
     final Activity passedActivity = ModalRoute.of(context).settings.arguments;
-
+    
     TextStyle titleStyle = TextStyles.title.copyWith(fontSize: 25).bold;
     if (AppTheme.fullWidth(context) < 393) {
       titleStyle = TextStyles.title.copyWith(fontSize: 23).bold;

@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/image_upload.dart';
-import 'package:sahayogihaath/provider/activity_provider.dart';
-import 'package:sahayogihaath/theme/theme.dart';
+import '../../image_upload.dart';
+import '../../provider/activity_provider.dart';
+import '../../theme/theme.dart';
 
 enum ImageType { userProfile, document, activity }
 
-class UserImagePicker extends StatefulWidget {
-  UserImagePicker(this.imagePickFn, {this.imageType, this.existingImage});
+class ImageFilePicker extends StatefulWidget {
+  ImageFilePicker(this.imagePickFn, {this.imageType, this.existingImage});
 
   final void Function(File pickedImage) imagePickFn;
 
@@ -19,10 +19,10 @@ class UserImagePicker extends StatefulWidget {
   final String existingImage;
 
   @override
-  _UserImagePickerState createState() => _UserImagePickerState();
+  _ImageFilePickerState createState() => _ImageFilePickerState();
 }
 
-class _UserImagePickerState extends State<UserImagePicker> {
+class _ImageFilePickerState extends State<ImageFilePicker> {
   File _pickedImage;
 
   bool isLoading = true;
@@ -70,7 +70,6 @@ class _UserImagePickerState extends State<UserImagePicker> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.existingImage);
     return isLoading
         ? CircularProgressIndicator()
         : Column(

@@ -1,21 +1,44 @@
+import 'package:flutter/cupertino.dart';
 
 enum UserType {donor, organization}
 
 class DonorModel{
-  DonorModel({this.name,this.email,this.address,this.phone,this.profileImage,this.userType,this.isAdmin=false});
+  DonorModel({@required this.id,@required this.name,@required this.email,@required this.address,@required this.phone,@required this.profileImage,@required this.userType});
 
+  String id;
   String name;
   String email;
   String phone;
   String address;
   String profileImage;
   String userType;
-  bool isAdmin;
+
+  Map<String, dynamic> toMap(){
+    return {
+      'id' : id,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'address': address,
+      'profile_image': profileImage,
+      'user_type': userType,
+    };
+  }
+
+  DonorModel.fromFirestore(Map<String,dynamic> model)
+      : id = model['id'],
+        name = model['name'],
+        email = model['email'],
+        phone = model['phone'],
+        address = model['address'],
+        profileImage = model['profile_image'],
+        userType = model['user_type'];
 }
 
 class OrganizationModel{
-  OrganizationModel({this.name,this.email,this.address,this.phone,this.establishedDate,this.profileImage,this.type,this.userType,this.documentImage});
+  OrganizationModel({@required this.id,@required this.name,@required this.email,@required this.address,@required this.phone,@required this.establishedDate,@required this.profileImage,@required this.type,@required this.userType,@required this.documentImage});
 
+  String id;
   String email;
   String name;
   String phone;
@@ -25,4 +48,31 @@ class OrganizationModel{
   String type;
   String profileImage;
   String documentImage;
+
+  Map<String, dynamic> toMap(){
+    return {
+      'id' : id,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'address': address,
+      'established_date': establishedDate,
+      'type': type,
+      'profile_image': profileImage,
+      'document_image': documentImage,
+      'user_type': userType,
+    };
+  }
+
+  OrganizationModel.fromFirestore(Map<String, dynamic> model)
+      : id = model['id'],
+        name = model['name'],
+        email = model['email'],
+        phone = model['phone'],
+        address = model['address'],
+        establishedDate = model['established_date'],
+        type = model['type'],
+        profileImage = model['profile_image'],
+        documentImage = model['document_image'],
+        userType = model['user_type'];
 }

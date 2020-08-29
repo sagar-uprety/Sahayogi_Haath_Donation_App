@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/auth_provider.dart';
+
+import '../../provider/user_provider.dart';
+import '../../provider/auth_provider.dart';
 
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
@@ -20,25 +22,46 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  UserProvider user;
+  bool isLoading = true;
+
+  @override
+  void initState(){
+    getUserData().then((value) {
+      print("SuccessFul");
+    });
+
+    super.initState();
+  }
+
+  getUserData() async{
+    final user = Provider.of<UserProvider>(context,listen: false);
+    await user.getUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context);
+    
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: CustomScrollView(
-        scrollDirection: Axis.vertical,
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                _header(),
-                _category(),
-              ],
+      body: user.name == null ?
+        Center(child: CircularProgressIndicator()) :
+        CustomScrollView(
+          scrollDirection: Axis.vertical,
+          slivers: <Widget>[
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  _header(),
+                  _category(),
+                ],
+              ),
             ),
-          ),
-          _activitiesList(),
-        ],
-      ),
+            _activitiesList(),
+          ],
+        ),
     );
   }
 
@@ -64,12 +87,13 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _header() {
+
     Size size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text("Hello,", style: TextStyles.title.subTitleColor),
-        Text("Peter Parker", style: TextStyles.h1Style),
+        Text(user.name, style: TextStyles.h1Style),
         Container(
           decoration: cGreyBoxDecoration,
           child: Row(
@@ -88,7 +112,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 child: CircleAvatar(
                     backgroundColor: Colors.blue,
-                    // backgroundImage: NetworkImage(user['profile_image']),
+                    backgroundImage: NetworkImage(user.profileImage),
                     radius: size.width * 0.10),
               ),
             ],

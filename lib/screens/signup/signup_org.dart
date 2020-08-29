@@ -12,7 +12,7 @@ import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
 import '../../components/Registration/HaveAnAccount.dart';
 import './SignUpBackground.dart';
-import '../pickers/user_image_picker.dart';
+import '../pickers/image_picker.dart';
 import '../../constants.dart';
 
 class SignUpOrganization extends StatefulWidget {
@@ -88,7 +88,7 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                     ),
                   ),
                   SizedBox(height: size.height * 0.04),
-                  UserImagePicker(_pickedImage,imageType: ImageType.userProfile,),
+                  ImageFilePicker(_pickedImage,imageType: ImageType.userProfile,),
                   RoundedInput(
                     hintText: "Name",
                     key: ValueKey('name'),
@@ -240,7 +240,7 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                       },
                     ),
                   ),
-                  UserImagePicker(_pickedDocument,imageType: ImageType.document,),
+                  ImageFilePicker(_pickedDocument,imageType: ImageType.document,),
                   authProvider.status == Status.Registering
                       ? CircularProgressIndicator()
                       : RoundButton(

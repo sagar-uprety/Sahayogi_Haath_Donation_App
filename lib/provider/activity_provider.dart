@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sahayogihaath/image_upload.dart';
 import 'package:uuid/uuid.dart';
 
+import '../image_upload.dart';
+import '../services/firestore_path.dart';
 import '../services/firestore_service.dart';
 import '../models/activitymodel.dart';
 
@@ -74,7 +75,6 @@ class ActivityProvider with ChangeNotifier {
       String id = uuid.v4();
       bool uploadStatus = await uploadImage(id);
 
-      print(_title + ' ' + _description + ' ' + _imageUrl + ' ' + id);
       if (uploadStatus) {
         //create new activity
         var newActivity = Activity(
@@ -82,7 +82,7 @@ class ActivityProvider with ChangeNotifier {
             description: description,
             image: image,
             activityID: id);
-        await firestoreService.saveActivity(newActivity);
+        await firestoreService.saveData(path: FirestorePath.activity(id), data: newActivity.toMap());
       } else {
         print('Error Uploading the file.');
       }
@@ -96,7 +96,7 @@ class ActivityProvider with ChangeNotifier {
             description: description,
             image: image,
             activityID: _activityID);
-        firestoreService.saveActivity(updatedActivity);
+        firestoreService.saveData(path: FirestorePath.activity(_activityID), data: updatedActivity.toMap());
       }
     }
     _state = SaveState.Saved;
@@ -105,7 +105,7 @@ class ActivityProvider with ChangeNotifier {
 
   removeActivity(String activityID) {
     deleteImage();
-    firestoreService.removeActivity(activityID);
+    firestoreService.deleteData(path: FirestorePath.activity(activityID));
     notifyListeners(); //checl
   }
 }
