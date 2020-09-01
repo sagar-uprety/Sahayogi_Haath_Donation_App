@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/models/activitymodel.dart';
-import 'package:sahayogihaath/provider/activity_provider.dart';
-import 'package:sahayogihaath/screens/pickers/user_image_picker.dart';
+
+import '../../models/activitymodel.dart';
+import '../../provider/activity_provider.dart';
+import '../../screens/pickers/image_picker.dart';
 
 import '../../theme/theme.dart';
 import '../../theme/extention.dart';
@@ -105,7 +106,7 @@ class _EditActivityState extends State<EditActivity> {
                       activityProvider.changeTitle(value);
                     },
                   ),
-                  UserImagePicker(
+                  ImageFilePicker(
                     _pickedImage,
                     imageType: ImageType.activity,
                     existingImage: imageUrl,
