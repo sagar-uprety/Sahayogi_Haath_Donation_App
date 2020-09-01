@@ -1,11 +1,12 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/user_provider.dart';
 import '../routes.dart';
 import '../models/usermodel.dart';
 import '../image_upload.dart';
@@ -71,34 +72,35 @@ class AuthProvider extends ChangeNotifier {
             documentUrl = value;
           });
         }
-        Map<String, dynamic> userDetails;
+
+         final userDatabase = Provider.of<UserProvider>(ctx,listen: false);
+
         if (typeOfUser == 'donor') {
-          userDetails = {
-            'name': name,
-            'email': email,
-            'phone': phone,
-            'address': address,
-            'profile_image': imageUrl,
-            'user_type': typeOfUser,
-            'isAdmin': false,
-          };
+          userDatabase.registerDonor(
+              DonorModel(
+                  id: uid,
+                  name: name,
+                  email: email,
+                  address: address,
+                  phone: phone,
+                  profileImage: imageUrl,
+                  userType: typeOfUser)
+          );
         } else if (typeOfUser == 'organization') {
-          userDetails = {
-            'name': name,
-            'email': email,
-            'phone': phone,
-            'address': address,
-            'established_date': establishedDate,
-            'type': type,
-            'profile_image': imageUrl,
-            'document_image': documentUrl,
-            'user_type': typeOfUser,
-          };
+          userDatabase.registerOrganization(
+            OrganizationModel(
+                id: uid,
+                name: name,
+                email: email,
+                address: address,
+                phone: phone,
+                establishedDate: establishedDate,
+                profileImage: imageUrl,
+                type: type,
+                userType: typeOfUser,
+                documentImage: documentUrl)
+          );
         }
-        await Firestore.instance
-            .collection('users')
-            .document(uid)
-            .setData(userDetails);
 
         sendEmailVerification(ctx);
       }

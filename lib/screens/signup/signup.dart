@@ -8,7 +8,7 @@ import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
 import '../../components/Registration/HaveAnAccount.dart';
 import './SignUpBackground.dart';
-import '../pickers/user_image_picker.dart';
+import '../pickers/image_picker.dart';
 import '../../provider/auth_provider.dart';
 import '../../models/usermodel.dart';
 import '../../routes.dart';
@@ -64,7 +64,7 @@ class _SignUpState extends State<SignUp> {
                 height: size.height * 0.,
               ), */
               SizedBox(height: size.height * 0.04),
-              UserImagePicker(_pickedImage,imageType: ImageType.userProfile,),
+              ImageFilePicker(_pickedImage,imageType: ImageType.userProfile,),
               RoundedInput(
                 hintText: "Full Name",
                 key: ValueKey('name'),
