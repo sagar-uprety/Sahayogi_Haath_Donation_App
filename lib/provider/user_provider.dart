@@ -14,27 +14,31 @@ class UserProvider extends ChangeNotifier {
   String _phone;
   String _address;
   String _profileImage;
-  String _userType;
   String _establishedDate;
   String _type;
   String _documentImage;
+  bool _isDonor = false;
+  bool _isOrganization = false;
+  bool _isAdmin = false;
 
+  String get id => _id;
   String get name => _name;
   String get email => _email;
   String get phone => _phone;
   String get address => _address;
   String get profileImage => _profileImage;
-  String get userType => _userType;
   String get establishedDate => _establishedDate;
   String get type => _type;
   String get documentImage => _documentImage;
+  bool get isDonor => _isDonor;
+  bool get isOrganization => _isOrganization;
+  bool get isAdmin => _isAdmin;
 
-  
   getUserData() async{
     FirebaseUser user= await FirebaseAuth.instance.currentUser();
     return _service.getData(path: FirestorePath.user(user.uid)).then((value) {
       print(value);
-      if(value['user_type']=='donor'){
+      if(value['isDonor'] == true || value['isAdmin'] == true){
         loadDonorData(DonorModel.fromFirestore(value));
       } else{
         loadOrganizationData(OrganizationModel.fromFirestore(value));
@@ -49,7 +53,8 @@ class UserProvider extends ChangeNotifier {
     _phone = donor.phone;
     _address = donor.address;
     _profileImage= donor.profileImage;
-    _userType = donor.userType;
+    _isDonor = donor.isDonor;
+    _isAdmin = donor.isAdmin;
     notifyListeners();
   }
 
@@ -60,11 +65,10 @@ class UserProvider extends ChangeNotifier {
     _phone = organization.phone;
     _address = organization.address;
     _profileImage = organization.profileImage;
-    _userType = organization.userType;
     _establishedDate = organization.establishedDate;
     _type = organization.type;
     _documentImage = organization.documentImage;
-
+    _isOrganization = organization.isOrganization;
     notifyListeners();
   }
 
