@@ -60,7 +60,7 @@ class _DonateSuccessState extends State<DonateSuccess> {
                 ),
                 SizedBox(height: size.height * 0.025),
                 Text(
-                  response.productName,
+                  response.referenceId,
                   style: TextStyle(
                     fontSize: 17.0,
                   ),

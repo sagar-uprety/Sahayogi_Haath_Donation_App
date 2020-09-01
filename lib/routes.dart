@@ -7,6 +7,7 @@ import './screens/splash.dart';
 import './screens/welcome/welcome.dart';
 import 'screens/dashboard/dashboard.dart';
 import './screens/organization/exploreorg.dart';
+import './screens/organization/org_info.dart';
 import './screens/activities_screen/activity_info.dart';
 import './screens/activities_screen/acitivity_list.dart';
 import './screens/activities_screen/edit_activity.dart';
@@ -33,6 +34,7 @@ class Routes {
   static const String donation_info = "/donation_indo";
 
   static const String explore_org = "/explore_org";
+  static const String org_info = "/org_info";
   static const String activities_list = "/activities_list";
   static const String activity_info = "/activity_info";
   static const String edit_activity = "/edit_activity";
@@ -45,6 +47,7 @@ class Routes {
     signupOrganization: (context) => SignUpOrganizationMain(),
     dashboard: (context) => Dashboard(),
     explore_org: (context) => ExploreOrganization(),
+    org_info: (context) => OrganizationInfo(),
     editData: (context) => EditData(),
     donate: (context) => DonateScreen(),
     donate_success: (context) => DonateSuccess(),
