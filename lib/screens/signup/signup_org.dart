@@ -88,14 +88,10 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                     ),
                   ),
                   SizedBox(height: size.height * 0.04),
-<<<<<<< HEAD
-                  UserImagePicker(
+                  ImageFilePicker(
                     _pickedImage,
                     imageType: ImageType.userProfile,
                   ),
-=======
-                  ImageFilePicker(_pickedImage,imageType: ImageType.userProfile,),
->>>>>>> dipesh_2nd
                   RoundedInput(
                     hintText: "Name",
                     key: ValueKey('name'),
@@ -247,14 +243,10 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                       },
                     ),
                   ),
-<<<<<<< HEAD
-                  UserImagePicker(
+                  ImageFilePicker(
                     _pickedDocument,
                     imageType: ImageType.document,
                   ),
-=======
-                  ImageFilePicker(_pickedDocument,imageType: ImageType.document,),
->>>>>>> dipesh_2nd
                   authProvider.status == Status.Registering
                       ? CircularProgressIndicator()
                       : RoundButton(

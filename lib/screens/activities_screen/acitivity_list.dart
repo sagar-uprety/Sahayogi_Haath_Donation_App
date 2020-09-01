@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-<<<<<<< HEAD
 import 'package:sahayogihaath/components/RoundedButton.dart';
-=======
-
-import '../../components/RoundedButton.dart';
-import '../../theme/theme.dart';
->>>>>>> dipesh_2nd
 
 import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
@@ -61,7 +55,6 @@ class _ActivitiesListState extends State<ActivitiesList> {
   }
 
   Widget _activitiesList() {
-<<<<<<< HEAD
     return Column(
       children: <Widget>[
         Row(
@@ -85,33 +78,6 @@ class _ActivitiesListState extends State<ActivitiesList> {
           },
         ),
       ],
-=======
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text("Recent Activities", style: TextStyles.title.bold),
-              IconButton(
-                      icon: Icon(
-                        Icons.sort,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      onPressed: () {})
-                  .p(15)
-            ],
-          ).hP16,
-          _activityTile().vP8,
-          RoundButton(
-            text: "Publish Activity",
-            onPress: () {
-              Navigator.pushNamed(context, Routes.edit_activity);
-            },
-          ),
-        ],
-      ),
->>>>>>> dipesh_2nd
     );
   }
 
