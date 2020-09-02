@@ -8,6 +8,9 @@ import '../../models/activitymodel.dart';
 import '../../components/caterogy_tile_single.dart';
 import '../../components/ListTiles/OrgListTiles.dart';
 
+
+
+
 String selectedCategory = "Orphanage";
 
 class ExploreOrganization extends StatefulWidget {
@@ -94,5 +97,8 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
             hm: 0,
           )
         : Center(child: CircularProgressIndicator());
+
+
   }
+
 }
