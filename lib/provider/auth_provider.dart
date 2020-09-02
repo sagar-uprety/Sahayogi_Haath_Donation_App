@@ -60,11 +60,9 @@ class AuthProvider extends ChangeNotifier {
           imageUrl = value;
         });
 
-        String typeOfUser = 'donor';
         String documentUrl;
 
         if (userType == UserType.organization) {
-          typeOfUser = 'organization';
           await ImageUploader()
               .uploadImage(
                   image: documentImage, path: CloudPath.document, id: uid)
@@ -75,7 +73,7 @@ class AuthProvider extends ChangeNotifier {
 
          final userDatabase = Provider.of<UserProvider>(ctx,listen: false);
 
-        if (typeOfUser == 'donor') {
+        if (userType == UserType.donor) {
           userDatabase.registerDonor(
               DonorModel(
                   id: uid,
@@ -84,9 +82,11 @@ class AuthProvider extends ChangeNotifier {
                   address: address,
                   phone: phone,
                   profileImage: imageUrl,
-                  userType: typeOfUser)
+                  isDonor: true,
+                  isAdmin: false,
+                )
           );
-        } else if (typeOfUser == 'organization') {
+        } else if (userType == UserType.organization) {
           userDatabase.registerOrganization(
             OrganizationModel(
                 id: uid,
@@ -97,8 +97,9 @@ class AuthProvider extends ChangeNotifier {
                 establishedDate: establishedDate,
                 profileImage: imageUrl,
                 type: type,
-                userType: typeOfUser,
-                documentImage: documentUrl)
+                documentImage: documentUrl,
+                isOrganization: true,
+              )
           );
         }
 
