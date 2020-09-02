@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/screens/organization/DetailScreen.dart';
 import 'package:sahayogihaath/screens/organization/GalleryScreen.dart';
+import 'package:sahayogihaath/screens/organization/organizationinfo.dart';
 
 import './provider/user_provider.dart';
 import './services/firestore_path.dart';
@@ -58,7 +59,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return PhotoDetailScreen();
+              return OrganizationInfo();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
