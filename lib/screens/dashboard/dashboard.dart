@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../provider/user_provider.dart';
 import '../../provider/auth_provider.dart';
+import '../../screens/dashboard/header.dart';
 
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
@@ -11,11 +12,9 @@ import '../../theme/theme.dart';
 import '../../routes.dart';
 
 import '../../models/activitymodel.dart';
-import '../../components/overview_detail.dart';
 import '../../components/ListTiles/ActivitiesListTiles.dart';
 import '../../components/ListTiles/DonationListTiles.dart';
 import '../../components/FlatButtonIcon.dart';
-import '../../constants.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -24,7 +23,6 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   UserProvider user;
-  bool isLoading = true;
 
   @override
   void initState() {
@@ -47,7 +45,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: user.name == null
+      body: user.id == null
           ? Center(child: CircularProgressIndicator())
           : CustomScrollView(
               scrollDirection: Axis.vertical,
@@ -55,12 +53,11 @@ class _DashboardState extends State<Dashboard> {
                 SliverList(
                   delegate: SliverChildListDelegate(
                     [
-                      _header(),
-                      _category(),
+                      Header(),
+                      if (user.isDonor || user.isAdmin) _category(),
                     ],
                   ),
                 ),
-                _generateLists(),
               ],
             ),
     );
@@ -91,41 +88,6 @@ class _DashboardState extends State<Dashboard> {
         )
       ],
     );
-  }
-
-  Widget _header() {
-    Size size = MediaQuery.of(context).size;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text("Hello,", style: TextStyles.title.subTitleColor),
-        Text(user.name, style: TextStyles.h1Style),
-        Container(
-          decoration: cGreyBoxDecoration,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              OverviewDetail(info: 'Rs. 1500.0', title: 'Total Donation'),
-              OverviewDetail(info: '3', title: 'Organization'),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Color(0xffffffff),
-                      width: 3,
-                      style: BorderStyle.solid),
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(size.width * 0.10)),
-                ),
-                child: CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    backgroundImage: NetworkImage(user.profileImage),
-                    radius: size.width * 0.10),
-              ),
-            ],
-          ).p16,
-        ).vP4,
-      ],
-    ).p16;
   }
 
   Widget _category() {

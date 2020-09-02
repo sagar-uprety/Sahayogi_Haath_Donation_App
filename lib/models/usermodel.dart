@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 enum UserType {donor, organization}
 
 class DonorModel{
-  DonorModel({@required this.id,@required this.name,@required this.email,@required this.address,@required this.phone,@required this.profileImage,@required this.userType});
+  DonorModel({@required this.id,@required this.name,@required this.email,@required this.address,@required this.phone,@required this.profileImage, this.isDonor,this.isAdmin});
 
   String id;
   String name;
@@ -11,7 +11,8 @@ class DonorModel{
   String phone;
   String address;
   String profileImage;
-  String userType;
+  bool isDonor;
+  bool isAdmin;
 
   Map<String, dynamic> toMap(){
     return {
@@ -21,7 +22,8 @@ class DonorModel{
       'phone': phone,
       'address': address,
       'profile_image': profileImage,
-      'user_type': userType,
+      'isDonor': isDonor,
+      'isAdmin': isAdmin,
     };
   }
 
@@ -32,11 +34,12 @@ class DonorModel{
         phone = model['phone'],
         address = model['address'],
         profileImage = model['profile_image'],
-        userType = model['user_type'];
+        isDonor = model['isDonor'],
+        isAdmin = model['isAdmin'];
 }
 
 class OrganizationModel{
-  OrganizationModel({@required this.id,@required this.name,@required this.email,@required this.address,@required this.phone,@required this.establishedDate,@required this.profileImage,@required this.type,@required this.userType,@required this.documentImage});
+  OrganizationModel({@required this.id,@required this.name,@required this.email,@required this.address,@required this.phone,@required this.establishedDate,@required this.profileImage,@required this.type,@required this.documentImage,this.isOrganization});
 
   String id;
   String email;
@@ -44,7 +47,8 @@ class OrganizationModel{
   String phone;
   String address;
   String establishedDate;
-  String userType;
+  // String userType;
+  bool isOrganization;
   String type;
   String profileImage;
   String documentImage;
@@ -60,7 +64,7 @@ class OrganizationModel{
       'type': type,
       'profile_image': profileImage,
       'document_image': documentImage,
-      'user_type': userType,
+      'isOrganization': isOrganization,
     };
   }
 
@@ -74,5 +78,5 @@ class OrganizationModel{
         type = model['type'],
         profileImage = model['profile_image'],
         documentImage = model['document_image'],
-        userType = model['user_type'];
+        isOrganization = model['isOrganization'];
 }
