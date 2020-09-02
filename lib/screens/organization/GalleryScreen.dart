@@ -77,7 +77,57 @@ class _GalleryScreenState extends State<GalleryScreen> {
                             fit: BoxFit.cover)),
                   ),
                   SizedBox(
-                    height: 20,
+                    width: 20,
+                  ),
+                  Container(
+                    width: (MediaQuery.of(context).size.width - 80) / 2,
+                    height: 230,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                            image: AssetImage("assets/images1/pham.jpg"),
+                            fit: BoxFit.cover)),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: (MediaQuery.of(context).size.width - 80) / 2,
+                    height: 230,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                            image: AssetImage("assets/images1/jelleke.jpg"),
+                            fit: BoxFit.cover)),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Container(
+                    width: (MediaQuery.of(context).size.width - 80) / 2,
+                    height: 230,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                            image: AssetImage("assets/images1/pham.jpg"),
+                            fit: BoxFit.cover)),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: (MediaQuery.of(context).size.width - 80) / 2,
+                    height: 230,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                            image: AssetImage("assets/images1/jelleke.jpg"),
+                            fit: BoxFit.cover)),
+                  ),
+                  SizedBox(
+                    width: 20,
                   ),
                   Container(
                     width: (MediaQuery.of(context).size.width - 80) / 2,
