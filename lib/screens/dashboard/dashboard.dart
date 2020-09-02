@@ -78,6 +78,12 @@ class _DashboardState extends State<Dashboard> {
       ),
       actions: <Widget>[
         FlatButton(
+          child: Text('Info'), //make something cool
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.org_info);
+          },
+        ),
+        FlatButton(
           child: Text('Logout'), //make something cool
           onPressed: () {
             AuthProvider().signOut();

@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
 import 'package:sahayogihaath/screens/organization/DetailScreen.dart';
 import 'package:sahayogihaath/screens/organization/GalleryScreen.dart';
 import 'package:sahayogihaath/screens/organization/organizationinfo.dart';
+=======
+import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
+>>>>>>> sagar
 
 import './provider/user_provider.dart';
 import './services/firestore_path.dart';
@@ -17,6 +21,11 @@ import './theme/theme.dart';
 import './routes.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
+<<<<<<< HEAD
+=======
+import './screens/organization/org_info.dart';
+import './components/AppBars/BottomTabBar.dart';
+>>>>>>> sagar
 
 void main() {
   runApp(
@@ -59,7 +68,12 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
+<<<<<<< HEAD
               return OrganizationInfo();
+=======
+              // return BottomTabBar();
+              return Dashboard();
+>>>>>>> sagar
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
