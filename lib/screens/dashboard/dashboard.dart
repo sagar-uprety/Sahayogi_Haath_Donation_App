@@ -14,6 +14,7 @@ import '../../routes.dart';
 import '../../models/activitymodel.dart';
 import '../../components/ActivitiesListTiles.dart';
 import '../../components/DonationListTiles.dart';
+import '../../components/FlatButtonIcon.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _DashboardState extends State<Dashboard> {
   UserProvider user;
 
   @override
-  void initState(){
+  void initState() {
     getUserData().then((value) {
       print("SuccessFul");
     });
@@ -32,15 +33,15 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
   }
 
-  getUserData() async{
-    final user = Provider.of<UserProvider>(context,listen: false);
+  getUserData() async {
+    final user = Provider.of<UserProvider>(context, listen: false);
     await user.getUserData();
   }
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context);
-    
+
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Theme.of(context).backgroundColor,
@@ -58,12 +59,10 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
             ),
-            _activitiesList(),
-          ],
-        ),
+          ]
+        )
     );
   }
-
   //appbar
   Widget _appBar() {
     return AppBar(
@@ -94,6 +93,11 @@ class _DashboardState extends State<Dashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text("Category", style: TextStyles.title.bold),
+              FlatButtonIcon(
+                  text: 'Donate Now',
+                  onPress: () {
+                    Navigator.pushNamed(context, Routes.donate);
+                  }),
             ],
           ).vP4,
         ),
@@ -119,7 +123,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _categoryCard(String title, String subtitle,
-      {Color color, Color lightColor}) {
+      {Color color, Color lightColor, Function onPress}) {
     TextStyle titleStyle = TextStyles.title.bold.white;
     TextStyle subtitleStyle = TextStyles.body.bold.white;
     if (AppTheme.fullWidth(context) < 392) {
@@ -181,13 +185,13 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ).ripple(() {
-          Navigator.pushNamed(context, Routes.donate); //test only
+          Navigator.pushNamed(context, Routes.explore_org); //test only
         }, borderRadius: BorderRadius.all(Radius.circular(20))),
       ),
     );
   }
 
-  Widget _activitiesList() {
+  Widget _generateLists() {
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -195,27 +199,11 @@ class _DashboardState extends State<Dashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text("Activities", style: TextStyles.title.bold).p(4),
-              FlatButton(
-                color: Theme.of(context).backgroundColor,
-                child: Row(children: [
-                  Text(
-                    "View All",
-                  ).hP8,
-                  Icon(
-                    Icons.sort,
-                    color: Theme.of(context).primaryColor,
-                  )
-                ]),
-                onPressed: () {
-                  // Navigator.pushNamed(context, Routes.activities_list);
-                },
-              ).ripple(
-                () {
+              FlatButtonIcon(
+                text: "View All",
+                onPress: () {
                   Navigator.pushNamed(context, Routes.activities_list);
                 },
-                borderRadius: BorderRadius.all(
-                  Radius.circular(13),
-                ),
               )
             ],
           ).hP16,
@@ -224,25 +212,11 @@ class _DashboardState extends State<Dashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text("Recent Donations", style: TextStyles.title.bold).p(4),
-              FlatButton(
-                color: Theme.of(context).backgroundColor,
-                child: Row(children: [
-                  Text(
-                    "View All",
-                  ).hP8,
-                  Icon(
-                    Icons.sort,
-                    color: Theme.of(context).primaryColor,
-                  )
-                ]),
-                onPressed: () {},
-              ).ripple(
-                () {
-                  Navigator.pushNamed(context, Routes.activities_list);
+              FlatButtonIcon(
+                text: "View All",
+                onPress: () {
+                  Navigator.pushNamed(context, Routes.donation_list);
                 },
-                borderRadius: BorderRadius.all(
-                  Radius.circular(13),
-                ),
               ),
             ],
           ).p16,
@@ -257,8 +231,8 @@ class _DashboardState extends State<Dashboard> {
     return (activities != null)
         ? ActivitiesListTiles(
             listprovider: activities,
-            itemCount: 5,
-            heightPercent: 0.4,
+            itemCount: activities.length >= 5 ? 5 : 1,
+            heightPercent: activities.length >= 5 ? 0.4 : 0.15,
           )
         : Center(child: CircularProgressIndicator());
   }
@@ -268,8 +242,8 @@ class _DashboardState extends State<Dashboard> {
     return (activities != null)
         ? DonationListTiles(
             listprovider: activities,
-            itemCount: 5,
-            heightPercent: 0.4,
+            itemCount: activities.length >= 5 ? 5 : 1,
+            heightPercent: activities.length >= 5 ? 0.4 : 0.15,
           )
         : Center(child: CircularProgressIndicator());
   }

@@ -88,7 +88,10 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                     ),
                   ),
                   SizedBox(height: size.height * 0.04),
-                  ImageFilePicker(_pickedImage,imageType: ImageType.userProfile,),
+                  ImageFilePicker(
+                    _pickedImage,
+                    imageType: ImageType.userProfile,
+                  ),
                   RoundedInput(
                     hintText: "Name",
                     key: ValueKey('name'),
@@ -240,7 +243,10 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                       },
                     ),
                   ),
-                  ImageFilePicker(_pickedDocument,imageType: ImageType.document,),
+                  ImageFilePicker(
+                    _pickedDocument,
+                    imageType: ImageType.document,
+                  ),
                   authProvider.status == Status.Registering
                       ? CircularProgressIndicator()
                       : RoundButton(
@@ -249,7 +255,6 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                             final isValid = _formKey.currentState.validate();
                             FocusScope.of(context).unfocus();
 
-                            //TODO: Default Image
                             if (_userImage == null) {
                               Scaffold.of(context).showSnackBar(
                                 SnackBar(
