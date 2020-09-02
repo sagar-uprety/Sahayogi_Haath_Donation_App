@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/screens/organization/GalleryScreen.dart';
 
+import './provider/user_provider.dart';
+import './services/firestore_path.dart';
+
 import './services/firestore_service.dart';
 import './provider/auth_provider.dart';
 import './provider/activity_provider.dart';
@@ -38,7 +41,10 @@ class SahayogiHaath extends StatelessWidget {
           create: (context) => ActivityProvider(),
         ),
         StreamProvider(
-          create: (context) => firestoreService.getActivities(),
+          create: (context) => firestoreService.getDatas(path: FirestorePath.activities()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
         ),
       ],
       child: MaterialApp(
