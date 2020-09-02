@@ -39,7 +39,7 @@ class PhotoDetailScreenState extends State<PhotoDetailScreen> {
                     "Food Donation to childrens",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 40,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

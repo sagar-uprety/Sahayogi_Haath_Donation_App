@@ -9,8 +9,6 @@ import '../../components/caterogy_tile_single.dart';
 import '../../components/ListTiles/OrgListTiles.dart';
 
 
-
-
 String selectedCategory = "Orphanage";
 
 class ExploreOrganization extends StatefulWidget {
