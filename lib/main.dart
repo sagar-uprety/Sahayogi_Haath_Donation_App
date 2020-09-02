@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/screens/organization/DetailScreen.dart';
 import 'package:sahayogihaath/screens/organization/GalleryScreen.dart';
 
 import './provider/user_provider.dart';
@@ -15,6 +16,7 @@ import './theme/theme.dart';
 import './routes.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
+
 void main() {
   runApp(
     ChangeNotifierProvider<AuthProvider>(
@@ -41,7 +43,8 @@ class SahayogiHaath extends StatelessWidget {
           create: (context) => ActivityProvider(),
         ),
         StreamProvider(
-          create: (context) => firestoreService.getDatas(path: FirestorePath.activities()),
+          create: (context) =>
+              firestoreService.getDatas(path: FirestorePath.activities()),
         ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
@@ -55,7 +58,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return GalleryScreen();
+              return PhotoDetailScreen();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();

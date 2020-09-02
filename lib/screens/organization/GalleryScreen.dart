@@ -37,7 +37,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
               SizedBox(
                 height: 30,
               ),
-              
               Row(
                 children: <Widget>[
                   Container(
@@ -79,7 +78,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   ),
                   SizedBox(
                     width: 20,
-<<<<<<< HEAD
                   ),
                   Container(
                     width: (MediaQuery.of(context).size.width - 80) / 2,
@@ -91,6 +89,9 @@ class _GalleryScreenState extends State<GalleryScreen> {
                             fit: BoxFit.cover)),
                   ),
                 ],
+              ),
+              SizedBox(
+                height: 20,
               ),
               Row(
                 children: <Widget>[
@@ -117,6 +118,9 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 20,
+              ),
               Row(
                 children: <Widget>[
                   Container(
@@ -130,8 +134,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   ),
                   SizedBox(
                     width: 20,
-=======
->>>>>>> 0b7076f2965d9a6484192e95379625fa685a9f44
                   ),
                   Container(
                     width: (MediaQuery.of(context).size.width - 80) / 2,
