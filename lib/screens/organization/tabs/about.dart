@@ -63,8 +63,8 @@ Widget getBody(context) {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"),
+                              image:
+                                  AssetImage('assets/images/helpinghands.jpg'),
                               fit: BoxFit.cover)),
                     ),
                     SizedBox(
@@ -146,52 +146,6 @@ Widget getBody(context) {
                 SizedBox(
                   height: 20,
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: Container(
-                          width: 150,
-                          height: 150,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage("assets/images/food_1.jfif"),
-                                  fit: BoxFit.cover)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: Container(
-                          width: 150,
-                          height: 150,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage("assets/images/food_1.jfif"),
-                                  fit: BoxFit.cover)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: Container(
-                          width: 150,
-                          height: 150,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage("assets/images/food_1.jfif"),
-                                  fit: BoxFit.cover)),
-                        ),
-                      )
-                    ],
-                  ),
-                )
               ],
             ),
           ),
