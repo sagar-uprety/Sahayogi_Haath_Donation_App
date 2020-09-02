@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './images.dart';
 
 class GalleryScreen extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
           child: Column(
             children: <Widget>[
               SizedBox(
-                height: 40,
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,12 +32,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
                     "Photos",
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
-                  // SvgPicture.asset("assets/images/forward_icon.svg")
                 ],
               ),
               SizedBox(
                 height: 30,
               ),
+              
               Row(
                 children: <Widget>[
                   Container(
@@ -45,7 +46,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
-                            image: AssetImage("assets/images1/children.jpg"),
+                            image: AssetImage(images[0].imagepath),
                             fit: BoxFit.cover)),
                   ),
                   SizedBox(
@@ -57,7 +58,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
-                            image: AssetImage("assets/images1/children.jpg"),
+                            image: AssetImage(images[1].imagepath),
                             fit: BoxFit.cover)),
                   ),
                 ],
@@ -73,11 +74,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
-                            image: AssetImage("assets/images1/jelleke.jpg"),
+                            image: AssetImage(images[0].imagepath),
                             fit: BoxFit.cover)),
                   ),
                   SizedBox(
                     width: 20,
+<<<<<<< HEAD
                   ),
                   Container(
                     width: (MediaQuery.of(context).size.width - 80) / 2,
@@ -128,6 +130,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   ),
                   SizedBox(
                     width: 20,
+=======
+>>>>>>> 0b7076f2965d9a6484192e95379625fa685a9f44
                   ),
                   Container(
                     width: (MediaQuery.of(context).size.width - 80) / 2,
@@ -139,7 +143,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                             fit: BoxFit.cover)),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
