@@ -94,8 +94,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
       ),
     ),
     );
-    
-    
    }
 }
    
