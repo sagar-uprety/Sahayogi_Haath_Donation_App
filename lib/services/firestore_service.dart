@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sahayogihaath/models/organizationmodel.dart';
 import '../models/activitymodel.dart';
 
 class FirestoreService {
@@ -15,6 +16,13 @@ class FirestoreService {
     return _db.collection(path).snapshots().map((snapshot) => snapshot
         .documents
         .map((document) => Activity.fromFirestore(document.data))
+        .toList());
+  }
+
+   Stream<List<OrganizationDetail>> getdocsData({@required String path}) {
+    return _db.collection(path).snapshots().map((snapshot) => snapshot
+        .documents
+        .map((document) => OrganizationDetail.fromFirestore(document.data))
         .toList());
   }
 

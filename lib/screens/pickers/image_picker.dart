@@ -7,7 +7,7 @@ import '../../image_upload.dart';
 import '../../provider/activity_provider.dart';
 import '../../theme/theme.dart';
 
-enum ImageType { userProfile, document, activity }
+enum ImageType { userProfile, document, activity, organization }
 
 class ImageFilePicker extends StatefulWidget {
   ImageFilePicker(this.imagePickFn, {this.imageType, this.existingImage});
