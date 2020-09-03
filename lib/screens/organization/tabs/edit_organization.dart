@@ -52,8 +52,8 @@ class _EditOrganizationState extends State<EditOrganization> {
               child: Text('Submit'),
               onPressed: () {
                 organizationProvider.saveOrganizationInfo();
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => OrganizationInfo()));
+                // Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (context) => OrganizationInfo()));
               }),
           RaisedButton(
               child: Text('Delete'),
