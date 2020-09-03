@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/provider/organization_provider.dart';
 import 'package:sahayogihaath/screens/organization/tabs/edit_organization.dart';
-
 import './provider/user_provider.dart';
 import './services/firestore_path.dart';
 
@@ -16,8 +15,6 @@ import './theme/theme.dart';
 import './routes.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
-// import './screens/organization/org_info.dart';
-// import './screens/organization/tabs/activities.dart';
 
 void main() {
   runApp(
