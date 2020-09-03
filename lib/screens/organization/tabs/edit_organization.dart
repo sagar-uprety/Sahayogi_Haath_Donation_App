@@ -42,16 +42,11 @@ class _EditOrganizationState extends State<EditOrganization> {
             imageType: ImageType.organization,
             existingImage: imageUrl,
           ),
-          // TextField(
-          //   decoration: InputDecoration(hintText: 'image'),
-          //    onChanged: (value) {
-          //     organizationProvider.changeImage(value);
-          //   },
-          // ),
           RaisedButton(
               child: Text('Submit'),
               onPressed: () {
                 organizationProvider.saveOrganizationInfo();
+                FocusScope.of(context).unfocus();
                 // Navigator.of(context).push(MaterialPageRoute(
                 //     builder: (context) => OrganizationInfo()));
               }),
