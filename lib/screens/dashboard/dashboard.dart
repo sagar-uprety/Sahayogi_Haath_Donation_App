@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/user_provider.dart';
-import '../../provider/auth_provider.dart';
 import '../../screens/dashboard/header.dart';
 
 import '../../theme/extention.dart';
@@ -53,7 +52,7 @@ class _DashboardState extends State<Dashboard> {
             SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  Header(),
+                  _header(),
                   if(user.isDonor || user.isAdmin)
                     _category(),
                 ],
@@ -74,14 +73,25 @@ class _DashboardState extends State<Dashboard> {
         color: Colors.black,
       ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('Logout'), //make something cool
-          onPressed: () {
-            AuthProvider().signOut();
-          },
-        )
+        IconButton(
+          icon: Icon(Icons.person,color: Colors.black,), 
+          onPressed: (){
+            Navigator.pushNamed(context, Routes.profile);
+          }
+        ),
       ],
     );
+  }
+  
+  Widget _header(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text("Hello,", style: TextStyles.title.subTitleColor),
+        Text(user.name, style: TextStyles.h1Style),
+        Header(),
+      ]
+    ).p16;
   }
 
   Widget _category() {

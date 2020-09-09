@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import '../../provider/user_provider.dart';
 import '../../image_upload.dart';
 import '../../provider/activity_provider.dart';
 import '../../theme/theme.dart';
@@ -35,7 +36,6 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
           _pickedImage = value;
           isLoading = false;
         });
-        print('success');
       });
     } else {
       isLoading = false;
@@ -63,6 +63,12 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
           Provider.of<ActivityProvider>(context, listen: false);
 
       activityProvider.changeImage(pickedImageFile);
+    }
+
+    if(widget.imageType == ImageType.userProfile) {
+      final userProvider = Provider.of<UserProvider>(context,listen: false);
+
+      userProvider.changeProfileImage(pickedImageFile);
     }
 
     widget.imagePickFn(pickedImageFile);

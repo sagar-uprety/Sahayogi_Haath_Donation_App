@@ -6,12 +6,12 @@ import '../../provider/user_provider.dart';
 import '../../theme/theme.dart';
 import '../../theme/extention.dart';
 import '../../constants.dart';
-import '../../theme/text_styles.dart';
 
 import '../../components/overview_detail.dart';
 
 class Header extends StatefulWidget {
   @override
+  
   _HeaderState createState() => _HeaderState();
 }
 
@@ -22,19 +22,12 @@ class _HeaderState extends State<Header> {
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text("Hello,", style: TextStyles.title.subTitleColor),
-        Text(user.name, style: TextStyles.h1Style),
-        if(user.isDonor)
-          _donorOverview(),
-        if(user.isOrganization)
-          _organizationOverview(),
-        if(user.isAdmin)
-          _adminOverview(),
-      ],
-    ).p16;
+    if(user.isDonor)
+      return _donorOverview();
+    if(user.isOrganization)
+      return _organizationOverview();
+    if(user.isAdmin)
+      return _adminOverview();
   }
 
   Widget _donorOverview(){

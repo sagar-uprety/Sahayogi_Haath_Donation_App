@@ -47,7 +47,6 @@ class OrganizationModel{
   String phone;
   String address;
   String establishedDate;
-  // String userType;
   bool isOrganization;
   String type;
   String profileImage;

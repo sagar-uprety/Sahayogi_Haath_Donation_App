@@ -1,11 +1,13 @@
+
 import 'package:flutter/cupertino.dart';
+import './screens/user_profile.dart';
 import './screens/edit_user_details.dart';
 import './screens/login/login_main.dart';
 import './screens/signup/signup_main.dart';
 import './screens/signup/signup_org_main.dart';
 import './screens/splash.dart';
 import './screens/welcome/welcome.dart';
-import 'screens/dashboard/dashboard.dart';
+import './screens/dashboard/dashboard.dart';
 import './screens/organization/exploreorg.dart';
 import './screens/activities_screen/activity_info.dart';
 import './screens/activities_screen/acitivity_list.dart';
@@ -26,6 +28,7 @@ class Routes {
 
   static const String dashboard = '/dashboard';
   static const String editData = '/editData';
+  static const String profile = '/profile';
 
   static const String donate = "/donate_screen";
   static const String donate_success = "/donate_success";
@@ -53,5 +56,6 @@ class Routes {
     activities_list: (context) => ActivitiesList(),
     activity_info: (context) => ActivityInfo(),
     edit_activity: (context) => EditActivity(),
+    profile: (context) => Profile(),
   };
 }
