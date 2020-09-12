@@ -69,7 +69,7 @@ String setDate(DateTime day){
                     child: Container(
                       width: cardWidth*0.12,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage('https://image.shutterstock.com/image-photo/mountains-during-sunset-beautiful-natural-260nw-407021107.jpg'),
+                        backgroundImage: NetworkImage(donorImage),
                       ),
                     ),
                   ),

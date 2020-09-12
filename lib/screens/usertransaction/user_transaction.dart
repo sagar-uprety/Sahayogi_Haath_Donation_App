@@ -95,7 +95,11 @@ class _UserTransactionState extends State<UserTransaction> {
                   ),
                 Container(
                     margin: EdgeInsets.symmetric(horizontal: width ),
-                    child: UserDonationStream(stateChoice: selectedChoice,userName: user.name,)
+                    child: UserDonationStream(
+                      stateChoice: selectedChoice,
+                      userName: user.name,
+                      userImage: user.profileImage,
+                    )
                   ),  
               ]
             ),

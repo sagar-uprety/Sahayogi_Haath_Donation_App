@@ -2,7 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../constants/transaction_const.dart';
 import '../../components/transaction_components/search_bar.dart';
 import 'admintransaction_main.dart';
+
+import 'package:provider/provider.dart';
+import '../../provider/user_provider.dart';
 import 'package:flutter/material.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AdminTransaction extends StatefulWidget {
@@ -12,33 +16,36 @@ class AdminTransaction extends StatefulWidget {
 }
   
 class _AdminTransactionState extends State<AdminTransaction> {  
+  UserProvider user;
+  bool isLoading = true;
+  String userImage;
 
    final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
   String orgName;
   String holder ='';
-  void getCurrentUser() async{
-    try{
-      final user=await _auth.currentUser();
-
-      if(user != null){
-        loggedInUser=user;
-      }
-    }
-    catch(e){
-      print(e);
-    }
-  }
-
-  
-
   @override
   void initState() {
-    super.initState();
-    getCurrentUser();
-    holder = null; 
-  }
+    getUserData().then((value) {
+      print("SuccessFul");
+     
+    });
+    
 
+    super.initState();
+     holder = null;
+  }
+  getUserData() async {
+    try{
+      final user = Provider.of<UserProvider>(context, listen: false);
+      await user.getUserData();
+    }
+    catch(e){
+      Text('Loading');
+    }
+  }
+  
+  
  getCurrentData(String orgName){
         holder = orgName;
      return holder;
@@ -47,17 +54,23 @@ class _AdminTransactionState extends State<AdminTransaction> {
   @override
   
   Widget build(BuildContext context) {
+     user = Provider.of<UserProvider>(context);
+      final userImage = user.profileImage;
     MediaQueryData queryData = MediaQuery.of(context);
     double width = queryData.size.width*0.02;
     double height = queryData.size.width*0.03;
      return SafeArea(
       child: Scaffold(
-        body: Padding(
+        backgroundColor: Theme.of(context).backgroundColor,
+      body: user.name == null
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
           padding: EdgeInsets.all(width) ,
           child: SingleChildScrollView(
             child:StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection('transaction').orderBy('donee').snapshots(),
         builder: (context, snapshot){
+                
                   if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'),);
                   }
@@ -150,7 +163,8 @@ class _AdminTransactionState extends State<AdminTransaction> {
                       ),
                       CircleAvatar(
                         child: CircleAvatar(
-                          backgroundImage: NetworkImage('https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png'),
+                         // backgroundColor: Colors.blue,
+                          backgroundImage: NetworkImage(userImage),
                           radius: 45,
                         ),
                         backgroundColor: Color(0xFFFFFFFF),

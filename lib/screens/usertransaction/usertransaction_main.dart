@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 class UserDonationStream extends StatelessWidget {
     MyChoice stateChoice;
     String userName;
-    UserDonationStream({this.stateChoice, this.userName});
+    String userImage;
+    UserDonationStream({this.stateChoice, this.userName, this.userImage});
     DateTime day;
     String donor;
     String donorImage;
@@ -26,6 +27,7 @@ class UserDonationStream extends StatelessWidget {
       }
       return data1;
     }
+    
   Widget build(BuildContext context) {
     return StreamBuilder <QuerySnapshot>(
       stream: Firestore.instance.collection(collection).where(user, isEqualTo : chooseState(MyChoice.my)).orderBy('dateTime').snapshots(),
@@ -41,7 +43,13 @@ class UserDonationStream extends StatelessWidget {
                   for(var donation in donations){
                      donor = donation.data[user];
                      donee = donation.data[organization];
-                     donorImage = donation.data[userImage];
+                     if(donor == userName){
+                        donorImage = userImage;
+                     }
+                     else{
+                       donorImage = 'https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-577160911.jpg';
+                     }
+                    
                      DateTime date = donation.data[dateTime].toDate();
                       time = DateFormat('dd MMM yyyy').format(date);
                       amount = donation.data[donationAmount].toDouble();
