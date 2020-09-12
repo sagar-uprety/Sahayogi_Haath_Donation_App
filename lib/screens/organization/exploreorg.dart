@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/models/organizationmodel.dart';
 
 import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
 
-import '../../models/activitymodel.dart';
 import '../../components/caterogy_tile_single.dart';
 import '../../components/ListTiles/OrgListTiles.dart';
 
@@ -86,11 +86,11 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
   }
 
   Widget _getOrgList() {
-    final activities = Provider.of<List<Activity>>(context);
-    return (activities != null)
+    final organinfo = Provider.of<List<OrganizationDetail>>(context);
+    return (organinfo != null)
         ? OrgListTiles(
-            listprovider: activities,
-            itemCount: activities.length,
+            listprovider: organinfo,
+            itemCount: organinfo.length,
             heightPercent: 0.7,
             hm: 0,
           )

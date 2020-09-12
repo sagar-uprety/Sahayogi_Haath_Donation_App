@@ -12,6 +12,7 @@ import '../models/organizationmodel.dart';
 enum SaveState { Uninitialized, Saving, Saved }
 
 class OrganizationProvider with ChangeNotifier {
+
   final firestoreService = FirestoreService();
 
   SaveState _state = SaveState.Uninitialized;
@@ -23,6 +24,7 @@ class OrganizationProvider with ChangeNotifier {
   String _imageUrl;
   var uuid = Uuid();
 
+ 
   //getters
   String get title => _title;
   String get description => _description;

@@ -47,7 +47,7 @@ class SahayogiHaath extends StatelessWidget {
         ),
         StreamProvider(
           create: (context) =>
-              firestoreService.getDatas(path: FirestorePath.organizations()),
+              firestoreService.getdocsData(path: FirestorePath.organizations()),
         ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),

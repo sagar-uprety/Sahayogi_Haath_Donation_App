@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sahayogihaath/models/organizationmodel.dart';
 import '../../../constants.dart';
 import '../../../theme/extention.dart';
 import '../../../theme/theme.dart';
 import '../../../components/overview_detail.dart';
+import 'package:provider/provider.dart';
+import '../../../provider/organization_provider.dart';
+
+
 
 class About extends StatefulWidget {
   @override
@@ -12,11 +17,13 @@ class About extends StatefulWidget {
 class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
+    OrganizationProvider organizationProvider = Provider.of<OrganizationProvider>(context);
     return getBody(context);
   }
 }
 
 Widget getBody(context) {
+  
   var size = MediaQuery.of(context).size;
   return SingleChildScrollView(
     child: Stack(
