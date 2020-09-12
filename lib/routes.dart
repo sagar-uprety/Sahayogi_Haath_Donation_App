@@ -1,4 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:sahayogihaath/screens/admintransaction/admin_transaction.dart';
+import 'package:sahayogihaath/screens/donationDetail.dart';
+import 'package:sahayogihaath/screens/orgtransaction/organization.dart';
+import 'package:sahayogihaath/screens/usertransaction/user_transaction.dart';
 import './screens/edit_user_details.dart';
 import './screens/login/login_main.dart';
 import './screens/signup/signup_main.dart';
@@ -37,6 +41,11 @@ class Routes {
   static const String activity_info = "/activity_info";
   static const String edit_activity = "/edit_activity";
 
+  static const String org_transaction = "/organization";
+  static const String user_transaction = "/user_transaction";
+  static const String admin_transaction = "/admin_transaction";
+  static const String donation_detail = "/donationDetail";
+
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
     welcome: (context) => Welcome(),
@@ -53,5 +62,9 @@ class Routes {
     activities_list: (context) => ActivitiesList(),
     activity_info: (context) => ActivityInfo(),
     edit_activity: (context) => EditActivity(),
+    org_transaction: (context) => OrganizationTransaction(),
+    user_transaction: (context) => UserTransaction(),
+    admin_transaction: (context) => AdminTransaction(),
+    donation_detail: (context) => DonationDetail()
   };
 }
