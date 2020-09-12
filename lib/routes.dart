@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
-import './screens/user_profile.dart';
-import './screens/edit_user_details.dart';
+import 'screens/profile/user_profile.dart';
+import 'screens/profile/edit_user_details.dart';
 import './screens/login/login_main.dart';
 import './screens/signup/signup_main.dart';
 import './screens/signup/signup_org_main.dart';

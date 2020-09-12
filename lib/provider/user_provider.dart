@@ -22,6 +22,7 @@ class UserProvider extends ChangeNotifier {
   String _establishedDate;
   String _type;
   String _documentImage;
+  String _description;
   bool _isDonor = false;
   bool _isOrganization = false;
   bool _isAdmin = false;
@@ -37,6 +38,7 @@ class UserProvider extends ChangeNotifier {
   String get establishedDate => _establishedDate;
   String get type => _type;
   String get documentImage => _documentImage;
+  String get description => _description;
   bool get isDonor => _isDonor;
   bool get isOrganization => _isOrganization;
   bool get isAdmin => _isAdmin;
@@ -59,9 +61,10 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeProfileImage(File value) {
+  changeProfileImage(File value) async{
     _profile = value;
     notifyListeners();
+    await saveProfileImage();
   }
 
   changeEstablishedDate(String value) {
@@ -71,6 +74,11 @@ class UserProvider extends ChangeNotifier {
 
   changeType(String value) {
     _type = value;
+    notifyListeners();
+  }
+
+  changeDescription(String value) {
+    _description =value;
     notifyListeners();
   }
 
@@ -84,22 +92,6 @@ class UserProvider extends ChangeNotifier {
         loadOrganizationData(OrganizationModel.fromFirestore(value));
       }
     });
-  }
-
-  setNull(){
-    _id =null;
-    _name = null;
-    _email = null;
-    _address = null;
-    _phone = null;
-    _profileImage = null;
-    _type = null;
-    _establishedDate = null;
-    _documentImage = null;
-    _isOrganization = false;
-    _isAdmin = false;
-    _isDonor = false;
-    // notifyListeners();
   }
 
   loadDonorData(DonorModel donor) {
@@ -123,6 +115,7 @@ class UserProvider extends ChangeNotifier {
     _profileImage = organization.profileImage;
     _establishedDate = organization.establishedDate;
     _type = organization.type;
+    _description = organization.description;
     _documentImage = organization.documentImage;
     _isOrganization = organization.isOrganization;
     notifyListeners();
@@ -134,6 +127,7 @@ class UserProvider extends ChangeNotifier {
         .uploadImage(image: _profile, path: CloudPath.profile, id: id)
         .then((String value) {
       _profileImage = value;
+      notifyListeners();
       _profile = null;
       isUploaded = true;
     });
@@ -144,49 +138,35 @@ class UserProvider extends ChangeNotifier {
     await ImageUploader().deleteImage(path: CloudPath.profile, id: _id);
   }
 
-  updateProfile() async {
-    _state = SaveState.Saving;
-    notifyListeners();
+  saveName(){
+    _service.updateData(path: FirestorePath.user(id), data: {'name' : name});
+  }
 
+  saveAddress(){
+    _service.updateData(path: FirestorePath.user(id), data: {'address' : address});
+  }
+
+  savePhone(){
+    _service.updateData(path: FirestorePath.user(id), data: {'phone' : phone});
+  }
+
+  saveEstablishmentDate(){
+    _service.updateData(path: FirestorePath.user(id), data: {'established_date': establishedDate});
+  }
+
+  saveType(){
+    _service.updateData(path: FirestorePath.user(id), data: {'type': type});
+  }
+
+  saveProfileImage() async{
     await deleteImage();
     bool uploadStatus = await uploadImage(_id);
+    if(uploadStatus)
+      _service.updateData(path: FirestorePath.user(id), data: {'profile_image': profileImage});
+  }
 
-    if (uploadStatus) {
-      if (_isDonor || _isAdmin) {
-        var updatedUser = DonorModel(
-          id: id,
-          name: name,
-          email: email,
-          address: address,
-          phone: phone,
-          profileImage: profileImage,
-          isDonor: isDonor,
-          isAdmin: isAdmin,
-        );
-
-        await _service.saveData(
-            path: FirestorePath.user(id), data: updatedUser.toMap());
-      } else if (_isOrganization) {
-        var updatedUser = OrganizationModel(
-          id: id,
-          name: name,
-          email: email,
-          address: address,
-          phone: phone,
-          establishedDate: establishedDate,
-          profileImage: profileImage,
-          type: type,
-          documentImage: documentImage,
-          isOrganization: isOrganization,
-        );
-
-        await _service.saveData(path: FirestorePath.user(id), data: updatedUser.toMap());
-      }
-    } else{
-      print('File upload failed.');
-    }
-    _state= SaveState.Saved;
-    notifyListeners();
+  saveDescription(){
+    _service.updateData(path: FirestorePath.user(id), data: {'description' : description});
   }
 
   Future<void> registerDonor(DonorModel donor) async {

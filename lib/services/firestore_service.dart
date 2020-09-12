@@ -11,6 +11,11 @@ class FirestoreService {
     return reference.setData(data);
   }
 
+  Future<void> updateData({@required String path, @required Map<String, dynamic> data}){
+    final reference = _db.document(path);
+    return reference.updateData(data);
+  }
+
   Stream<List<Activity>> getDatas({@required String path}) {
     return _db.collection(path).snapshots().map((snapshot) => snapshot
         .documents

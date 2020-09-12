@@ -191,9 +191,7 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                       suffixIcon: Icons.today,
                       keyboardType: TextInputType.datetime,
                       validator: (value) {
-                        if (value.isNotEmpty ||
-                            RegExp(r'([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$')
-                                .hasMatch(value)) {
+                        if (value.isNotEmpty) {
                           return null;
                         }
                         return 'Invalid Date';

@@ -178,7 +178,7 @@ class AuthProvider extends ChangeNotifier {
           );
         });
 
-        await signOut(ctx);
+        await signOut();
 
         Navigator.of(ctx).pushReplacementNamed(Routes.login);
       } else {
@@ -210,11 +210,10 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  Future signOut(BuildContext ctx) async {
+  Future signOut() async {
     _auth.signOut();
     _status = Status.Unauthenticated;
     user = null;
-    Provider.of<UserProvider>(ctx, listen: false).setNull();
     notifyListeners();
     return Future.delayed(Duration.zero);
   }
