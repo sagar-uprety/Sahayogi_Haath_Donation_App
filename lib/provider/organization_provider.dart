@@ -35,7 +35,9 @@ class OrganizationProvider with ChangeNotifier {
   //setters
   changeTitle(String value) {
     _title = value;
-    notifyListeners();
+    notifyListeners(
+      
+    );
   }
 
   changeDescription(String value) {
