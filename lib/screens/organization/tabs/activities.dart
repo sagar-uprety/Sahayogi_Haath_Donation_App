@@ -13,13 +13,7 @@ class TabActvities extends StatefulWidget {
 class _TabActvitiesState extends State<TabActvities> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: _appBar(),
-        backgroundColor: Color(0XFFfefefe),
-        body: _activitiesList(),
-      ),
-    );
+    return _activitiesList();
   }
 
   // appbar
