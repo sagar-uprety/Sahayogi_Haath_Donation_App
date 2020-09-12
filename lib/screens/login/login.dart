@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
+import '../../constants.dart';
+import '../../screens/forgot_password.dart';
+import '../../routes.dart';
+import '../../provider/auth_provider.dart';
 import '../../components/RoundedInput.dart';
 import '../../components/RoundedButton.dart';
-import '../../components/HaveAnAccount.dart';
-import '../signup/signup_main.dart';
+import '../../components/Registration/HaveAnAccount.dart';
 import './LoginBackground.dart';
 
 class Login extends StatefulWidget {
-  Login(this.submitLoginForm, this.loginWithGoogle, this.isLoading);
-
-  final void Function(
-    String email,
-    String password,
-    BuildContext ctx,
-  ) submitLoginForm;
-  final Future<bool> Function() loginWithGoogle;
-
-  final bool isLoading;
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -28,22 +21,19 @@ class _LoginState extends State<Login> {
   var userEmail = '';
   var userPassword = '';
 
-  void _submit() {
-    final isValid = _formKey.currentState.validate();
-    FocusScope.of(context).unfocus();
-    if (isValid) {
-      _formKey.currentState.save();
-      widget.submitLoginForm(
-        userEmail.trim(),
-        userPassword.trim(),
-        context,
-      );
-    }
+  bool obscurePassword = true;
+
+  void _toggleVisibility() {
+    setState(() {
+      obscurePassword = !obscurePassword;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return LoginBackground(
       child: SingleChildScrollView(
         child: Form(
@@ -67,6 +57,8 @@ class _LoginState extends State<Login> {
               RoundedInput(
                 hintText: "Enter Your Email",
                 key: ValueKey('email'),
+                icon: Icons.person,
+                autofocus: false,
                 enableSuggesstion: false,
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -84,8 +76,11 @@ class _LoginState extends State<Login> {
                 hintText: "Password",
                 key: ValueKey('password'),
                 icon: Icons.lock,
-                obscureText: true,
-                suffixIcon: Icons.visibility,
+                autofocus: false,
+                obscureText: obscurePassword,
+                suffixIcon:
+                    obscurePassword ? Icons.visibility : Icons.visibility_off,
+                onClickedSuffixIcon: _toggleVisibility,
                 validator: (value) {
                   if (value.isEmpty || value.length < 8) {
                     return 'Password must be at least 8 characters long.';
@@ -97,18 +92,48 @@ class _LoginState extends State<Login> {
                   print(userPassword);
                 },
               ),
-              if (widget.isLoading) CircularProgressIndicator(),
-              if (!widget.isLoading)
-                RoundButton(
-                  text: 'LOGIN',
-                  onPress: _submit,
-                ),
+              authProvider.status == Status.Authenticating
+                  ? CircularProgressIndicator()
+                  : RoundButton(
+                      text: 'LOGIN',
+                      onPress: () async {
+                        final isValid = _formKey.currentState.validate();
+                        FocusScope.of(context).unfocus();
+
+                        if (isValid) {
+                          _formKey.currentState.save();
+                          await authProvider
+                              .signInWithEmailAndPassword(userEmail.trim(),
+                                  userPassword.trim(), context)
+                              .catchError((error) {
+                            print(error);
+                          });
+                        }
+                      },
+                    ),
               SizedBox(height: size.height * 0.03),
-              if (!widget.isLoading)
+              if (authProvider.status != Status.Authenticating)
                 HaveAnAccountCheck(
                   onPress: () {
-                    Navigator.pushNamed(context, SignUpMain.id);
+                    Navigator.pushNamed(context, Routes.signup);
                   },
+                ),
+              if (authProvider.status != Status.Authenticating)
+                FlatButton(
+                  textColor: Colors.blue,
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => ForgotPassword(),
+                    );
+                  },
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
                 )
             ],
           ),

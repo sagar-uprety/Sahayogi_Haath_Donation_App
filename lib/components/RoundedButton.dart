@@ -5,22 +5,24 @@ class RoundButton extends StatelessWidget {
   final String text;
   final Color color, textColor;
   final Function onPress;
+  final double radius;
   const RoundButton({
     Key key,
     @required this.text,
     this.color = kPrimaryColor,
     this.textColor = Colors.white,
     this.onPress,
+    this.radius = 30,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.8,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(radius),
         child: FlatButton(
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
           color: color,
