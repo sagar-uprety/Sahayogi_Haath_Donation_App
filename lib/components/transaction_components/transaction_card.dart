@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:sahayogihaath/routes.dart';
 import '../../screens/donationDetail.dart';
 import '../../constants/transaction_const.dart';
 //transaction card
@@ -137,18 +138,22 @@ String setDate(DateTime day){
                                 children: [
                                   FittedBox(
                                                                       child: Text('Rs $amount',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight:FontWeight.bold,
-                                        color: Color(0xFFFA2E69),
-                                      ),
+                                      style: kAmount,
                                     ),
                                   ),
                                   FittedBox(
                                     child: IconButton(
                                       iconSize: MediaQuery.of(context).size.width*0.09,
                                       onPressed: (){
-                                        Navigator.pushNamed(context, DonationDetail.id);
+                                        Navigator.push(context, MaterialPageRoute(
+                                          builder: (context)=> DonationDetail(
+                                            orgName: donee,
+                                            amount: amount,
+                                            time: time,
+                                            donor: donor,
+                                          ),
+                                        ),
+                                        ) ;                                     
                                       },
                                       icon:Icon(
                                         Icons.arrow_right,

@@ -1,12 +1,15 @@
+
 import 'package:flutter/material.dart';
 import '../constants/transaction_const.dart';
-class DonationDetail extends StatefulWidget {
-  static const id = 'donationDetail';
-  @override
-  _DonationDetailState createState() => _DonationDetailState();
-}
-
-class _DonationDetailState extends State<DonationDetail> {
+import '../theme/extention.dart';
+import '../theme/text_styles.dart';
+class DonationDetail extends StatelessWidget {
+  String orgName;
+  double amount;
+  String time;
+  String donor;
+  String code = '043D087';
+  DonationDetail({this.orgName, this.amount, this.time, this.donor});
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -23,36 +26,142 @@ class _DonationDetailState extends State<DonationDetail> {
               margin: EdgeInsets.symmetric(vertical: height,horizontal: width),
               width:cardWidth,
               height:MediaQuery.of(context).size.height*0.07,
-              decoration:kHomeDecoration,
-              child:Center(child: Text('Donation Detail')), 
+              decoration:kTransactionDetail,
+              
+              child:Center(
+                child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.monetization_on,
+                    color: Colors.purple[50],
+                  ),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  Text(
+                    'Transaction Detail',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white
+                    ),
+                  ),
+                ],
+              )), 
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: width),
-              padding: EdgeInsets.all(queryData.size.width*0.05),
               width:cardWidth,
               height:MediaQuery.of(context).size.height*0.5,
               decoration: kHomeDecoration,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget> [
                   FittedBox(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(),
-                        Text('Dara')
+                        CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          radius: 20,
+                        ),
+                        SizedBox(
+                          width: queryData.size.width*0.05,
+                        ),                     
+                         Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             Text(
+                               orgName,
+                               style:kTransactionCardDoneeBoxText,
+                        ),
+                         SizedBox(
+                          height: queryData.size.height*0.005,
+                        ), 
+                        Text(
+                          '$time',
+                          style: kDetailTransactionCardText
+                        )
+                           ],
+                         ),
+                        SizedBox(
+                          width: queryData.size.width*0.2,
+                        ), 
+                        Text(
+                          'Rs $amount',
+                          style: kAmount,
+                        ),
                       ],
                     ),
                   ),
-                  MaterialButton(
-                    child: Text('View'),
-                    onPressed: null,
+                   SizedBox(
+                          height: queryData.size.height*0.04,
+                        ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Channel',
+                            style: kTransactionCardBoxText,
+                          ),
+                          SizedBox(
+                          height: queryData.size.height*0.005,
+                        ),
+                          Text(
+                            'Esewa Payment',
+                            style:  kTransactionCardDoneeBoxText,
+                          ),
+                        ]
+                      ),
+                       SizedBox(
+                          height: queryData.size.height*0.04,
+                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Transaction Code',
+                            style: kTransactionCardBoxText,
+                          ),
+                           SizedBox(
+                          height: queryData.size.height*0.005,
+                        ), 
+                          Text(
+                            'Esewa Payment',
+                            style:  kTransactionCardDoneeBoxText,
+                          ),
+                        ]
+                      ),
+                       SizedBox(
+                          height: queryData.size.height*0.04,
+                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Donated By',
+                            style: kTransactionCardBoxText,
+                          ),
+                           SizedBox(
+                          height: queryData.size.height*0.005,
+                        ), 
+                          Text(
+                            donor,
+                            style:  kTransactionCardDoneeBoxText,
+                          ),
+                        ]
+                      ),
+                    ],
                   ),
-                  Row(),
-                  Column(),
                 ]
-              ),
-            )
+              ).p(20)
+            ),
         ],
-      ),
+      ).p(2)
           ),
     );
   }
