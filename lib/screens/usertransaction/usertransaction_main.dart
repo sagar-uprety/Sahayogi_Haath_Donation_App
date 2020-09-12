@@ -6,7 +6,8 @@ import '../../components/transaction_components/usertransaction_card.dart';
 import 'package:intl/intl.dart';
 class UserDonationStream extends StatelessWidget {
     MyChoice stateChoice;
-    UserDonationStream({this.stateChoice});
+    String userName;
+    UserDonationStream({this.stateChoice, this.userName});
     DateTime day;
     String donor;
     String donorImage;
@@ -14,7 +15,7 @@ class UserDonationStream extends StatelessWidget {
     String donee;
     double amount;
 
-    String userName = 'shreya shrestha' ;
+    //String userName = 'shreya shrestha' ;
     chooseState(MyChoice data){
       String data1;
       if(stateChoice == MyChoice.my){

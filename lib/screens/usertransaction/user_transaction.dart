@@ -2,6 +2,9 @@ import 'usertransaction_main.dart';
 import '../../components/transaction_components/search_bar.dart';
 import '../../components/transaction_components/showtransactionButton.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../provider/user_provider.dart';
+import '../../provider/auth_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 enum MyChoice {
@@ -19,26 +22,27 @@ class _UserTransactionState extends State<UserTransaction> {
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
   MyChoice selectedChoice;
-  void getCurrentUser() async{
-    try{
-      final user=await _auth.currentUser();
+  UserProvider user;
+  bool isLoading = true;
 
-      if(user != null){
-        loggedInUser=user;
-      }
-    }
-    catch(e){
-      print(e);
-    }
-  }
   @override
   void initState() {
+    getUserData().then((value) {
+      print("SuccessFul");
+    });
+    selectedChoice = MyChoice.all;
+    
+
     super.initState();
-    getCurrentUser();
-    selectedChoice = MyChoice.my;
   }
+  getUserData() async {
+    final user = Provider.of<UserProvider>(context, listen: false);
+    await user.getUserData();
+  }
+  
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context);
     MediaQueryData queryData = MediaQuery.of(context);
     double width = queryData.size.width*0.02;
      return SafeArea(
@@ -91,7 +95,7 @@ class _UserTransactionState extends State<UserTransaction> {
                   ),
                 Container(
                     margin: EdgeInsets.symmetric(horizontal: width ),
-                    child: UserDonationStream(stateChoice: selectedChoice,)
+                    child: UserDonationStream(stateChoice: selectedChoice,userName: user.name,)
                   ),  
               ]
             ),
