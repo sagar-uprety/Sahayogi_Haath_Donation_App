@@ -39,7 +39,7 @@ class DonorModel{
 }
 
 class OrganizationModel{
-  OrganizationModel({@required this.id,@required this.name,@required this.email,@required this.address,@required this.phone,@required this.establishedDate,@required this.profileImage,@required this.type,@required this.documentImage,this.isOrganization});
+  OrganizationModel({@required this.id,@required this.name,@required this.email,@required this.address,@required this.phone,@required this.establishedDate,@required this.profileImage,@required this.type,@required this.documentImage,this.description,this.isOrganization});
 
   String id;
   String email;
@@ -47,11 +47,11 @@ class OrganizationModel{
   String phone;
   String address;
   String establishedDate;
-  // String userType;
   bool isOrganization;
   String type;
   String profileImage;
   String documentImage;
+  String description;
 
   Map<String, dynamic> toMap(){
     return {
@@ -65,6 +65,7 @@ class OrganizationModel{
       'profile_image': profileImage,
       'document_image': documentImage,
       'isOrganization': isOrganization,
+      'description': description
     };
   }
 
@@ -78,5 +79,6 @@ class OrganizationModel{
         type = model['type'],
         profileImage = model['profile_image'],
         documentImage = model['document_image'],
-        isOrganization = model['isOrganization'];
+        isOrganization = model['isOrganization'],
+        description = model['description'];
 }

@@ -14,12 +14,14 @@ class FormInput extends StatelessWidget {
   final int maxlines;
   final int maxlength;
   final bool autofocus;
+  final String value;
   const FormInput({
     this.key, //have a look at these key value
     this.hintText,
     // this.onSaved,
     this.validator,
     this.onChanged,
+    this.value,
     this.keyboardType,
     this.capitalization = TextCapitalization.none,
     this.enableSuggesstion = false,
@@ -42,6 +44,7 @@ class FormInput extends StatelessWidget {
         keyboardType: keyboardType,
         onChanged: onChanged,
         validator: validator,
+        initialValue: value,
         maxLength: maxlength,
         maxLines: maxlines,
         decoration: InputDecoration(

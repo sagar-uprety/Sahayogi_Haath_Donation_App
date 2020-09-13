@@ -14,6 +14,10 @@ extension PaddingHelper on Widget {
   Padding p(double value) =>
       Padding(padding: EdgeInsets.all(value), child: this);
 
+  /// Set symmetric padding according to `horizontalValue : x` and `VerticalValue : y`
+  Padding ps({double x = 0.0, double y = 0.0}) =>
+      Padding(padding: EdgeInsets.symmetric(horizontal: x, vertical: y),child: this,);
+
   /// Horizontal Padding 16
   Padding get hP4 =>
       Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: this);

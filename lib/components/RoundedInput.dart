@@ -6,10 +6,12 @@ class RoundedInput extends StatelessWidget {
   final IconData icon, suffixIcon;
   final bool autofocus;
   final TextEditingController controller;
+  final String initialValue;
   final bool obscureText;
   final Function onClickedSuffixIcon;
   final TextInputType keyboardType;
   final TextCapitalization capitalization;
+  final void Function(String) onChanged;
   final bool enableSuggesstion;
   final FormFieldSetter<String> onSaved;
   final FormFieldValidator<String> validator;
@@ -18,9 +20,11 @@ class RoundedInput extends StatelessWidget {
     this.key, // have a look at these key value
     this.hintText,
     this.icon,
+    this.initialValue,
     this.onSaved,
     this.obscureText = false,
     this.onClickedSuffixIcon,
+    this.onChanged,
     this.suffixIcon,
     this.keyboardType,
     this.capitalization = TextCapitalization.none,
@@ -38,10 +42,12 @@ class RoundedInput extends StatelessWidget {
         key: key,
         autocorrect: false,
         autofocus: autofocus,
+        initialValue: initialValue,
         textCapitalization: capitalization,
         enableSuggestions: enableSuggesstion,
         obscureText: obscureText,
         keyboardType: keyboardType,
+        onChanged: onChanged,
         onSaved: onSaved,
         validator: validator,
         decoration: InputDecoration(
@@ -73,10 +79,7 @@ class TextInputController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return Container(
-      width: size.width * 0.8,
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       decoration: BoxDecoration(

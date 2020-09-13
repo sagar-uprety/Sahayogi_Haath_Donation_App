@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/user_provider.dart';
-import '../../provider/auth_provider.dart';
 import '../../screens/dashboard/header.dart';
 
 import '../../theme/extention.dart';
@@ -45,21 +44,24 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: user.id == null
-          ? Center(child: CircularProgressIndicator())
-          : CustomScrollView(scrollDirection: Axis.vertical, slivers: <Widget>[
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Header(),
-                    if (user.isDonor || user.isAdmin) _category(),
-                  ],
-                ),
+      body: user.id == null ?
+        Center(child: CircularProgressIndicator()) :
+        CustomScrollView(
+          scrollDirection: Axis.vertical,
+          slivers: <Widget>[
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  _header(),
+                  if(user.isDonor || user.isAdmin)
+                    _category(),
+                ],
               ),
-            ]),
+            ),
+          ]
+        )
     );
   }
-
   //appbar
   Widget _appBar() {
     return AppBar(
@@ -71,20 +73,25 @@ class _DashboardState extends State<Dashboard> {
         color: Colors.black,
       ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('Info'), //make something cool
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.org_info);
-          },
+        IconButton(
+          icon: Icon(Icons.person,color: Colors.black,), 
+          onPressed: (){
+            Navigator.pushNamed(context, Routes.profile);
+          }
         ),
-        FlatButton(
-          child: Text('Logout'), //make something cool
-          onPressed: () {
-            AuthProvider().signOut();
-          },
-        )
       ],
     );
+  }
+  
+  Widget _header(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text("Hello,", style: TextStyles.title.subTitleColor),
+        Text(user.name, style: TextStyles.h1Style),
+        Header(),
+      ]
+    ).p16;
   }
 
   Widget _category() {
