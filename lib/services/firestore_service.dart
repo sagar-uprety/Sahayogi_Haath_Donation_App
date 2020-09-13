@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import '../models/activitymodel.dart';
 
 class FirestoreService {
   Firestore _db = Firestore.instance;
@@ -10,12 +9,9 @@ class FirestoreService {
     print('$path: $data');
     return reference.setData(data);
   }
-
-  Stream<List<Activity>> getDatas({@required String path}) {
-    return _db.collection(path).snapshots().map((snapshot) => snapshot
-        .documents
-        .map((document) => Activity.fromFirestore(document.data))
-        .toList());
+  
+  Stream<QuerySnapshot> getDatas({@required String path}){
+    return _db.collection(path).snapshots().map((snapshot) => snapshot);
   }
 
   Future<Map<String,dynamic>> getData({@required String path}) {

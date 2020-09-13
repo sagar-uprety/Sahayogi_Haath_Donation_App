@@ -4,11 +4,11 @@ import 'package:uuid/uuid.dart';
 
 import '../models/usertransactionmodel.dart';
 
+import '../services/firestore_service.dart';
 import '../services/firestore_path.dart';
-import '../services/transaction.dart';
 
 class UserTransactionProvider with ChangeNotifier{
-  final firestoreService = TransactionFirestoreService();
+  final _service = FirestoreService();
   String _transactionId;
   String _donor;
   String _donee;
@@ -43,6 +43,14 @@ class UserTransactionProvider with ChangeNotifier{
     _transactionId = transaction.transactionId;
     //_amount = transaction.amount;
   }
+
+  Stream<List<UserTransactionModel>> getTransactions(){
+    return _service.getDatas(path: FirestorePath.transactions()).map((snapshot) => snapshot
+    .documents
+    .map((doc) => UserTransactionModel.fromFirestore(doc.data))
+    .toList());
+  }
+
   saveTransaction() {
     print(_transactionId);
     if (_transactionId == null) {
@@ -52,7 +60,7 @@ class UserTransactionProvider with ChangeNotifier{
         donee: _donee,
         //amount: _amount, 
         transactionId: id);
-      firestoreService.saveTransaction(path: FirestorePath.transaction(id), data: newTransaction.toMap());
+      _service.saveData(path: FirestorePath.transaction(id), data: newTransaction.toMap());
     } else {
       //Update
       var updatedTransaction = UserTransactionModel(
@@ -60,13 +68,13 @@ class UserTransactionProvider with ChangeNotifier{
         //amount: _amount,
         donee: _donee,
         transactionId: _transactionId);
-      firestoreService.saveTransaction(path: FirestorePath.transaction(_transactionId), data: updatedTransaction.toMap());
+      _service.saveData(path: FirestorePath.transaction(_transactionId), data: updatedTransaction.toMap());
     }
     notifyListeners();
   }
 
   removeTransaction(String transactionId){
-    firestoreService.deleteTransaction(path: FirestorePath.transaction(transactionId));
+    _service.deleteData(path: FirestorePath.transaction(transactionId));
     notifyListeners();
   }
   

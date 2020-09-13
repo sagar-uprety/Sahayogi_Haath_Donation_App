@@ -3,21 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/components/transaction_components/transaction_card.dart';
-import 'package:sahayogihaath/provider/usertransaction_provider.dart';
-import 'package:sahayogihaath/screens/admintransaction/admin_transaction.dart';
-import 'package:sahayogihaath/screens/orgtransaction/organization.dart';
-import 'package:sahayogihaath/screens/usertransaction/edit_transaction.dart';
-import 'package:sahayogihaath/screens/usertransaction/test_transaction.dart';
-import 'package:sahayogihaath/screens/usertransaction/user_transaction.dart';
-import 'package:sahayogihaath/services/transaction.dart';
+
 
 import './provider/user_provider.dart';
-import './services/firestore_path.dart';
-
-import './services/firestore_service.dart';
+import './provider/usertransaction_provider.dart';
 import './provider/auth_provider.dart';
 import './provider/activity_provider.dart';
+
 import './theme/theme.dart';
 
 import './routes.dart';
@@ -43,21 +35,21 @@ class SahayogiHaath extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    final firestoreService = FirestoreService();
-    final transactionService = TransactionFirestoreService();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (context) => UserTransactionProvider(),
         ),
         StreamProvider(
-          create: (context) => transactionService.getTransaction(path: FirestorePath.transactions()),
+          // create: (context) => transactionService.getTransactions(),
+          create: (context) => UserTransactionProvider().getTransactions(),
         ),
         ChangeNotifierProvider(
           create: (context) => ActivityProvider(),
         ),
         StreamProvider(
-          create: (context) => firestoreService.getDatas(path: FirestorePath.activities()),
+          create: (context) => ActivityProvider().getActivities(),
+          // create: (context) => firestoreService.getActivities(path: FirestorePath.activities()),
         ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
