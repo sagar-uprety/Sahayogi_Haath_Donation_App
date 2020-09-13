@@ -1,11 +1,11 @@
-class UserTransaction{
+class UserTransactionModel{
   final String transactionId;
   final  String donor;
   final  String donee;
-  final  double amount;
-  UserTransaction({
+  //final  double amount;
+  UserTransactionModel({
     this.transactionId,
-    this.amount,
+    //this.amount,
     this.donor,
     this.donee,
   });
@@ -13,15 +13,15 @@ class UserTransaction{
   Map<String,dynamic>toMap(){
     return {
       'transactionId': transactionId,
-      'amount': amount,
+      //'amount': amount,
       'donor': donor,
       'donee': donee,
     };
   }
 
-  UserTransaction.fromFirestore(Map <String,dynamic> firestore)
-  : transactionId = firestore['transactionID'], 
+  UserTransactionModel.fromFirestore(Map <String,dynamic> firestore)
+  : transactionId = firestore['transactionId'], 
     donor = firestore['donor'],
-    donee = firestore['donee'],
-    amount = firestore['amount'];
+    donee = firestore['donee'];
+   // amount = firestore['amount'];
 }

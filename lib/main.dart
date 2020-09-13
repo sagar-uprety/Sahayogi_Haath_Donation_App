@@ -1,10 +1,16 @@
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/components/transaction_components/transaction_card.dart';
+import 'package:sahayogihaath/provider/usertransaction_provider.dart';
 import 'package:sahayogihaath/screens/admintransaction/admin_transaction.dart';
 import 'package:sahayogihaath/screens/orgtransaction/organization.dart';
+import 'package:sahayogihaath/screens/usertransaction/edit_transaction.dart';
+import 'package:sahayogihaath/screens/usertransaction/test_transaction.dart';
 import 'package:sahayogihaath/screens/usertransaction/user_transaction.dart';
+import 'package:sahayogihaath/services/transaction.dart';
 
 import './provider/user_provider.dart';
 import './services/firestore_path.dart';
@@ -38,9 +44,15 @@ class SahayogiHaath extends StatelessWidget {
     ]);
 
     final firestoreService = FirestoreService();
-
+    final transactionService = TransactionFirestoreService();
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserTransactionProvider(),
+        ),
+        StreamProvider(
+          create: (context) => transactionService.getTransaction(path: FirestorePath.transactions()),
+        ),
         ChangeNotifierProvider(
           create: (context) => ActivityProvider(),
         ),
@@ -59,7 +71,7 @@ class SahayogiHaath extends StatelessWidget {
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
-              return UserTransaction();
+              return Dashboard();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
