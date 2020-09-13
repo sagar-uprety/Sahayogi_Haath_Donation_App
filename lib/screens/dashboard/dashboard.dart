@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/screens/usertransaction/test_transaction.dart';
 
 import '../../provider/user_provider.dart';
 import '../../provider/auth_provider.dart';
@@ -135,6 +136,11 @@ class _DashboardState extends State<Dashboard> {
                   text: 'Donate Now',
                   onPress: () {
                     Navigator.pushNamed(context, Routes.donate);
+                  }),
+                  FlatButtonIcon(
+                  text: 'View',
+                  onPress: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> TransactionTest()));
                   }),
             ],
           ).vP4,
