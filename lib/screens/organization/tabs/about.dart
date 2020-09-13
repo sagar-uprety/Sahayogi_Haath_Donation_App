@@ -22,6 +22,7 @@ class _AboutState extends State<About> {
 }
 
 Widget getBody(context) {
+
   
   var size = MediaQuery.of(context).size;
   return SingleChildScrollView(
