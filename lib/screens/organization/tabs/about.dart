@@ -17,7 +17,6 @@ class About extends StatefulWidget {
 class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
-    OrganizationProvider organizationProvider = Provider.of<OrganizationProvider>(context);
     return getBody(context);
   }
 }

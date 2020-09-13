@@ -47,19 +47,16 @@ class _DashboardState extends State<Dashboard> {
       backgroundColor: Theme.of(context).backgroundColor,
       body: user.id == null
           ? Center(child: CircularProgressIndicator())
-          : CustomScrollView(
-              scrollDirection: Axis.vertical,
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      Header(),
-                      if (user.isDonor || user.isAdmin) _category(),
-                    ],
-                  ),
+          : CustomScrollView(scrollDirection: Axis.vertical, slivers: <Widget>[
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Header(),
+                    if (user.isDonor || user.isAdmin) _category(),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ]),
     );
   }
 
