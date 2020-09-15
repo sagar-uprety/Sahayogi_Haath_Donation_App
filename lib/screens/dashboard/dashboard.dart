@@ -136,11 +136,7 @@ class _DashboardState extends State<Dashboard> {
                   onPress: () {
                     Navigator.pushNamed(context, Routes.donate);
                   }),
-                  FlatButtonIcon(
-                  text: 'View',
-                  onPress: () {
-                    Navigator.pushNamed(context, Routes.donation_list);
-                  }),
+                  
             ],
           ).vP4,
         ),
@@ -250,6 +246,7 @@ class _DashboardState extends State<Dashboard> {
               )
             ],
           ).hP16,
+           
           _getOrgList(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -263,7 +260,8 @@ class _DashboardState extends State<Dashboard> {
               ),
             ],
           ).p16,
-          _getTransactionList()
+          _getTransactionList(),
+         
         ],
       ),
     );

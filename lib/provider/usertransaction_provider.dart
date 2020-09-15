@@ -9,17 +9,21 @@ import '../services/firestore_path.dart';
 
 class UserTransactionProvider with ChangeNotifier{
   final _service = FirestoreService();
+  String time;
+  String donorImage;
   String _transactionId;
-  // String _donor;
-  // String _donee;
-  String _amount;
+  String donor;
+  String donee;
+  String amount;
   var uuid = Uuid();
 
   loadValues(UserTransactionModel transaction) {
-    // _donor = transaction.donor;
-    // _donee = transaction.donee;
+    time = transaction.time;
+    donorImage = transaction.donorImage;
+    donor = transaction.donor;
+    donee = transaction.donee;
     _transactionId = transaction.transactionId;
-    _amount = transaction.amount;
+    amount = transaction.amount;
   }
 
   Stream<List<UserTransactionModel>> getTransactions(){
@@ -29,31 +33,19 @@ class UserTransactionProvider with ChangeNotifier{
     .toList());
   }
 
-  saveTransaction(String amount,) {
-    print(_transactionId);
+  saveTransaction(String amount, String donor, String donee, String donorImage, String time) {
     if (_transactionId == null) {
       String id = uuid.v4();
       var newTransaction = UserTransactionModel(
-        // donor: _donor, 
-        // donee: _donee,
+        time: time,
+        donorImage: donorImage,
+        donor: donor, 
+        donee: donee,
         amount: amount, 
         transactionId: id);
       _service.saveData(path: FirestorePath.transaction(id), data: newTransaction.toMap());
       print(amount);
-    } else {
-      //Update
-      var updatedTransaction = UserTransactionModel(
-        // donor: _donor, 
-        amount: _amount,
-        // donee: _donee,
-        transactionId: _transactionId);
-      _service.saveData(path: FirestorePath.transaction(_transactionId), data: updatedTransaction.toMap());
     }
-    notifyListeners();
-  }
-
-  removeTransaction(String transactionId){
-    _service.deleteData(path: FirestorePath.transaction(transactionId));
     notifyListeners();
   }
   
