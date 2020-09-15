@@ -255,7 +255,7 @@ class _DashboardState extends State<Dashboard> {
               FlatButtonIcon(
                 text: "View All",
                 onPress: () {
-                  Navigator.pushNamed(context, Routes.donation_list);
+                  Navigator.pushNamed(context, Routes.user_transaction);
                 },
               ),
             ],

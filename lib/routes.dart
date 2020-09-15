@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import './screens/admintransaction/admin_transaction.dart';
 import './screens/donationDetail.dart';
 import './screens/orgtransaction/organization.dart';
-import './screens/usertransaction/test_transaction.dart';
-import './screens/usertransaction/user_transaction.dart';
+import './screens/transaction/user_transaction.dart';
 import './screens/edit_user_details.dart';
 import './screens/login/login_main.dart';
 import './screens/signup/signup_main.dart';
@@ -58,8 +57,6 @@ class Routes {
     editData: (context) => EditData(),
     donate: (context) => DonateScreen(),
     donate_success: (context) => DonateSuccess(),
-    // donation_list: (context) => DonationList(),
-    donation_list: (context) => TransactionTest(),
     donation_info: (context) => DonationInfo(),
     activities_list: (context) => ActivitiesList(),
     activity_info: (context) => ActivityInfo(),
