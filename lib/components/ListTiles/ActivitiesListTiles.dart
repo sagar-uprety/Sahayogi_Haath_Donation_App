@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
-import '../theme/theme.dart';
-import '../theme/text_styles.dart';
-import '../theme/light_color.dart';
-import '../theme/extention.dart';
-import '../routes.dart';
+import '../../theme/theme.dart';
+import '../../theme/text_styles.dart';
+import '../../theme/light_color.dart';
+import '../../theme/extention.dart';
+import '../../routes.dart';
 
-class DonationListTiles extends StatefulWidget {
+class ActivitiesListTiles extends StatefulWidget {
   final List listprovider;
   final int itemCount;
   final double heightPercent;
-  DonationListTiles({
+  ActivitiesListTiles({
     this.listprovider,
     this.itemCount,
     this.heightPercent,
   });
   @override
-  _DonationListTilesState createState() => _DonationListTilesState();
+  _ActivitiesListTilesState createState() => _ActivitiesListTilesState();
 }
 
-class _DonationListTilesState extends State<DonationListTiles> {
+class _ActivitiesListTilesState extends State<ActivitiesListTiles> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: AppTheme.lightTheme.backgroundColor,
       height: AppTheme.fullHeight(context) *
           widget.heightPercent, //check this. is it perfect?
       child: ListView.builder(

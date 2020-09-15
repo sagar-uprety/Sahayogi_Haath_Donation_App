@@ -9,6 +9,7 @@ class CloudPath {
   static const String profile = 'profile';
   static const String document = 'documents';
   static const String activities = 'activities';
+  static const String organizations = 'organizations';
 }
 
 class ImageUploader {

@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
-import '../theme/theme.dart';
-import '../theme/text_styles.dart';
-import '../theme/light_color.dart';
-import '../theme/extention.dart';
-import '../routes.dart';
+import '../../theme/theme.dart';
+import '../../theme/text_styles.dart';
+import '../../theme/light_color.dart';
+import '../../theme/extention.dart';
+import '../../routes.dart';
 
-class ActivitiesListTiles extends StatefulWidget {
+class OrgListTiles extends StatefulWidget {
   final List listprovider;
   final int itemCount;
   final double heightPercent;
   final double hm;
-  ActivitiesListTiles(
-      {this.listprovider, this.itemCount, this.heightPercent, this.hm = 16});
+  OrgListTiles({
+    this.listprovider,
+    this.itemCount,
+    this.heightPercent,
+    this.hm = 16,
+  });
   @override
-  _ActivitiesListTilesState createState() => _ActivitiesListTilesState();
+  _OrgListTilesState createState() => _OrgListTilesState();
 }
 
-class _ActivitiesListTilesState extends State<ActivitiesListTiles> {
+class _OrgListTilesState extends State<OrgListTiles> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,11 +73,11 @@ class _ActivitiesListTilesState extends State<ActivitiesListTiles> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.listprovider[index].description,
+                        'address',
                         style: TextStyles.bodySm.subTitleColor.bold,
                       ),
                       Text(
-                        "08/21/2020 (3)",
+                        "type",
                         style: TextStyles.bodySm.subTitleColor,
                       ),
                     ],

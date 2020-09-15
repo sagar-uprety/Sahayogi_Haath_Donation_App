@@ -11,8 +11,8 @@ import '../../theme/theme.dart';
 import '../../routes.dart';
 
 import '../../models/activitymodel.dart';
-import '../../components/ActivitiesListTiles.dart';
-import '../../components/DonationListTiles.dart';
+import '../../components/ListTiles/ActivitiesListTiles.dart';
+import '../../components/ListTiles/DonationListTiles.dart';
 import '../../components/FlatButtonIcon.dart';
 
 class Dashboard extends StatefulWidget {
@@ -44,24 +44,24 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: user.id == null ?
-        Center(child: CircularProgressIndicator()) :
-        CustomScrollView(
-          scrollDirection: Axis.vertical,
-          slivers: <Widget>[
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  _header(),
-                  if(user.isDonor || user.isAdmin)
-                    _category(),
-                ],
-              ),
+      body: user.id == null
+          ? Center(child: CircularProgressIndicator())
+          : CustomScrollView(
+              scrollDirection: Axis.vertical,
+              slivers: <Widget>[
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      _header(),
+                      if (user.isDonor || user.isAdmin) _category(),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ]
-        )
     );
   }
+
   //appbar
   Widget _appBar() {
     return AppBar(
@@ -74,24 +74,25 @@ class _DashboardState extends State<Dashboard> {
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.person,color: Colors.black,), 
-          onPressed: (){
-            Navigator.pushNamed(context, Routes.profile);
-          }
-        ),
+            icon: Icon(
+              Icons.person,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.profile);
+            }),
       ],
     );
   }
-  
-  Widget _header(){
+
+  Widget _header() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text("Hello,", style: TextStyles.title.subTitleColor),
-        Text(user.name, style: TextStyles.h1Style),
-        Header(),
-      ]
-    ).p16;
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text("Hello,", style: TextStyles.title.subTitleColor),
+          Text(user.name, style: TextStyles.h1Style),
+          Header(),
+        ]).p16;
   }
 
   Widget _category() {

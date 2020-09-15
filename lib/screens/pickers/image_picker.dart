@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../provider/user_provider.dart';
+import 'package:sahayogihaath/provider/organization_provider.dart';
 import '../../image_upload.dart';
 import '../../provider/activity_provider.dart';
 import '../../theme/theme.dart';
 
-enum ImageType { userProfile, document, activity }
+enum ImageType { userProfile, document, activity, organization }
 
 class ImageFilePicker extends StatefulWidget {
   ImageFilePicker(this.imagePickFn, {this.imageType, this.existingImage});
@@ -65,13 +66,19 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
       activityProvider.changeImage(pickedImageFile);
     }
 
-    if(widget.imageType == ImageType.userProfile) {
-      final userProvider = Provider.of<UserProvider>(context,listen: false);
+    if (widget.imageType == ImageType.userProfile) {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
 
       userProvider.changeProfileImage(pickedImageFile);
-    }
+      if (widget.imageType == ImageType.organization) {
+        final orgProvider =
+            Provider.of<OrganizationProvider>(context, listen: false);
 
-    widget.imagePickFn(pickedImageFile);
+        orgProvider.changeImage(pickedImageFile);
+      }
+
+      widget.imagePickFn(pickedImageFile);
+    }
   }
 
   @override
@@ -86,6 +93,8 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
                 _documentImage(context),
               if (widget.imageType == ImageType.activity)
                 _activityImage(context),
+              if (widget.imageType == ImageType.organization)
+                _organizationImage(context),
               FlatButton.icon(
                 textColor: Theme.of(context).primaryColor,
                 onPressed: _pickImage,
@@ -137,6 +146,19 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
   }
 
   Widget _activityImage(BuildContext context) {
+    return Container(
+      height: _pickedImage != null ? AppTheme.fullHeight(context) * 0.30 : 0,
+      width: _pickedImage != null ? AppTheme.fullWidth(context) * 0.90 : 0,
+      decoration: BoxDecoration(
+        image: _pickedImage != null
+            ? DecorationImage(image: FileImage(_pickedImage), fit: BoxFit.cover)
+            : null,
+        borderRadius: BorderRadius.circular(10),
+      ),
+    );
+  }
+
+  Widget _organizationImage(BuildContext context) {
     return Container(
       height: _pickedImage != null ? AppTheme.fullHeight(context) * 0.30 : 0,
       width: _pickedImage != null ? AppTheme.fullWidth(context) * 0.90 : 0,

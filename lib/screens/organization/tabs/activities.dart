@@ -1,30 +1,19 @@
 import 'package:flutter/material.dart';
+import '../../../theme/extention.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/components/RoundedButton.dart';
+import '../../../theme/text_styles.dart';
+import '../../../components/ListTiles/ActivitiesListTiles.dart';
+import '../../../models/activitymodel.dart';
 
-import '../../theme/extention.dart';
-import '../../theme/text_styles.dart';
-
-import '../../models/activitymodel.dart';
-// import '../../components/TopAppBar.dart';
-import '../../routes.dart';
-import '../../components/ListTiles/ActivitiesListTiles.dart';
-
-class ActivitiesList extends StatefulWidget {
+class TabActvities extends StatefulWidget {
   @override
-  _ActivitiesListState createState() => _ActivitiesListState();
+  _TabActvitiesState createState() => _TabActvitiesState();
 }
 
-class _ActivitiesListState extends State<ActivitiesList> {
+class _TabActvitiesState extends State<TabActvities> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: _appBar(),
-        backgroundColor: Color(0XFFfefefe),
-        body: _activitiesList(),
-      ),
-    );
+    return _activitiesList();
   }
 
   // appbar
@@ -71,12 +60,12 @@ class _ActivitiesListState extends State<ActivitiesList> {
           ],
         ).hP16,
         _activityTile().vP8,
-        RoundButton(
-          text: "Publish Activity",
-          onPress: () {
-            Navigator.pushReplacementNamed(context, Routes.edit_activity);
-          },
-        ),
+        // RoundButton(
+        //   text: "Publish Activity",
+        //   onPress: () {
+        //     Navigator.pushReplacementNamed(context, Routes.edit_activity);
+        //   },
+        // ),
       ],
     );
   }
