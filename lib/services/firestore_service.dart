@@ -14,6 +14,10 @@ class FirestoreService {
     return _db.collection(path).snapshots().map((snapshot) => snapshot);
   }
 
+  Stream<QuerySnapshot> getUserTransaction({@required String path, String username}){
+    return _db.collection(path).where('donor', isEqualTo: username).snapshots().map((snapshot) => snapshot);
+  }
+
   Future<Map<String,dynamic>> getData({@required String path}) {
     return _db.document(path).get().then((doc) => doc.data);
   }

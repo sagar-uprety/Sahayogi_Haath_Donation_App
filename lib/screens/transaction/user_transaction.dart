@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/usertransaction_provider.dart';
+import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
 
 import '../../components/transaction_components/search_bar.dart';
 import '../../components/transaction_components/showtransactionButton.dart';
@@ -16,21 +18,22 @@ enum MyChoice {
 }
 
 class UserTransaction extends StatefulWidget {
+ 
   static const id = 'usertransaction';
   @override
   _UserTransactionState createState() => _UserTransactionState();
 }
 
 class _UserTransactionState extends State<UserTransaction> {
+  
   MyChoice selectedChoice;
-  UserProvider user;
   bool isLoading = true;
+
+
 
  
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context);
-    
     MediaQueryData queryData = MediaQuery.of(context);
     double width = queryData.size.width*0.02;
      return SafeArea(
