@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/services/firestore_service.dart';
 
 import './screens/organization/org_info.dart';
 import './screens/welcome/welcome.dart';
@@ -51,11 +52,11 @@ class SahayogiHaath extends StatelessWidget {
         ),
         StreamProvider(
           create: (context) =>
-              firestoreService.getDatas(path: FirestorePath.activities()),
+              FirestoreService().getDatas(path: FirestorePath.activities()),
         ),
         StreamProvider(
           create: (context) =>
-              firestoreService.getdocsData(path: FirestorePath.organizations()),
+              FirestoreService().getdocsData(path: FirestorePath.organizations()),
         ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
