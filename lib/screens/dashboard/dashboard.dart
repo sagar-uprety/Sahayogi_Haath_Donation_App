@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/usertransaction_provider.dart';
 
 import '../../provider/user_provider.dart';
 import '../../screens/dashboard/header.dart';
-
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
 import '../../theme/text_styles.dart';
@@ -16,7 +16,8 @@ import '../../components/ListTiles/DonationListTiles.dart';
 import '../../components/FlatButtonIcon.dart';
 
 class Dashboard extends StatefulWidget {
-  @override
+  
+    @override
   _DashboardState createState() => _DashboardState();
 }
 
@@ -28,7 +29,6 @@ class _DashboardState extends State<Dashboard> {
     getUserData().then((value) {
       print("SuccessFul");
     });
-
     super.initState();
   }
 
@@ -36,32 +36,36 @@ class _DashboardState extends State<Dashboard> {
     final user = Provider.of<UserProvider>(context, listen: false);
     await user.getUserData();
   }
+  
+   
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context);
+    
 
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: user.id == null ?
-        Center(child: CircularProgressIndicator()) :
-        CustomScrollView(
-          scrollDirection: Axis.vertical,
-          slivers: <Widget>[
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  _header(),
-                  if(user.isDonor || user.isAdmin)
-                    _category(),
-                ],
-              ),
+      body: user.id == null
+          ? Center(child: CircularProgressIndicator())
+          : CustomScrollView(
+              scrollDirection: Axis.vertical,
+              slivers: <Widget>[
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      _header(),
+                      if (user.isDonor || user.isAdmin) _category(),
+                    ],
+                  ),
+                ),
+                _generateLists(),
+              ],
             ),
-          ]
-        )
     );
   }
+
   //appbar
   Widget _appBar() {
     return AppBar(
@@ -74,24 +78,25 @@ class _DashboardState extends State<Dashboard> {
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.person,color: Colors.black,), 
-          onPressed: (){
-            Navigator.pushNamed(context, Routes.profile);
-          }
-        ),
+            icon: Icon(
+              Icons.person,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.profile);
+            }),
       ],
     );
   }
-  
-  Widget _header(){
+
+  Widget _header() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text("Hello,", style: TextStyles.title.subTitleColor),
-        Text(user.name, style: TextStyles.h1Style),
-        Header(),
-      ]
-    ).p16;
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text("Hello,", style: TextStyles.title.subTitleColor),
+          Text(user.name, style: TextStyles.h1Style),
+          Header(),
+        ]).p16;
   }
 
   Widget _category() {
@@ -108,6 +113,7 @@ class _DashboardState extends State<Dashboard> {
                   onPress: () {
                     Navigator.pushNamed(context, Routes.donate);
                   }),
+                  
             ],
           ).vP4,
         ),
@@ -202,6 +208,8 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _generateLists() {
+    final transactionProvider = Provider.of<UserTransactionProvider>(context);
+    
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -217,6 +225,7 @@ class _DashboardState extends State<Dashboard> {
               )
             ],
           ).hP16,
+           
           _getOrgList(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -225,12 +234,17 @@ class _DashboardState extends State<Dashboard> {
               FlatButtonIcon(
                 text: "View All",
                 onPress: () {
-                  Navigator.pushNamed(context, Routes.donation_list);
+                  setState(() {
+                    transactionProvider.getUserName(user.name);
+                  });
+                  
+                  Navigator.pushNamed(context, Routes.user_transaction);
                 },
               ),
             ],
           ).p16,
-          _getTransactionList()
+          _getTransactionList(),
+         
         ],
       ),
     );
@@ -257,4 +271,5 @@ class _DashboardState extends State<Dashboard> {
           )
         : Center(child: CircularProgressIndicator());
   }
+  
 }

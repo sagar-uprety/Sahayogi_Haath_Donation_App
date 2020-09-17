@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../provider/user_provider.dart';
+import 'package:sahayogihaath/provider/organization_provider.dart';
 import '../../image_upload.dart';
 import '../../provider/activity_provider.dart';
 import '../../theme/theme.dart';
@@ -65,13 +66,19 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
       activityProvider.changeImage(pickedImageFile);
     }
 
-    if(widget.imageType == ImageType.userProfile) {
-      final userProvider = Provider.of<UserProvider>(context,listen: false);
+    if (widget.imageType == ImageType.userProfile) {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
 
       userProvider.changeProfileImage(pickedImageFile);
-    }
+      if (widget.imageType == ImageType.organization) {
+        final orgProvider =
+            Provider.of<OrganizationProvider>(context, listen: false);
 
-    widget.imagePickFn(pickedImageFile);
+        orgProvider.changeImage(pickedImageFile);
+      }
+
+      widget.imagePickFn(pickedImageFile);
+    }
   }
 
   @override
