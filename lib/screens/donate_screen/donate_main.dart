@@ -103,6 +103,7 @@ class _DonateScreenState extends State<DonateScreen> {
     );
     try {
       final res = await _esewaPnp.initPayment(payment: eSewaPayment);
+      //donation update
       Navigator.pushReplacementNamed(context, Routes.donate_success,
           arguments: res);
     } on ESewaPaymentException catch (e) {
