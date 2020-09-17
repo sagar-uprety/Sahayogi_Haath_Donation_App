@@ -8,7 +8,6 @@ import '../../theme/text_styles.dart';
 import '../../components/caterogy_tile_single.dart';
 import '../../components/ListTiles/OrgListTiles.dart';
 
-
 String selectedCategory = "Orphanage";
 
 class ExploreOrganization extends StatefulWidget {
@@ -46,23 +45,43 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
               decoration: BoxDecoration(
                   color: Color(0xffEFEFEF),
                   borderRadius: BorderRadius.circular(14)),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.search),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "Search",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 19,
-                    ),
-                  )
-                ],
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Search",
+                  border: InputBorder.none,
+                  prefix: Icon(Icons.search),
+                ),
+                onChanged: (value) {
+                  
+                },
               ),
             ).vP8,
+
+            // Container(
+            //   padding: EdgeInsets.symmetric(horizontal: 24),
+            //   height: 50,
+            //   decoration: BoxDecoration(
+            //       color: Color(0xffEFEFEF),
+            //       borderRadius: BorderRadius.circular(14)),
+            //   child: Row(
+            //     children: <Widget>[
+            //       Icon(Icons.search),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Text(
+            //         "Search",
+            //         style: TextStyle(
+            //           color: Colors.grey,
+            //           fontSize: 19,
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ).vP8,
+
             Text("Categories", style: TextStyles.title.bold).vP8,
+
             Container(
               height: 30,
               child: ListView.builder(
@@ -95,8 +114,5 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
             hm: 0,
           )
         : Center(child: CircularProgressIndicator());
-
-
   }
-
 }
