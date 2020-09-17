@@ -3,12 +3,14 @@ class OrganizationDetail {
   final String description;
   final String title;
   final String image;
+  final String searchKey;
 
   OrganizationDetail({
     this.organizationID,
     this.description,
     this.title,
     this.image,
+    this.searchKey,
   });
 
   Map<String, dynamic> toMap() {
@@ -16,7 +18,8 @@ class OrganizationDetail {
       'organizationID': organizationID,
       'description': description,
       'title': title,
-      'image': image
+      'image': image,
+      'searchKey': searchKey
     };
   }
 
@@ -24,5 +27,6 @@ class OrganizationDetail {
       : organizationID = firestore['organizationID'],
         description = firestore['description'],
         title = firestore['title'],
-        image = firestore['image'];
+        image = firestore['image'],
+        searchKey = firestore['searchKey'];
 }

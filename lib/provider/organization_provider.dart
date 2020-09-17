@@ -20,6 +20,7 @@ class OrganizationProvider with ChangeNotifier {
   String _title;
   String _description;
   String _organizationID;
+  String _searchKey;
   File _image;
   String _imageUrl;
   var uuid = Uuid();
@@ -28,6 +29,7 @@ class OrganizationProvider with ChangeNotifier {
   //getters
   String get title => _title;
   String get description => _description;
+    String get searchKey => _searchKey;
   String get image => _imageUrl;
 
   SaveState get saveState => _state;
@@ -45,6 +47,11 @@ class OrganizationProvider with ChangeNotifier {
     notifyListeners();
   }
 
+   changeSearchKey(String value) {
+    _searchKey = value;
+    notifyListeners();
+  }
+
   changeImage(File value) {
     _image = value;
     notifyListeners();
@@ -55,6 +62,7 @@ class OrganizationProvider with ChangeNotifier {
     _description = organizationDetail.description;
     _organizationID = organizationDetail.organizationID;
     _imageUrl = organizationDetail.image;
+    _searchKey = organizationDetail.searchKey;
   }
 
   Future<bool> uploadImage(uid) async {

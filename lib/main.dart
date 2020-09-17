@@ -3,9 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/provider/organization_provider.dart';
-import 'package:sahayogihaath/screens/organization/exploreorg.dart';
+import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
 import './provider/user_provider.dart';
 import './services/firestore_path.dart';
+import './screens/organization/exploreorg.dart';
 
 import './services/firestore_service.dart';
 import './provider/auth_provider.dart';

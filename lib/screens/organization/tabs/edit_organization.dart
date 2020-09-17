@@ -19,6 +19,7 @@ class _EditOrganizationState extends State<EditOrganization> {
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+  final searchKeyController = TextEditingController();
 
   String imageUrl;
   File _orgImage;
@@ -49,6 +50,7 @@ class _EditOrganizationState extends State<EditOrganization> {
       //Controller Update
       titleController.text = widget.organizationDetail.title;
       descriptionController.text = widget.organizationDetail.description;
+      searchKeyController.text = widget.organizationDetail.searchKey;
       imageUrl = widget.organizationDetail.image;
       // State Update
       new Future.delayed(Duration.zero, () {
@@ -77,6 +79,12 @@ class _EditOrganizationState extends State<EditOrganization> {
             decoration: InputDecoration(hintText: 'description'),
             onChanged: (value) {
               organizationProvider.changeDescription(value);
+            },
+          ),
+          TextField(
+            decoration: InputDecoration(hintText: 'searchKey'),
+            onChanged: (value) {
+              organizationProvider.changeSearchKey(value);
             },
           ),
           ImageFilePicker(

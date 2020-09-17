@@ -23,8 +23,37 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
     "Edlerly Care"
   ];
 
+  List<OrganizationDetail> organizationdetail = [];
+  List<OrganizationDetail> filterlist = [];
+
+  TextEditingController searchController = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      filterList();
+    });
+  }
+
+  filterList() {
+    List<OrganizationDetail> _organizationdetail = [];
+    _organizationdetail.addAll(organizationdetail);
+    if (searchController.text.isEmpty) {
+      _organizationdetail.retainWhere((organizationDetail) {
+        String searchTerm = searchController.text.toLowerCase();
+        String orgtitle = organizationDetail.title.toLowerCase();
+        return orgtitle.contains(searchTerm);
+      });
+      setState(() {
+        filterlist = _organizationdetail;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool isSearching = searchController.text.isNotEmpty;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -46,14 +75,15 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
                   color: Color(0xffEFEFEF),
                   borderRadius: BorderRadius.circular(14)),
               child: TextField(
+                controller: searchController,
                 decoration: InputDecoration(
                   hintText: "Search",
                   border: InputBorder.none,
-                  prefix: Icon(Icons.search),
+                  prefix: Icon(
+                    Icons.search,
+                  ),
                 ),
-                onChanged: (value) {
-                  
-                },
+                onChanged: (value) {},
               ),
             ).vP8,
 
@@ -85,13 +115,17 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
             Container(
               height: 30,
               child: ListView.builder(
-                  itemCount: categories.length,
+                  itemCount: isSearching == true
+                      ? filterlist.length
+                      : categories.length,
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return CategorieTile(
-                      category: categories[index],
+                      category: isSearching == true
+                          ? filterlist[index]
+                          : categories[index],
                       isSelected: selectedCategory == categories[index],
                       context: this,
                     );
