@@ -1,9 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sahayogihaath/components/RoundedButton.dart';
 import 'package:esewa_pnp/esewa.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:esewa_pnp/esewa_pnp.dart';
+import 'package:provider/provider.dart';
+
 import '../../routes.dart';
+
+import '../../provider/user_provider.dart';
+import '../../provider/usertransaction_provider.dart';
 
 class DonateScreen extends StatefulWidget {
   @override
@@ -95,6 +102,7 @@ class _DonateScreenState extends State<DonateScreen> {
   }
 
   Future<void> pay() async {
+   
     ESewaPayment eSewaPayment = ESewaPayment(
       amount: _amount,
       productName: "Org Test 1",
@@ -103,7 +111,8 @@ class _DonateScreenState extends State<DonateScreen> {
     );
     try {
       final res = await _esewaPnp.initPayment(payment: eSewaPayment);
-      //donation update
+      updateFirestore(res);
+      print(res.referenceId);
       Navigator.pushReplacementNamed(context, Routes.donate_success,
           arguments: res);
     } on ESewaPaymentException catch (e) {
@@ -118,4 +127,22 @@ class _DonateScreenState extends State<DonateScreen> {
       content: Text(msg),
     );
   }
+
+  Future <void> updateFirestore(ESewaResult res) async{
+    final user = Provider.of<UserProvider>(context, listen: false); 
+    final ESewaResult response = res;
+    String donor = user.name;
+    String donorId = user.id;
+    String donorImage = user.profileImage;
+    String amount = response.totalAmount;
+    String donee = response.productName;
+    String id = response.referenceId;
+    DateTime date = DateTime.now();
+    String time = DateFormat('dd MMM yyyy HH:mm:ss').format(date);
+    
+    final transactionProvider = Provider.of<UserTransactionProvider>(context, listen: false);
+
+    await transactionProvider.saveTransaction(amount, donorId, donor, donee, donorImage, time, id);
+  }
+   
 }

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sahayogihaath/class.dart';
 import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
 import 'package:sahayogihaath/screens/orgtransaction/organization.dart';
-import 'package:uuid/uuid.dart';
-
 import '../models/usertransactionmodel.dart';
 
 import '../services/firestore_service.dart';
@@ -22,12 +20,7 @@ class UserTransactionProvider with ChangeNotifier{
   String donee;
   String amount;
   String userName;
-  var uuid = Uuid();
 
-  // String getUser1(){
-  //   String userName =  getUser.user();
-  //   return userName;
-  // }
   
   loadValues(UserTransactionModel transaction) {
     time = transaction.time;
@@ -38,7 +31,7 @@ class UserTransactionProvider with ChangeNotifier{
     amount = transaction.amount;
   }
   
-  
+ 
    Stream<List<UserTransactionModel>> getUserName(String user) {
         currentUser = user;
         return _service.getUserTransaction(
@@ -59,10 +52,9 @@ class UserTransactionProvider with ChangeNotifier{
     .map((doc) => UserTransactionModel.fromFirestore(doc.data))
     .toList());
   }
-  saveTransaction(String amount, String donor, String donee, String donorImage, String time) {
-    if (_transactionId == null) {
-      String id = uuid.v4();
+  saveTransaction(String amount, String donorId, String donor, String donee, String donorImage, String time, String id) {
       var newTransaction = UserTransactionModel(
+        donorId: donorId,
         time: time,
         donorImage: donorImage,
         donor: donor, 
@@ -71,7 +63,6 @@ class UserTransactionProvider with ChangeNotifier{
         transactionId: id);
       _service.saveData(path: FirestorePath.transaction(id), data: newTransaction.toMap());
       print(amount);
-    }
     notifyListeners();
   }
   

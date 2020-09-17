@@ -1,5 +1,6 @@
 class UserTransactionModel{
   final String time;
+  final String donorId;
   final String transactionId;
   final  String donor;
   final String donorImage;
@@ -12,6 +13,7 @@ class UserTransactionModel{
     this.donor,
     this.donorImage,
     this.donee,
+    this.donorId
   });
 
   Map<String,dynamic>toMap(){
@@ -22,6 +24,7 @@ class UserTransactionModel{
       'donor': donor,
       'donee': donee,
       'time': time,
+      'donorId' : donorId,
     };
   }
 
@@ -31,5 +34,6 @@ class UserTransactionModel{
     donor = firestore['donor'],
     donee = firestore['donee'],
    amount = firestore['amount'],
-   time = firestore['time'];
+   time = firestore['time'],
+   donorId = firestore['donorId'];
 }

@@ -44,7 +44,8 @@ String setDate(DateTime day){
   @override
   Widget build(BuildContext context) {
      DateFormat format = new DateFormat("dd MMM yyyy");
-    var formattedDate = format.parse(time);
+    DateTime formattedDate = format.parse(time);
+    String displayTime = DateFormat('dd MMM yyyy').format(formattedDate);
      double donatedamount = double.parse(amount);
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
@@ -122,7 +123,7 @@ String setDate(DateTime day){
                                   width: MediaQuery.of(context).size.width*0.02,
                                 ),
                                 Text(
-                                  '$time',
+                                  '$displayTime',
                                   style: kDetailTransactionCardText
                                 ),
                               ],
