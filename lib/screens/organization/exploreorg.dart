@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/models/organizationmodel.dart';
+
+import '../../models/usermodel.dart';
+import '../signup/signup_org.dart';
 
 import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
 
-import '../../components/caterogy_tile_single.dart';
+import '../../components/category_tile_single.dart';
 import '../../components/ListTiles/OrgListTiles.dart';
 
 
-String selectedCategory = "Orphanage";
 
 class ExploreOrganization extends StatefulWidget {
   @override
@@ -17,12 +18,13 @@ class ExploreOrganization extends StatefulWidget {
 }
 
 class _ExploreOrganizationState extends State<ExploreOrganization> {
-  List<String> categories = [
-    "Orphanage",
-    "Child Care",
-    "Nusring Home",
-    "Edlerly Care"
-  ];
+  String selectedCategory = organizationType[0];
+
+  changeSelectedCategory(String value){
+    setState(() {
+      selectedCategory = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,15 +68,16 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
             Container(
               height: 30,
               child: ListView.builder(
-                  itemCount: categories.length,
+                  itemCount: organizationType.length,
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return CategorieTile(
-                      category: categories[index],
-                      isSelected: selectedCategory == categories[index],
+                    return CategoryTile(
+                      category: organizationType[index],
+                      isSelected: selectedCategory == organizationType[index],
                       context: this,
+                      changeCategory: changeSelectedCategory
                     );
                   }),
             ).vP8,
@@ -86,7 +89,7 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
   }
 
   Widget _getOrgList() {
-    final organinfo = Provider.of<List<OrganizationDetail>>(context);
+    final organinfo = Provider.of<List<OrganizationModel>>(context);
     return (organinfo != null)
         ? OrgListTiles(
             listprovider: organinfo,
@@ -95,8 +98,5 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
             hm: 0,
           )
         : Center(child: CircularProgressIndicator());
-
-
   }
-
 }

@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
-import 'package:sahayogihaath/services/firestore_service.dart';
 
-import './screens/organization/org_info.dart';
+import './screens/dashboard/dashboard.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
 
@@ -17,7 +15,6 @@ import './provider/usertransaction_provider.dart';
 import './provider/auth_provider.dart';
 import './provider/activity_provider.dart';
 
-import './services/firestore_path.dart';
 import './theme/theme.dart';
 import './routes.dart';
 
@@ -55,9 +52,12 @@ class SahayogiHaath extends StatelessWidget {
               ActivityProvider().getActivities(),
         ),
         StreamProvider(
-          create: (context) =>
-              FirestoreService().getdocsData(path: FirestorePath.organizations()),
+          create: (context) => UserProvider().getOrganizations()
         ),
+        // StreamProvider(
+        //   create: (context) =>
+        //       FirestoreService().getdocsData(path: FirestorePath.organizations()),
+        // ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
         ),
