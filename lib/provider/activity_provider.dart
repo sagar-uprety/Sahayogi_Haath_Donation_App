@@ -53,6 +53,13 @@ class ActivityProvider with ChangeNotifier {
     _imageUrl = activity.image;
   }
 
+  Stream<List<Activity>> getActivities(){
+    return firestoreService.getDatas(path: FirestorePath.activities()).map((snapshot) => snapshot
+    .documents
+    .map((doc) => Activity.fromFirestore(doc.data))
+    .toList());
+  }
+
   Future<bool> uploadImage(uid) async {
     bool isUploaded = false;
     await ImageUploader()

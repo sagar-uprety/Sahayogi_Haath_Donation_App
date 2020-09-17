@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/FireStoredata.dart';
+import 'package:sahayogihaath/class.dart';
+import 'package:sahayogihaath/provider/usertransaction_provider.dart';
+import 'package:sahayogihaath/screens/orgtransaction/organization.dart';
 
 import '../../provider/user_provider.dart';
 import '../../screens/dashboard/header.dart';
@@ -16,7 +20,8 @@ import '../../components/ListTiles/DonationListTiles.dart';
 import '../../components/FlatButtonIcon.dart';
 
 class Dashboard extends StatefulWidget {
-  @override
+  
+    @override
   _DashboardState createState() => _DashboardState();
 }
 
@@ -28,7 +33,6 @@ class _DashboardState extends State<Dashboard> {
     getUserData().then((value) {
       print("SuccessFul");
     });
-
     super.initState();
   }
 
@@ -36,10 +40,13 @@ class _DashboardState extends State<Dashboard> {
     final user = Provider.of<UserProvider>(context, listen: false);
     await user.getUserData();
   }
+  
+   
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context);
+    
 
     return Scaffold(
       appBar: _appBar(),
@@ -109,6 +116,7 @@ class _DashboardState extends State<Dashboard> {
                   onPress: () {
                     Navigator.pushNamed(context, Routes.donate);
                   }),
+                  
             ],
           ).vP4,
         ),
@@ -203,6 +211,8 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _generateLists() {
+    final transactionProvider = Provider.of<UserTransactionProvider>(context);
+    
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -218,6 +228,7 @@ class _DashboardState extends State<Dashboard> {
               )
             ],
           ).hP16,
+           
           _getOrgList(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -226,12 +237,18 @@ class _DashboardState extends State<Dashboard> {
               FlatButtonIcon(
                 text: "View All",
                 onPress: () {
-                  Navigator.pushNamed(context, Routes.donation_list);
+                  setState(() {
+                    String userName = user.name;
+                    transactionProvider.getUserName(userName);
+                  });
+                  
+                  Navigator.pushNamed(context, Routes.user_transaction);
                 },
               ),
             ],
           ).p16,
-          _getTransactionList()
+          _getTransactionList(),
+         
         ],
       ),
     );
@@ -258,4 +275,5 @@ class _DashboardState extends State<Dashboard> {
           )
         : Center(child: CircularProgressIndicator());
   }
+  
 }

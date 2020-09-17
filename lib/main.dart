@@ -1,21 +1,23 @@
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/organization_provider.dart';
-import 'package:sahayogihaath/screens/organization/org_info.dart';
-import 'package:sahayogihaath/screens/organization/tabs/edit_organization.dart';
-import './provider/user_provider.dart';
-import './services/firestore_path.dart';
 
-import './services/firestore_service.dart';
-import './provider/auth_provider.dart';
-import './provider/activity_provider.dart';
-import './theme/theme.dart';
-
-import './routes.dart';
+import './screens/organization/org_info.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
+
+
+import './provider/user_provider.dart';
+import './provider/organization_provider.dart';
+import './provider/usertransaction_provider.dart';
+import './provider/auth_provider.dart';
+import './provider/activity_provider.dart';
+
+import './services/firestore_path.dart';
+import './theme/theme.dart';
+import './routes.dart';
 
 void main() {
   runApp(
@@ -35,10 +37,15 @@ class SahayogiHaath extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    final firestoreService = FirestoreService();
-
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserTransactionProvider(),
+        ),
+        StreamProvider(
+          // create: (context) => transactionService.getTransactions(),
+          create: (context) => UserTransactionProvider().getTransactions(),
+        ),
         ChangeNotifierProvider(
           create: (context) => ActivityProvider(),
         ),
