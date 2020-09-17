@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
 import 'package:sahayogihaath/services/firestore_service.dart';
 
 import './screens/organization/org_info.dart';
@@ -44,7 +45,6 @@ class SahayogiHaath extends StatelessWidget {
           create: (context) => UserTransactionProvider(),
         ),
         StreamProvider(
-          // create: (context) => transactionService.getTransactions(),
           create: (context) => UserTransactionProvider().getTransactions(),
         ),
         ChangeNotifierProvider(
@@ -52,7 +52,7 @@ class SahayogiHaath extends StatelessWidget {
         ),
         StreamProvider(
           create: (context) =>
-              FirestoreService().getDatas(path: FirestorePath.activities()),
+              ActivityProvider().getActivities(),
         ),
         StreamProvider(
           create: (context) =>
@@ -74,7 +74,8 @@ class SahayogiHaath extends StatelessWidget {
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
               // return BottomTabBar();
-              return OrganizationInfo();
+              // return OrganizationInfo();
+              return Dashboard();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();

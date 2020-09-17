@@ -64,6 +64,7 @@ class _DashboardState extends State<Dashboard> {
                     ],
                   ),
                 ),
+                _generateLists(),
               ],
             ),
     );
@@ -238,8 +239,7 @@ class _DashboardState extends State<Dashboard> {
                 text: "View All",
                 onPress: () {
                   setState(() {
-                    String userName = user.name;
-                    transactionProvider.getUserName(userName);
+                    transactionProvider.getUserName(user.name);
                   });
                   
                   Navigator.pushNamed(context, Routes.user_transaction);

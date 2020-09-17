@@ -20,8 +20,8 @@ class FirestoreService {
     return reference.updateData(data);
   }
 
-  Stream<QuerySnapshot> getUserTransaction({@required String path, String username}){
-    return _db.collection(path).where('donor', isEqualTo: username).snapshots().map((snapshot) => snapshot);
+  Stream<QuerySnapshot> getConditionData({@required String path,@required String key,@required value}){
+    return _db.collection(path).where(key, isEqualTo: value).snapshots().map((snapshot) => snapshot);
   }
 
    Stream<List<OrganizationDetail>> getdocsData({@required String path}) {
