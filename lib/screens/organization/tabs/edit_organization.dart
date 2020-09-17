@@ -46,10 +46,10 @@ class _EditOrganizationState extends State<EditOrganization> {
         productProvider.loadValues(OrganizationDetail());
       });
     } else {
-      //Controller Update
-      titleController.text = widget.organizationDetail.title;
-      descriptionController.text = widget.organizationDetail.description;
-      imageUrl = widget.organizationDetail.image;
+      // Controller Update
+      // titleController.text = widget.organizationDetail.title;
+      // descriptionController.text = widget.organizationDetail.description;
+      // imageUrl = widget.organizationDetail.image;
       // State Update
       new Future.delayed(Duration.zero, () {
         final productProvider =
