@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/models/organizationmodel.dart';
+
+import '../../models/usermodel.dart';
+import '../signup/signup_org.dart';
 
 import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
 
-import '../../components/caterogy_tile_single.dart';
+import '../../components/category_tile_single.dart';
 import '../../components/ListTiles/OrgListTiles.dart';
-
-String selectedCategory = "Orphanage";
 
 class ExploreOrganization extends StatefulWidget {
   @override
@@ -16,44 +16,18 @@ class ExploreOrganization extends StatefulWidget {
 }
 
 class _ExploreOrganizationState extends State<ExploreOrganization> {
-  List<String> categories = [
-    "Orphanage",
-    "Child Care",
-    "Nusring Home",
-    "Edlerly Care"
-  ];
+  String selectedCategory = organizationType[0];
 
-  List<OrganizationDetail> organizationdetail = [];
-  List<OrganizationDetail> filterlist = [];
+  changeSelectedCategory(String value) {
+    setState(() {
+      selectedCategory = value;
+    });
+  }
 
   TextEditingController searchController = new TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    searchController.addListener(() {
-      filterList();
-    });
-  }
-
-  filterList() {
-    List<OrganizationDetail> _organizationdetail = [];
-    _organizationdetail.addAll(organizationdetail);
-    if (searchController.text.isEmpty) {
-      _organizationdetail.retainWhere((organizationDetail) {
-        String searchTerm = searchController.text.toLowerCase();
-        String orgtitle = organizationDetail.title.toLowerCase();
-        return orgtitle.contains(searchTerm);
-      });
-      setState(() {
-        filterlist = _organizationdetail;
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    bool isSearching = searchController.text.isNotEmpty;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -115,20 +89,16 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
             Container(
               height: 30,
               child: ListView.builder(
-                  itemCount: isSearching == true
-                      ? filterlist.length
-                      : categories.length,
+                  itemCount: organizationType.length,
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return CategorieTile(
-                      category: isSearching == true
-                          ? filterlist[index]
-                          : categories[index],
-                      isSelected: selectedCategory == categories[index],
-                      context: this,
-                    );
+                    return CategoryTile(
+                        category: organizationType[index],
+                        isSelected: selectedCategory == organizationType[index],
+                        context: this,
+                        changeCategory: changeSelectedCategory);
                   }),
             ).vP8,
             _getOrgList(),
@@ -139,7 +109,7 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
   }
 
   Widget _getOrgList() {
-    final organinfo = Provider.of<List<OrganizationDetail>>(context);
+    final organinfo = Provider.of<List<OrganizationModel>>(context);
     return (organinfo != null)
         ? OrgListTiles(
             listprovider: organinfo,

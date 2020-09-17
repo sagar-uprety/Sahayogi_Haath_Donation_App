@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+
 import '../image_upload.dart';
 import '../provider/activity_provider.dart';
 import '../models/usermodel.dart';
@@ -92,6 +93,14 @@ class UserProvider extends ChangeNotifier {
         loadOrganizationData(OrganizationModel.fromFirestore(value));
       }
     });
+  }
+
+  Stream<List<OrganizationModel>> getOrganizations(){
+    return _service.getConditionData(path: FirestorePath.users(), key: 'isOrganization', value: true)
+        .map((snapshot) => snapshot
+        .documents
+        .map((doc) =>OrganizationModel.fromFirestore(doc.data))
+        .toList());
   }
 
   loadDonorData(DonorModel donor) {

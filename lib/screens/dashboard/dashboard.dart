@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/usertransaction_provider.dart';
 
+import '../../provider/usertransaction_provider.dart';
 import '../../provider/user_provider.dart';
 import '../../screens/dashboard/header.dart';
 import '../../theme/extention.dart';
@@ -36,14 +36,10 @@ class _DashboardState extends State<Dashboard> {
     final user = Provider.of<UserProvider>(context, listen: false);
     await user.getUserData();
   }
-  
-   
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context);
-    
-
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Theme.of(context).backgroundColor,
@@ -244,7 +240,6 @@ class _DashboardState extends State<Dashboard> {
             ],
           ).p16,
           _getTransactionList(),
-         
         ],
       ),
     );

@@ -5,7 +5,7 @@ import '../../theme/light_color.dart';
 import '../../theme/extention.dart';
 import '../../routes.dart';
 
-class ActivitiesListTiles extends StatefulWidget {
+class ActivitiesListTiles extends StatelessWidget {
   final List listprovider;
   final int itemCount;
   final double heightPercent;
@@ -14,21 +14,17 @@ class ActivitiesListTiles extends StatefulWidget {
     this.itemCount,
     this.heightPercent,
   });
-  @override
-  _ActivitiesListTilesState createState() => _ActivitiesListTilesState();
-}
 
-class _ActivitiesListTilesState extends State<ActivitiesListTiles> {
   @override
   Widget build(BuildContext context) {
     return Container(
       color: AppTheme.lightTheme.backgroundColor,
       height: AppTheme.fullHeight(context) *
-          widget.heightPercent, //check this. is it perfect?
+          heightPercent, //check this. is it perfect?
       child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
-          itemCount: widget.itemCount,
+          itemCount: itemCount,
           itemBuilder: (context, index) {
             return Container(
               margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -64,14 +60,14 @@ class _ActivitiesListTilesState extends State<ActivitiesListTiles> {
                     ),
                   ),
                   title: Text(
-                    widget.listprovider[index].title,
+                    listprovider[index].title,
                     style: TextStyles.title.bold,
                   ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.listprovider[index].description,
+                        listprovider[index].description,
                         style: TextStyles.bodySm.subTitleColor.bold,
                       ),
                       Text(
@@ -89,7 +85,7 @@ class _ActivitiesListTilesState extends State<ActivitiesListTiles> {
               ).ripple(
                 () {
                   Navigator.pushNamed(context, Routes.activity_info,
-                      arguments: widget.listprovider[index]);
+                      arguments: listprovider[index]);
                 },
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),

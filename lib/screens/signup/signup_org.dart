@@ -42,8 +42,6 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
   File _userImage;
   File _documentImage;
 
- 
-
   bool obscurePassword = true;
   String _pickedDate = '';
   TextEditingController controller;

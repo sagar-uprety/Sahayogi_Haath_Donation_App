@@ -70,15 +70,15 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
 
       userProvider.changeProfileImage(pickedImageFile);
-      if (widget.imageType == ImageType.organization) {
-        final orgProvider =
-            Provider.of<OrganizationProvider>(context, listen: false);
+      // if (widget.imageType == ImageType.organization) {
+      //   final orgProvider =
+      //       Provider.of<OrganizationProvider>(context, listen: false);
 
-        orgProvider.changeImage(pickedImageFile);
-      }
+      //   orgProvider.changeImage(pickedImageFile);
+      // }
 
-      widget.imagePickFn(pickedImageFile);
     }
+    widget.imagePickFn(pickedImageFile);
   }
 
   @override

@@ -58,11 +58,9 @@ class OrganizationProvider with ChangeNotifier {
   }
 
   loadValues(OrganizationDetail organizationDetail) {
-    _title = organizationDetail.title;
     _description = organizationDetail.description;
     _organizationID = organizationDetail.organizationID;
-    _imageUrl = organizationDetail.image;
-    _searchKey = organizationDetail.searchKey;
+    _imageUrl = organizationDetail.bannerImage;
   }
 
   Future<bool> uploadImage(uid) async {
@@ -90,9 +88,8 @@ class OrganizationProvider with ChangeNotifier {
       if (uploadStatus) {
         //create new activity
         var newOrganization = OrganizationDetail(
-            title: title,
             description: description,
-            image: image,
+            bannerImage: image,
             organizationID: id);
         await firestoreService.saveData(
             path: FirestorePath.organization(id),
@@ -106,9 +103,8 @@ class OrganizationProvider with ChangeNotifier {
       bool uploadStatus = await uploadImage(_organizationID);
       if (uploadStatus) {
         var updatedOrganization = OrganizationDetail(
-            title: title,
             description: description,
-            image: image,
+            bannerImage: image,
             organizationID: _organizationID);
         firestoreService.saveData(
             path: FirestorePath.organization(_organizationID),
