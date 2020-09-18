@@ -14,10 +14,9 @@ class OrganizationInfo extends StatefulWidget {
 }
 
 class _OrganizationInfoState extends State<OrganizationInfo> {
-  
   @override
   Widget build(BuildContext context) {
-    
+   
 
     return DefaultTabController(
         length: 4,

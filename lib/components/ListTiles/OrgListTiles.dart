@@ -17,7 +17,7 @@ class OrgListTiles extends StatelessWidget {
     this.heightPercent,
     this.hm = 16,
   });
- 
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -87,7 +87,7 @@ class OrgListTiles extends StatelessWidget {
                 ),
               ).ripple(
                 () {
-                  Navigator.pushNamed(context, Routes.activity_info,
+                  Navigator.pushNamed(context, Routes.org_info,
                       arguments: listprovider[index]);
                 },
                 borderRadius: BorderRadius.all(

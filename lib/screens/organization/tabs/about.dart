@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:sahayogihaath/models/organizationmodel.dart';
+import 'package:provider/provider.dart';
+
 import '../../../constants.dart';
 import '../../../theme/extention.dart';
 import '../../../theme/theme.dart';
 import '../../../components/overview_detail.dart';
+import '../../../theme/text_styles.dart';
+import '../../../models/usermodel.dart';
+
+
 
 class About extends StatefulWidget {
   @override
@@ -17,19 +24,41 @@ class _AboutState extends State<About> {
 }
 
 Widget getBody(context) {
+  final OrganizationModel passedOrganization =
+      ModalRoute.of(context).settings.arguments;
+
+final organdetail = Provider.of<List<OrganizationDetail>>(context);
+
+  // final OrganizationDetail passedOrganizationdetail =
+  //     ModalRoute.of(context).settings.arguments;
+
+  TextStyle titleStyle = TextStyles.title.copyWith(fontSize: 25).bold;
+  if (AppTheme.fullWidth(context) < 393) {
+    titleStyle = TextStyles.title.copyWith(fontSize: 23).bold;
+  }
+
   var size = MediaQuery.of(context).size;
   return SingleChildScrollView(
     child: Stack(
       children: <Widget>[
+        // Container(
+        //   width: double.infinity,
+        //   height: size.height * 0.5,
+        //   decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //         image: AssetImage("assets/images1/children.jpg"),
+        //         fit: BoxFit.cover),
+        //   ),
+        // ),
+
         Container(
-          width: double.infinity,
-          height: size.height * 0.5,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images1/children.jpg"),
-                fit: BoxFit.cover),
+          height: AppTheme.fullHeight(context) * 0.42,
+          child: Image.network(
+            passedOrganization.profileImage,
+            fit: BoxFit.fill,
           ),
         ),
+
         Container(
           margin: EdgeInsets.only(top: size.height * 0.45),
           width: double.infinity,
@@ -49,14 +78,12 @@ Widget getBody(context) {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          "Food Distribution",
-                          style: TextStyle(
-                              height: 1.6,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                          passedOrganization
+                              .name, //name //avoid overflow problem
+                          style: titleStyle,
                         ),
                         Text(
-                          "2020/02/09",
+                          passedOrganization.establishedDate,
                           style: TextStyle(fontSize: 13),
                         ),
                       ],
@@ -102,11 +129,10 @@ Widget getBody(context) {
                       height: 10,
                     ),
                     Text(
-                      "Nobody wants to stare at a blank wall all day long, which is why wall art is such a crucial step in the decorating process. And once you start brainstorming, the rest is easy. From gallery walls to DIY pieces like framing your accessories and large-scale photography, we've got plenty of wall art ideas to spark your creativity. And where better to look for inspiration that interior designer-decorated walls",
-                      style: TextStyle(
-                        height: 1.8,
-                      ),
-                      textAlign: TextAlign.justify,
+                      "zhgfydsgf",
+                      // passedOrganization
+                      //     .description, //name //avoid overflow problem
+                      style: titleStyle,
                     ),
                   ],
                 ),

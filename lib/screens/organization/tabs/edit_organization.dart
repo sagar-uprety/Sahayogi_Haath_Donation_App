@@ -19,7 +19,6 @@ class _EditOrganizationState extends State<EditOrganization> {
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
-  final searchKeyController = TextEditingController();
 
   String imageUrl;
   File _orgImage;
@@ -78,12 +77,6 @@ class _EditOrganizationState extends State<EditOrganization> {
             decoration: InputDecoration(hintText: 'description'),
             onChanged: (value) {
               organizationProvider.changeDescription(value);
-            },
-          ),
-          TextField(
-            decoration: InputDecoration(hintText: 'searchKey'),
-            onChanged: (value) {
-              organizationProvider.changeSearchKey(value);
             },
           ),
           ImageFilePicker(

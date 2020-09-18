@@ -52,6 +52,7 @@ class Routes {
   static const String user_transaction = "/user_transaction";
   static const String admin_transaction = "/admin_transaction";
   static const String donation_detail = "/donationDetail";
+
  
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
