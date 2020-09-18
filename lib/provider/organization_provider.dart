@@ -11,7 +11,10 @@ import '../models/organizationmodel.dart';
 
 enum SaveState { Uninitialized, Saving, Saved }
 
+String currentUserid;
+
 class OrganizationProvider with ChangeNotifier {
+  final _service = FirestoreService();
 
   final firestoreService = FirestoreService();
 
@@ -25,11 +28,10 @@ class OrganizationProvider with ChangeNotifier {
   String _imageUrl;
   var uuid = Uuid();
 
- 
   //getters
   String get title => _title;
   String get description => _description;
-    String get searchKey => _searchKey;
+  String get searchKey => _searchKey;
   String get image => _imageUrl;
 
   SaveState get saveState => _state;
@@ -37,9 +39,7 @@ class OrganizationProvider with ChangeNotifier {
   //setters
   changeTitle(String value) {
     _title = value;
-    notifyListeners(
-      
-    );
+    notifyListeners();
   }
 
   changeDescription(String value) {
@@ -47,7 +47,7 @@ class OrganizationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-   changeSearchKey(String value) {
+  changeSearchKey(String value) {
     _searchKey = value;
     notifyListeners();
   }
@@ -88,9 +88,7 @@ class OrganizationProvider with ChangeNotifier {
       if (uploadStatus) {
         //create new activity
         var newOrganization = OrganizationDetail(
-            description: description,
-            bannerImage: image,
-            organizationID: id);
+            description: description, bannerImage: image, organizationID: id);
         await firestoreService.saveData(
             path: FirestorePath.organization(id),
             data: newOrganization.toMap());
@@ -121,4 +119,16 @@ class OrganizationProvider with ChangeNotifier {
         path: FirestorePath.organization(organizationID));
     notifyListeners(); //check
   }
+
+  // Stream<List<OrganizationDetail>> getUserID() {
+  //   return _service
+  //       .getConditionData(
+  //         path: FirestorePath.transactions(),
+  //         key: 'organizationID',
+  //         value: currentUserid,
+  //       )
+  //       .map((snapshot) => snapshot.documents
+  //           .map((doc) => OrganizationDetail.fromFirestore(doc.data))
+  //           .toList());
+  // }
 }

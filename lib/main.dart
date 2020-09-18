@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/screens/activities_screen/acitivity_list.dart';
+import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
 import 'package:sahayogihaath/screens/organization/exploreorg.dart';
+import 'package:sahayogihaath/screens/organization/tabs/activities.dart';
 // import 'package:sahayogihaath/screens/organization/exploreorg.dart';
 // import 'package:sahayogihaath/screens/organization/org_info.dart';
 // import 'package:sahayogihaath/screens/organization/tabs/about.dart';
@@ -15,6 +17,7 @@ import './screens/splash.dart';
 // import './screens/organization/tabs/edit_organization.dart';
 // import './screens/organization/exploreorg.dart';
 // import './screens/activities_screen/acitivity_list.dart';
+import './screens/activities_screen/edit_activity.dart';
 
 import './provider/user_provider.dart';
 import './provider/organization_provider.dart';
@@ -57,7 +60,15 @@ class SahayogiHaath extends StatelessWidget {
         StreamProvider(
           create: (context) => ActivityProvider().getActivities(),
         ),
-        StreamProvider(create: (context) => UserProvider().getOrganizations()),
+
+        StreamProvider(
+          create: (context) => UserProvider().getOrganizations(),
+        ),
+
+        // StreamProvider(
+        //   create: (context) => ActivityProvider().getUserId(),
+        // ),
+
         // StreamProvider(
         //   create: (context) =>
         //       FirestoreService().getdocsData(path: FirestorePath.organizations()),
@@ -78,7 +89,7 @@ class SahayogiHaath extends StatelessWidget {
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
               // return BottomTabBar();
-              return ExploreOrganization();
+              return Dashboard();
               // return ActivitiesList();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/activitymodel.dart';
 import '../../provider/activity_provider.dart';
+import '../../provider/user_provider.dart';
 import '../../screens/pickers/image_picker.dart';
 
 import '../../theme/theme.dart';
@@ -51,6 +52,7 @@ class _EditActivityState extends State<EditActivity> {
       new Future.delayed(Duration.zero, () {
         final productProvider =
             Provider.of<ActivityProvider>(context, listen: false);
+
         productProvider.loadValues(Activity());
       });
     } else {
@@ -71,6 +73,7 @@ class _EditActivityState extends State<EditActivity> {
   @override
   Widget build(BuildContext context) {
     final activityProvider = Provider.of<ActivityProvider>(context);
+
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Color(0XFFfefefe),
@@ -137,8 +140,11 @@ class _EditActivityState extends State<EditActivity> {
                             bool validated = _formKey.currentState.validate();
                             FocusScope.of(context).unfocus();
                             // _formKey.currentState.save();
+                            final user = Provider.of<UserProvider>(context,
+                                listen: false);
+                            await user.getUserData();
                             if (validated) {
-                              await activityProvider.saveActivity();
+                              await activityProvider.saveActivity(user.id);
                               Navigator.pushReplacementNamed(
                                   context, Routes.activities_list);
                             }

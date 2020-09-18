@@ -16,8 +16,7 @@ import '../../components/ListTiles/DonationListTiles.dart';
 import '../../components/FlatButtonIcon.dart';
 
 class Dashboard extends StatefulWidget {
-  
-    @override
+  @override
   _DashboardState createState() => _DashboardState();
 }
 
@@ -109,7 +108,6 @@ class _DashboardState extends State<Dashboard> {
                   onPress: () {
                     Navigator.pushNamed(context, Routes.donate);
                   }),
-                  
             ],
           ).vP4,
         ),
@@ -156,7 +154,7 @@ class _DashboardState extends State<Dashboard> {
               offset: Offset(4, 4),
               blurRadius: 10,
               color: lightColor.withOpacity(.8),
-            )
+            ),
           ],
         ),
         child: ClipRRect(
@@ -205,7 +203,7 @@ class _DashboardState extends State<Dashboard> {
 
   Widget _generateLists() {
     final transactionProvider = Provider.of<UserTransactionProvider>(context);
-    
+
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -221,7 +219,6 @@ class _DashboardState extends State<Dashboard> {
               )
             ],
           ).hP16,
-           
           _getOrgList(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -233,7 +230,7 @@ class _DashboardState extends State<Dashboard> {
                   setState(() {
                     transactionProvider.getUserName(user.name);
                   });
-                  
+
                   Navigator.pushNamed(context, Routes.user_transaction);
                 },
               ),
@@ -266,5 +263,4 @@ class _DashboardState extends State<Dashboard> {
           )
         : Center(child: CircularProgressIndicator());
   }
-  
 }

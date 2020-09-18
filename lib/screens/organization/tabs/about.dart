@@ -27,7 +27,6 @@ Widget getBody(context) {
   final OrganizationModel passedOrganization =
       ModalRoute.of(context).settings.arguments;
 
-final organdetail = Provider.of<List<OrganizationDetail>>(context);
 
   // final OrganizationDetail passedOrganizationdetail =
   //     ModalRoute.of(context).settings.arguments;
