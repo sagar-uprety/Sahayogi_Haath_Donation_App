@@ -20,7 +20,7 @@ import './screens/splash.dart';
 import './screens/activities_screen/edit_activity.dart';
 
 import './provider/user_provider.dart';
-import './provider/organization_provider.dart';
+import 'provider/users_extra.dart/organization_provider.dart';
 import './provider/usertransaction_provider.dart';
 import './provider/auth_provider.dart';
 import './provider/activity_provider.dart';

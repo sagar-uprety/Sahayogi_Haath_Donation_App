@@ -225,8 +225,13 @@ class _DescriptionSectionState extends State<DescriptionSection> {
                 children:[
                   Text(
                     user.description,
-                    textAlign: TextAlign.center,
-                    style: TextStyles.bodySm.copyWith(fontWeight: FontWeight.w400),
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      fontSize: FontSizes.bodySm,
+                      fontWeight: FontWeight.w400,
+                      height: 1.8,
+                      letterSpacing: 0.4,
+                    ),
                   ).ps(x: 15),
                   FlatButton(
                     textColor: Colors.blue,

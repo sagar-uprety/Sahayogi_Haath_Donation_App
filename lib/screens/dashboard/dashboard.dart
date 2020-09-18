@@ -247,7 +247,7 @@ class _DashboardState extends State<Dashboard> {
     return (activities != null)
         ? ActivitiesListTiles(
             listprovider: activities,
-            itemCount: activities.length >= 5 ? 5 : 1,
+            itemCount: activities.length >= 5 ? 5 : activities.length,
             heightPercent: activities.length >= 5 ? 0.4 : 0.15,
           )
         : Center(child: CircularProgressIndicator());
@@ -258,7 +258,7 @@ class _DashboardState extends State<Dashboard> {
     return (activities != null)
         ? DonationListTiles(
             listprovider: activities,
-            itemCount: activities.length >= 5 ? 5 : 1,
+            itemCount: activities.length >= 5 ? 5 : activities.length,
             heightPercent: activities.length >= 5 ? 0.4 : 0.15,
           )
         : Center(child: CircularProgressIndicator());

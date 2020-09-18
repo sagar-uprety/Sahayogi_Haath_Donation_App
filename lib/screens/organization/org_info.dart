@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/components/FlatButtonIcon.dart';
+
+import '../../components/FlatButtonIcon.dart';
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
 import '../../theme/theme.dart';

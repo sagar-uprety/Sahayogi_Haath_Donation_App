@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/models/organizationmodel.dart';
-import 'package:sahayogihaath/provider/organization_provider.dart';
+import 'package:sahayogihaath/provider/users_extra.dart/organization_provider.dart';
 import 'package:sahayogihaath/screens/organization/org_info.dart';
 import '../../pickers/image_picker.dart';
 import 'dart:io';
@@ -70,7 +70,7 @@ class _EditOrganizationState extends State<EditOrganization> {
           TextField(
             decoration: InputDecoration(hintText: 'title'),
             onChanged: (value) {
-              organizationProvider.changeTitle(value);
+              // organizationProvider.changeTitle(value);
             },
           ),
           TextField(
@@ -87,7 +87,7 @@ class _EditOrganizationState extends State<EditOrganization> {
           RaisedButton(
               child: Text('Submit'),
               onPressed: () {
-                organizationProvider.saveOrganizationInfo();
+                // organizationProvider.saveOrganizationInfo();
                 FocusScope.of(context).unfocus();
                 // Navigator.of(context).push(MaterialPageRoute(
                 //     builder: (context) => OrganizationInfo()));

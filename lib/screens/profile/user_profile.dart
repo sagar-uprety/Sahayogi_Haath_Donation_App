@@ -54,6 +54,7 @@ class Profile extends StatelessWidget {
                     text: 'Help and Support',
                     onPress: () {
                       print('Help and Suppoort');
+                      Navigator.pushNamed(context, Routes.org_info);
                     },
                     icon: Icons.help),
                 NavigatingButton(

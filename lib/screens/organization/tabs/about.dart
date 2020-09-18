@@ -9,7 +9,13 @@ import '../../../components/overview_detail.dart';
 import '../../../theme/text_styles.dart';
 import '../../../models/usermodel.dart';
 
+import 'package:provider/provider.dart';
 
+import '../../../provider/user_provider.dart';
+import '../../../screens/dashboard/header.dart';
+import '../../../screens/profile/edit_data_field.dart';
+import '../../../theme/text_styles.dart';
+import '../../../theme/extention.dart';
 
 class About extends StatefulWidget {
   @override
@@ -19,27 +25,24 @@ class About extends StatefulWidget {
 class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
-    return getBody(context);
-  }
-}
+    var size = MediaQuery.of(context).size;
+    final user = Provider.of<UserProvider>(context);
 
-Widget getBody(context) {
-  final OrganizationModel passedOrganization =
-      ModalRoute.of(context).settings.arguments;
+    Widget getBody(context) {
+      final OrganizationModel passedOrganization =
+          ModalRoute.of(context).settings.arguments;
 
+      // final OrganizationDetail passedOrganizationdetail =
+      //     ModalRoute.of(context).settings.arguments;
 
-  // final OrganizationDetail passedOrganizationdetail =
-  //     ModalRoute.of(context).settings.arguments;
+      TextStyle titleStyle = TextStyles.title.copyWith(fontSize: 25).bold;
+      if (AppTheme.fullWidth(context) < 393) {
+        titleStyle = TextStyles.title.copyWith(fontSize: 23).bold;
+      }
 
-  TextStyle titleStyle = TextStyles.title.copyWith(fontSize: 25).bold;
-  if (AppTheme.fullWidth(context) < 393) {
-    titleStyle = TextStyles.title.copyWith(fontSize: 23).bold;
-  }
-
-  var size = MediaQuery.of(context).size;
-  return SingleChildScrollView(
-    child: Stack(
-      children: <Widget>[
+      var size = MediaQuery.of(context).size;
+      return SingleChildScrollView(
+          child: Stack(children: <Widget>[
         // Container(
         //   width: double.infinity,
         //   height: size.height * 0.5,
@@ -103,23 +106,16 @@ Widget getBody(context) {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          OverviewDetail(
-                              info: 'Rs. 1500.0', title: 'Total Donation'),
-                          OverviewDetail(info: '3', title: 'Organization'),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Color(0xffffffff),
-                                  width: 3,
-                                  style: BorderStyle.solid),
-                              borderRadius: BorderRadius.all(Radius.circular(
-                                  AppTheme.fullWidth(context) * 0.10)),
-                            ),
-                            child: CircleAvatar(
-                                backgroundColor: Colors.blue,
-                                backgroundImage:
-                                    AssetImage("assets/images1/children.jpg"),
-                                radius: AppTheme.fullWidth(context) * .10),
+                          Text(
+                            user.name,
+                            style: TextStyle(
+                                height: 1.6,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            user.establishedDate,
+                            style: TextStyle(fontSize: 13),
                           ),
                         ],
                       ).p16,
@@ -138,8 +134,8 @@ Widget getBody(context) {
               ],
             ).vP16,
           ),
-        ),
-      ],
-    ),
-  );
+        )
+      ]));
+    }
+  }
 }
