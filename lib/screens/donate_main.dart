@@ -94,7 +94,7 @@ class _DonateState extends State<Donate> {
       ),
     );
   }
-
+  
   Future<void> pay() async {
     ESewaPayment eSewaPayment = ESewaPayment(
       amount: _amount,

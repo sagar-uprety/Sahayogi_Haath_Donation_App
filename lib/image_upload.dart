@@ -9,7 +9,7 @@ class CloudPath {
   static const String profile = 'profile';
   static const String document = 'documents';
   static const String activities = 'activities';
-  static const String organizations = 'organizations';
+  static const String org_banner = 'org_banners';
 }
 
 class ImageUploader {
