@@ -7,10 +7,10 @@ class UserTransactionCard extends StatelessWidget {
    DateTime day;
    String donee;
    String donor;
-   String time;
+   Timestamp datetime;
    String amount;
   String donorImage;
-  UserTransactionCard({this.day,@required this.donor, @required this.donee, @required this.time, @required this.donorImage, @required this.amount});
+  UserTransactionCard({this.day,@required this.donor, @required this.donee, @required this.datetime, @required this.donorImage, @required this.amount});
   
                       
 String setDate(DateTime day){
@@ -43,9 +43,13 @@ String setDate(DateTime day){
   
   @override
   Widget build(BuildContext context) {
-     DateFormat format = new DateFormat("dd MMM yyyy");
-    DateTime formattedDate = format.parse(time);
-    String displayTime = DateFormat('dd MMM yyyy').format(formattedDate);
+    DateTime date = datetime.toDate();
+    String time = DateFormat('dd MMM yyyy').format(date);
+    // DateTime date = DateTime.parse(time);
+    // print(date);
+    //  DateFormat format = new DateFormat("dd MMM yyyy");
+    // DateTime formattedDate = format.parse(time);
+    // String displayTime = DateFormat('dd MMM yyyy').format(formattedDate);
      double donatedamount = double.parse(amount);
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
@@ -55,7 +59,7 @@ String setDate(DateTime day){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(setDate(formattedDate), style: kTransactionCardBoxText,),
+        Text(setDate(date), style: kTransactionCardBoxText,),
         SizedBox(
                     height: queryData.size.height*0.007,
                   ),
@@ -123,7 +127,7 @@ String setDate(DateTime day){
                                   width: MediaQuery.of(context).size.width*0.02,
                                 ),
                                 Text(
-                                  '$displayTime',
+                                  '$time',
                                   style: kDetailTransactionCardText
                                 ),
                               ],

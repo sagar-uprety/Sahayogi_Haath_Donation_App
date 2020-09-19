@@ -138,7 +138,7 @@ class _DonateScreenState extends State<DonateScreen> {
     String donee = response.productName;
     String id = response.referenceId;
     DateTime date = DateTime.now();
-    String time = DateFormat('dd MMM yyyy HH:mm:ss').format(date);
+    Timestamp time = Timestamp.fromDate(date);
     
     final transactionProvider = Provider.of<UserTransactionProvider>(context, listen: false);
 

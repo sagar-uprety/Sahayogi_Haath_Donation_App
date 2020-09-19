@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/organizationmodel.dart';
+import 'package:intl/intl.dart';
 
 class FirestoreService {
   Firestore _db = Firestore.instance;
@@ -20,8 +21,16 @@ class FirestoreService {
     return reference.updateData(data);
   }
 
-  Stream<QuerySnapshot> getUserTransaction({@required String path, String username}){
-    return _db.collection(path).where('donorId', isEqualTo: username).orderBy('time').snapshots().map((snapshot) => snapshot);
+  Stream<QuerySnapshot> getUserTransaction({@required String path, String username, DateTime startDate, DateTime endDate}){
+    if(startDate != null && endDate != null){
+      Timestamp starttime = Timestamp.fromDate(startDate);
+      Timestamp endtime = Timestamp.fromDate(endDate);
+      return _db.collection(path).where('donorId', isEqualTo: username).where('time', isGreaterThan: starttime ).where('time',isLessThan: endtime).orderBy('time', descending: true).snapshots().map((snapshot) => snapshot);
+    }
+    else{
+      return _db.collection(path).where('donorId', isEqualTo: username).orderBy('time', descending: true).snapshots().map((snapshot) => snapshot);
+
+    }
   }
 
    Stream<List<OrganizationDetail>> getdocsData({@required String path}) {

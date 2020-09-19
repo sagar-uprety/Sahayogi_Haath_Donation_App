@@ -1,19 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sahayogihaath/class.dart';
-import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
-import 'package:sahayogihaath/screens/orgtransaction/organization.dart';
+import 'package:intl/intl.dart';
+
 import '../models/usertransactionmodel.dart';
 
 import '../services/firestore_service.dart';
 import '../services/firestore_path.dart';
-import '../provider/user_provider.dart';
 
   String currentUser;
 class UserTransactionProvider with ChangeNotifier{
-  final getUser = Sorting();
   final _service = FirestoreService();
-  String time;
+  Timestamp time;
   String donorImage;
   String _transactionId;
   String donor;
@@ -32,15 +30,19 @@ class UserTransactionProvider with ChangeNotifier{
   }
   
  
-   Stream<List<UserTransactionModel>> getUserName(String user) {
+
+   Stream<List<UserTransactionModel>> getSortedBy(String user, DateTime startDate, DateTime endDate) {
         currentUser = user;
-        return _service.getUserTransaction(
-      path: FirestorePath.transactions(), 
-      username: currentUser,
-    ).map((snapshot) => snapshot
-    .documents
-    .map((doc) => UserTransactionModel.fromFirestore(doc.data))
-    .toList());
+        print(startDate);
+             return _service.getUserTransaction(
+              path: FirestorePath.transactions(), 
+              username: currentUser,
+              startDate: startDate,
+              endDate: endDate,
+            ).map((snapshot) => snapshot
+            .documents
+            .map((doc) => UserTransactionModel.fromFirestore(doc.data))
+            .toList());
    } 
 
   Stream<List<UserTransactionModel>> getTransactions(){
@@ -52,7 +54,7 @@ class UserTransactionProvider with ChangeNotifier{
     .map((doc) => UserTransactionModel.fromFirestore(doc.data))
     .toList());
   }
-  saveTransaction(String amount, String donorId, String donor, String donee, String donorImage, String time, String id) {
+  saveTransaction(String amount, String donorId, String donor, String donee, String donorImage, Timestamp time, String id) {
       var newTransaction = UserTransactionModel(
         donorId: donorId,
         time: time,

@@ -40,8 +40,8 @@ class Profile extends StatelessWidget {
                 NavigatingButton(
                   text: 'My Donations',
                   onPress: () {
-                    String userId = user.id;
-                    transactionProvider.getUserName(userId);
+                    // String userId = user.id;
+                    // transactionProvider.getUserName(userId);
                     Navigator.pushNamed(context, Routes.user_transaction);
                     print('My Donations');
                   },

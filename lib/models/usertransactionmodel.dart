@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserTransactionModel{
-  final String time;
+  final Timestamp time;
   final String donorId;
   final String transactionId;
   final  String donor;

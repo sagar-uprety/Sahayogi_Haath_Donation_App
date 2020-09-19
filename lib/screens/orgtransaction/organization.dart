@@ -25,6 +25,7 @@ class  _OrganizationTransaction extends State< OrganizationTransaction> {
      if(dateTime != null){
         endDate = DateTime(dateTime.year, dateTime.month,dateTime.day, 24, 59, 59);
       }
+      return endDate;
   }
   Future selectdateRange(BuildContext context) async{
     selecteddate = DateTime(current.year, current.month,current.day);
