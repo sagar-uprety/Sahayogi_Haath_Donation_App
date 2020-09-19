@@ -22,15 +22,8 @@ class FirestoreService {
   }
 
   Stream<QuerySnapshot> getUserTransaction({@required String path, String username, DateTime startDate, DateTime endDate}){
-    if(startDate != null && endDate != null){
-      Timestamp starttime = Timestamp.fromDate(startDate);
-      Timestamp endtime = Timestamp.fromDate(endDate);
-      return _db.collection(path).where('donorId', isEqualTo: username).where('time', isGreaterThan: starttime ).where('time',isLessThan: endtime).orderBy('time', descending: true).snapshots().map((snapshot) => snapshot);
-    }
-    else{
-      return _db.collection(path).where('donorId', isEqualTo: username).orderBy('time', descending: true).snapshots().map((snapshot) => snapshot);
-
-    }
+    print(startDate);
+      return _db.collection(path).where('donorId', isEqualTo: username).where('time', isGreaterThan: startDate).orderBy('time', descending: true).snapshots().map((snapshot) => snapshot);
   }
 
    Stream<List<OrganizationDetail>> getdocsData({@required String path}) {

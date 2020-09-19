@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:date_range_picker/date_range_picker.dart' as dateRange;
+import 'package:sahayogihaath/models/usertransactionmodel.dart';
 import 'package:sahayogihaath/provider/usertransaction_provider.dart';
+import 'package:sahayogihaath/screens/transaction/user_transactionmain.dart';
 
 import '../../components/transaction_components/search_bar.dart';
-import '../../components/transaction_components/usertransaction_card.dart';
 
 import '../../provider/user_provider.dart';
-import '../../models/usertransactionmodel.dart';
 
 class UserTransaction extends StatefulWidget {
  
@@ -22,14 +22,10 @@ DateTime selecteddate;
 DateTime endDate;
 
 class _UserTransactionState extends State<UserTransaction> {
-
-
    @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
-    final transactionProvider = Provider.of<UserTransactionProvider>(context);
-     transactionProvider.getSortedBy(user.id,selecteddate,endDate);
-     final transactions = Provider.of<List<UserTransactionModel>>(context);
+    String userid = user.id; 
     MediaQueryData queryData = MediaQuery.of(context);
     double width = queryData.size.width*0.02;
      return SafeArea(
@@ -49,23 +45,7 @@ class _UserTransactionState extends State<UserTransaction> {
                      SizedBox(
                          height:MediaQuery.of(context).size.height*0.015,
                        ),
-                        (transactions != null)? ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                             itemCount: transactions.length,
-                             itemBuilder: (context, index) {
-                               transactionProvider.getSortedBy(user.id,selecteddate,endDate);
-                               return UserTransactionCard(
-                                     donor: transactions[index].donor, 
-                                     donee: transactions[index].donee, 
-                                      datetime: transactions[index].time, 
-                                     donorImage: transactions[index].donorImage, 
-                                     amount: transactions[index].amount,
-                                   );
-                             }
-                  )
-                      : Center(child: CircularProgressIndicator()),
+                      UserTransactionMain(userid: userid, selectedDate: selecteddate, endDate: endDate,),
                    ]
                  ),
                ) 
@@ -91,7 +71,6 @@ class _UserTransactionState extends State<UserTransaction> {
   }
  
   
- 
 
 
   Widget _sortByDate(){
@@ -194,4 +173,6 @@ class _UserTransactionState extends State<UserTransaction> {
     selectdateRange(context);
   }
   }
+
+
 }
