@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/screens/organization/org_info.dart';
 
 import './screens/dashboard/dashboard.dart';
 import './screens/welcome/welcome.dart';

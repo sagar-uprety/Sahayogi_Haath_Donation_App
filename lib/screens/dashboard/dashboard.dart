@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/extras_provider.dart';
-import 'package:sahayogihaath/provider/usertransaction_provider.dart';
-import 'package:sahayogihaath/screens/orgtransaction/organization.dart';
 
+import '../../provider/extras_provider.dart';
+import '../../provider/usertransaction_provider.dart';
 import '../../provider/user_provider.dart';
 import '../../screens/dashboard/header.dart';
 

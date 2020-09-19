@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/extras_provider.dart';
 
+import '../provider/extras_provider.dart';
 import '../provider/user_provider.dart';
 import '../routes.dart';
 import '../models/usermodel.dart';
-import '../image_upload.dart';
+import '../services/image_upload.dart';
 
 enum Status {
   Uninitialized,

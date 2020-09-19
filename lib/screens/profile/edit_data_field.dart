@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/models/usermodel.dart';
-import 'package:sahayogihaath/provider/extras_provider.dart';
 
-import '../../provider/user_provider.dart';
+import '../../provider/extras_provider.dart';
 
 import '../../components/FormInput.dart' as formInput;
 import '../../components/RoundedInput.dart';

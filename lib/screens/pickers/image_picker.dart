@@ -3,12 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import '../../provider/user_provider.dart';
-import '../../image_upload.dart';
+
 import '../../provider/activity_provider.dart';
+import '../../provider/extras_provider.dart';
+import '../../provider/user_provider.dart';
+import '../../services/image_upload.dart';
+
+import '../../theme/text_styles.dart';
 import '../../theme/theme.dart';
 
-enum ImageType { userProfile, document, activity, organization }
+enum ImageType { userProfile, document, activity, banner}
 
 class ImageFilePicker extends StatefulWidget {
   ImageFilePicker(this.imagePickFn, {this.imageType, this.existingImage});
@@ -66,17 +70,17 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
     }
 
     if (widget.imageType == ImageType.userProfile) {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-      userProvider.changeProfileImage(pickedImageFile);
-      // if (widget.imageType == ImageType.organization) {
-      //   final orgProvider =
-      //       Provider.of<OrganizationProvider>(context, listen: false);
-
-      //   orgProvider.changeImage(pickedImageFile);
-      // }
-
+      if(widget.existingImage != null){
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.changeProfileImage(pickedImageFile);
+      }
     }
+
+    if (widget.imageType == ImageType.banner) {
+      final userProvider = Provider.of<ExtrasProvider>(context, listen: false);
+      userProvider.changeBannerImage(pickedImageFile);
+    }
+
     widget.imagePickFn(pickedImageFile);
   }
 
@@ -92,8 +96,8 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
                 _documentImage(context),
               if (widget.imageType == ImageType.activity)
                 _activityImage(context),
-              if (widget.imageType == ImageType.organization)
-                _organizationImage(context),
+              if (widget.imageType == ImageType.banner)
+                _bannerImage(context),
               FlatButton.icon(
                 textColor: Theme.of(context).primaryColor,
                 onPressed: _pickImage,
@@ -157,16 +161,31 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
     );
   }
 
-  Widget _organizationImage(BuildContext context) {
-    return Container(
-      height: _pickedImage != null ? AppTheme.fullHeight(context) * 0.30 : 0,
-      width: _pickedImage != null ? AppTheme.fullWidth(context) * 0.90 : 0,
-      decoration: BoxDecoration(
-        image: _pickedImage != null
-            ? DecorationImage(image: FileImage(_pickedImage), fit: BoxFit.cover)
-            : null,
-        borderRadius: BorderRadius.circular(10),
-      ),
+  Widget _bannerImage(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            'Add a banner to display on your profile.',
+            textAlign: TextAlign.center,
+            style: TextStyles.bodySm,
+          ),
+        ),
+        SizedBox(
+          height: AppTheme.fullWidth(context) * 0.012,
+        ),
+        Container(
+          height: _pickedImage != null ? AppTheme.fullHeight(context) * 0.50 : 0,
+          width: _pickedImage != null ? AppTheme.fullWidth(context) * 0.90 : 0,
+          decoration: BoxDecoration(
+            image: _pickedImage != null
+                ? DecorationImage(image: FileImage(_pickedImage), fit: BoxFit.cover)
+                : null,
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ],
     );
   }
 }

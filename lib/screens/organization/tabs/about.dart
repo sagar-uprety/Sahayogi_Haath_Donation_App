@@ -1,10 +1,13 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/extras_provider.dart';
 
+import '../../../provider/extras_provider.dart';
 import '../../../provider/user_provider.dart';
+
 import '../../../screens/dashboard/header.dart';
 import '../../../screens/profile/edit_data_field.dart';
+
 import '../../../theme/extention.dart';
 
 class About extends StatefulWidget {
@@ -17,6 +20,7 @@ class _AboutState extends State<About> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     final user = Provider.of<UserProvider>(context);
+    final extra = Provider.of<ExtrasProvider>(context);
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
@@ -25,7 +29,7 @@ class _AboutState extends State<About> {
             height: size.height * 0.5,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: NetworkImage(user.profileImage),
+                  image: extra.banner != null ? NetworkImage(extra.banner) : AssetImage('assets/images/def_banner.jpg'),
                   fit: BoxFit.cover),
             ),
           ),
@@ -49,7 +53,6 @@ class _AboutState extends State<About> {
                         children: <Widget>[
                           Text(
                             user.name,
-                            // '',
                             style: TextStyle(
                                 height: 1.6,
                                 fontSize: 20,
@@ -57,7 +60,6 @@ class _AboutState extends State<About> {
                           ),
                           Text(
                             user.establishedDate,
-                            // '',
                             style: TextStyle(fontSize: 13),
                           ),
                         ],

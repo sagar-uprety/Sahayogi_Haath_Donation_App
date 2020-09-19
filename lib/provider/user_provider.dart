@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:sahayogihaath/provider/extras_provider.dart';
 
-import '../image_upload.dart';
 import '../provider/activity_provider.dart';
+import '../provider/extras_provider.dart';
+
 import '../models/usermodel.dart';
+
 import '../services/firestore_path.dart';
+import '../services/image_upload.dart';
 import '../services/firestore_service.dart';
 
 class UserProvider extends ChangeNotifier {

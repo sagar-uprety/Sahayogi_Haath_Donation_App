@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-import '../image_upload.dart';
+import '../services/image_upload.dart';
 import '../services/firestore_path.dart';
 import '../services/firestore_service.dart';
 import '../models/activitymodel.dart';
