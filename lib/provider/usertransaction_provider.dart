@@ -29,21 +29,6 @@ class UserTransactionProvider with ChangeNotifier{
     amount = transaction.amount;
   }
   
- 
-
-   Stream<List<UserTransactionModel>> getSortedBy(String user, DateTime startDate, DateTime endDate) {
-        currentUser = user;
-        print(startDate);
-             return _service.getUserTransaction(
-              path: FirestorePath.transactions(), 
-              username: currentUser,
-              startDate: startDate,
-              endDate: endDate,
-            ).map((snapshot) => snapshot
-            .documents
-            .map((doc) => UserTransactionModel.fromFirestore(doc.data))
-            .toList());
-   } 
 
   Stream<List<UserTransactionModel>> getTransactions(){
     return _service.getUserTransaction(
