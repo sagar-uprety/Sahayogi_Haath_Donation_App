@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sahayogihaath/components/FlatButtonIcon.dart';
-import 'package:sahayogihaath/provider/activity_provider.dart';
-import 'package:sahayogihaath/screens/activities_screen/edit_activity.dart';
+
+import '../../components/FlatButtonIcon.dart';
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
-import '../../theme/text_styles.dart';
 import '../../theme/theme.dart';
 
-import '../../components/RoundedButton.dart';
-import '../../models/activitymodel.dart';
 import './tabs/about.dart';
 import './tabs/activities.dart';
 import './tabs/photos.dart';
