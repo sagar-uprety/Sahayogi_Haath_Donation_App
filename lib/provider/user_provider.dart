@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sahayogihaath/provider/extras_provider.dart';
 
 import '../image_upload.dart';
 import '../provider/activity_provider.dart';
@@ -23,7 +24,6 @@ class UserProvider extends ChangeNotifier {
   String _establishedDate;
   String _type;
   String _documentImage;
-  String _description;
   bool _isDonor = false;
   bool _isOrganization = false;
   bool _isAdmin = false;
@@ -39,7 +39,6 @@ class UserProvider extends ChangeNotifier {
   String get establishedDate => _establishedDate;
   String get type => _type;
   String get documentImage => _documentImage;
-  String get description => _description;
   bool get isDonor => _isDonor;
   bool get isOrganization => _isOrganization;
   bool get isAdmin => _isAdmin;
@@ -75,11 +74,6 @@ class UserProvider extends ChangeNotifier {
 
   changeType(String value) {
     _type = value;
-    notifyListeners();
-  }
-
-  changeDescription(String value) {
-    _description =value;
     notifyListeners();
   }
 
@@ -124,7 +118,6 @@ class UserProvider extends ChangeNotifier {
     _profileImage = organization.profileImage;
     _establishedDate = organization.establishedDate;
     _type = organization.type;
-    _description = organization.description;
     _documentImage = organization.documentImage;
     _isOrganization = organization.isOrganization;
     notifyListeners();
@@ -149,6 +142,7 @@ class UserProvider extends ChangeNotifier {
 
   saveName(){
     _service.updateData(path: FirestorePath.user(id), data: {'name' : name});
+    ExtrasProvider().saveIdName(id,name);
   }
 
   saveAddress(){
@@ -172,10 +166,6 @@ class UserProvider extends ChangeNotifier {
     bool uploadStatus = await uploadImage(_id);
     if(uploadStatus)
       _service.updateData(path: FirestorePath.user(id), data: {'profile_image': profileImage});
-  }
-
-  saveDescription(){
-    _service.updateData(path: FirestorePath.user(id), data: {'description' : description});
   }
 
   Future<void> registerDonor(DonorModel donor) async {

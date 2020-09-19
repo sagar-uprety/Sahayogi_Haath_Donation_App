@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/models/usermodel.dart';
-import 'package:sahayogihaath/provider/users_extra.dart/organization_provider.dart';
+import 'package:sahayogihaath/provider/extras_provider.dart';
 
 import '../../provider/user_provider.dart';
 
@@ -184,6 +184,8 @@ class _EditDataFieldState extends State<EditDataField> {
   }
 }
 
+
+
 class DescriptionSection extends StatefulWidget {
   @override
   _DescriptionSectionState createState() => _DescriptionSectionState();
@@ -200,7 +202,7 @@ class _DescriptionSectionState extends State<DescriptionSection> {
   }
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<OrganizationProvider>(context);
+    final user = Provider.of<ExtrasProvider>(context);
 
     return Container(
       child: !isEditable ?

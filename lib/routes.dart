@@ -21,7 +21,6 @@ import './screens/activities_screen/edit_activity.dart';
 import './screens/donate_screen/donate_success.dart';
 import './screens/donate_screen/donate_main.dart';
 import './screens/donate_screen/donation_info.dart';
-import './screens/organization/tabs/edit_organization.dart';
 
 class Routes {
   Routes._();
@@ -46,7 +45,6 @@ class Routes {
   static const String activities_list = "/activities_list";
   static const String activity_info = "/activity_info";
   static const String edit_activity = "/edit_activity";
-  static const String edit_organization = "/edit_organization";
 
   static const String org_transaction = "/organization";
   static const String user_transaction = "/user_transaction";
@@ -70,7 +68,6 @@ class Routes {
     activity_info: (context) => ActivityInfo(),
     edit_activity: (context) => EditActivity(),
     profile: (context) => Profile(),
-    edit_organization: (context) => EditOrganization(),
     org_transaction: (context) => OrganizationTransaction(),
     user_transaction: (context) => UserTransaction(),
     admin_transaction: (context) => AdminTransaction(),

@@ -11,7 +11,7 @@ import './screens/splash.dart';
 
 
 import './provider/user_provider.dart';
-import 'provider/users_extra.dart/organization_provider.dart';
+import 'provider/extras_provider.dart';
 import './provider/usertransaction_provider.dart';
 import './provider/auth_provider.dart';
 import './provider/activity_provider.dart';
@@ -55,15 +55,11 @@ class SahayogiHaath extends StatelessWidget {
         StreamProvider(
           create: (context) => UserProvider().getOrganizations()
         ),
-        // StreamProvider(
-        //   create: (context) =>
-        //       FirestoreService().getdocsData(path: FirestorePath.organizations()),
-        // ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => OrganizationProvider(),
+          create: (context) => ExtrasProvider(),
         ),
       ],
       child: MaterialApp(

@@ -32,8 +32,6 @@ class Profile extends StatelessWidget {
                 Text(user.name, style: TextStyles.h1Style),
                 SizedBox(height: 15,),
                 Header(),
-                if(user.isOrganization)
-                  DescriptionSection(),
               ]),
               Column(children: [
                 NavigatingButton(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/extras_provider.dart';
 
 import '../../../provider/user_provider.dart';
 import '../../../screens/dashboard/header.dart';
 import '../../../screens/profile/edit_data_field.dart';
-import '../../../theme/text_styles.dart';
 import '../../../theme/extention.dart';
 
 class About extends StatefulWidget {
@@ -17,7 +17,6 @@ class _AboutState extends State<About> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     final user = Provider.of<UserProvider>(context);
-
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
@@ -26,7 +25,6 @@ class _AboutState extends State<About> {
             height: size.height * 0.5,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  // image: AssetImage("assets/images1/children.jpg"),
                   image: NetworkImage(user.profileImage),
                   fit: BoxFit.cover),
             ),
@@ -51,6 +49,7 @@ class _AboutState extends State<About> {
                         children: <Widget>[
                           Text(
                             user.name,
+                            // '',
                             style: TextStyle(
                                 height: 1.6,
                                 fontSize: 20,
@@ -58,6 +57,7 @@ class _AboutState extends State<About> {
                           ),
                           Text(
                             user.establishedDate,
+                            // '',
                             style: TextStyle(fontSize: 13),
                           ),
                         ],
@@ -75,15 +75,6 @@ class _AboutState extends State<About> {
                         height: 10,
                       ),
                       DescriptionSection(),
-                      // Text(
-                      //   "Nobody wants to stare at a blank wall all day long, which is why wall art is such a crucial step in the decorating process. And once you start brainstorming, the rest is easy. From gallery walls to DIY pieces like framing your accessories and large-scale photography, we've got plenty of wall art ideas to spark your creativity. And where better to look for inspiration that interior designer-decorated walls",
-                      //   style: TextStyle(
-                      //     fontSize: FontSizes.bodySm,
-                      //     fontWeight: FontWeight.w400,
-                      //     height: 1.8,
-                      //     letterSpacing: 0.4,
-                      //   ),
-                      // ),
                     ],
                   ),
                 ],

@@ -1,24 +1,28 @@
 class OrganizationDetail {
-  final String organizationID;
+  final String id;
+  final String name;
   final String description;
   final String bannerImage;
 
   OrganizationDetail({
-    this.organizationID,
+    this.id,
+    this.name,
     this.description,
     this.bannerImage,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'organizationID': organizationID,
+      'id': id,
+      'name': name,
       'description': description,
       'banner_image': bannerImage
     };
   }
 
   OrganizationDetail.fromFirestore(Map<String, dynamic> firestore)
-      : organizationID = firestore['organizationID'],
+      : id = firestore['id'],
+        name = firestore['name'],
         description = firestore['description'],
         bannerImage = firestore['banner_image'];
 }

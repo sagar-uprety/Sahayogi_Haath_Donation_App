@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/extras_provider.dart';
 
 import '../provider/user_provider.dart';
 import '../routes.dart';
@@ -71,7 +72,7 @@ class AuthProvider extends ChangeNotifier {
           });
         }
 
-         final userDatabase = Provider.of<UserProvider>(ctx,listen: false);
+        final userDatabase = Provider.of<UserProvider>(ctx,listen: false);
 
         if (userType == UserType.donor) {
           userDatabase.registerDonor(
@@ -102,7 +103,7 @@ class AuthProvider extends ChangeNotifier {
               )
           );
         }
-
+        Provider.of<ExtrasProvider>(ctx,listen: false).saveIdName(uid,name);
         sendEmailVerification(ctx);
       }
     } on PlatformException catch (err) {

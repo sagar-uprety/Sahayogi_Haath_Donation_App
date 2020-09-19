@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import '../models/organizationmodel.dart';
+import '../models/extras_model.dart';
 
 class FirestoreService {
   Firestore _db = Firestore.instance;
@@ -24,7 +24,7 @@ class FirestoreService {
     return _db.collection(path).where(key, isEqualTo: value).snapshots().map((snapshot) => snapshot);
   }
 
-   Stream<List<OrganizationDetail>> getdocsData({@required String path}) {
+  Stream<List<OrganizationDetail>> getdocsData({@required String path}) {
     return _db.collection(path).snapshots().map((snapshot) => snapshot
         .documents
         .map((document) => OrganizationDetail.fromFirestore(document.data))

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/extras_provider.dart';
+import 'package:sahayogihaath/provider/usertransaction_provider.dart';
+import 'package:sahayogihaath/screens/orgtransaction/organization.dart';
 
-import '../../provider/usertransaction_provider.dart';
 import '../../provider/user_provider.dart';
 import '../../screens/dashboard/header.dart';
 
@@ -30,6 +32,9 @@ class _DashboardState extends State<Dashboard> {
     getUserData().then((value) {
       print("SuccessFul");
     });
+    getUserExtraData().then((value){
+      print('Extra Data received.');
+    });
     super.initState();
   }
 
@@ -37,10 +42,17 @@ class _DashboardState extends State<Dashboard> {
     final user = Provider.of<UserProvider>(context, listen: false);
     await user.getUserData();
   }
+  
+  getUserExtraData() async {
+    final user = Provider.of<ExtrasProvider>(context, listen: false);
+    await user.getCurrentUserInfo();
+  }
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context);
+    
+
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: Theme.of(context).backgroundColor,
@@ -57,7 +69,7 @@ class _DashboardState extends State<Dashboard> {
                     ],
                   ),
                 ),
-                _generateLists(),
+                _generateLists()
               ],
             ),
     );
@@ -232,15 +244,16 @@ class _DashboardState extends State<Dashboard> {
                 text: "View All",
                 onPress: () {
                   setState(() {
-                    transactionProvider.getUserName(user.name);
+                    
                   });
                   
-                  Navigator.pushNamed(context, Routes.org_transaction);
+                  Navigator.pushNamed(context, Routes.user_transaction);
                 },
               ),
             ],
           ).p16,
           _getTransactionList(),
+         
         ],
       ),
     );
@@ -251,7 +264,7 @@ class _DashboardState extends State<Dashboard> {
     return (activities != null)
         ? ActivitiesListTiles(
             listprovider: activities,
-            itemCount: activities.length >= 5 ? 5 : activities.length,
+            itemCount: activities.length >= 5 ? 5 : 1,
             heightPercent: activities.length >= 5 ? 0.4 : 0.15,
           )
         : Center(child: CircularProgressIndicator());
@@ -262,7 +275,7 @@ class _DashboardState extends State<Dashboard> {
     return (activities != null)
         ? DonationListTiles(
             listprovider: activities,
-            itemCount: activities.length >= 5 ? 5 : activities.length,
+            itemCount: activities.length >= 5 ? 5 : 1,
             heightPercent: activities.length >= 5 ? 0.4 : 0.15,
           )
         : Center(child: CircularProgressIndicator());
