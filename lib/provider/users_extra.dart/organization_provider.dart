@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../image_upload.dart';
 import '../../services/firestore_path.dart';
@@ -16,14 +15,19 @@ class OrganizationProvider with ChangeNotifier {
   final _service = FirestoreService();
 
   String _description;
-  String _organizationID;
   File _image;
   String _bannerImage;
 
+  String _organizationID;
+
   //getters
-  String get id => _organizationID;
   String get description => _description;
   String get banner => _bannerImage;
+
+  getID() async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    return user.uid;
+  }
 
   //setters
   changeDescription(String value) {
@@ -38,8 +42,8 @@ class OrganizationProvider with ChangeNotifier {
   }
 
   loadValues(OrganizationDetail organizationDetail) {
+    _organizationID = getID();
     _description = organizationDetail.description;
-    _organizationID = organizationDetail.organizationID;
     _bannerImage = organizationDetail.bannerImage;
   }
 

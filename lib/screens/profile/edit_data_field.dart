@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/models/usermodel.dart';
+import 'package:sahayogihaath/provider/users_extra.dart/organization_provider.dart';
 
 import '../../provider/user_provider.dart';
 
@@ -198,7 +200,7 @@ class _DescriptionSectionState extends State<DescriptionSection> {
   }
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context);
+    final user = Provider.of<OrganizationProvider>(context);
 
     return Container(
       child: !isEditable ?
