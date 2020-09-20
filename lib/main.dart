@@ -60,7 +60,6 @@ class SahayogiHaath extends StatelessWidget {
         StreamProvider(
           create: (context) => ActivityProvider().getActivities(),
         ),
-
         StreamProvider(
           create: (context) => UserProvider().getOrganizations(),
         ),

@@ -6,6 +6,7 @@ import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
 import '../../theme/theme.dart';
 import '../../models/usermodel.dart';
+import '../../models/activitymodel.dart';
 
 import '../../provider/activity_provider.dart';
 
@@ -23,11 +24,12 @@ class _OrganizationInfoState extends State<OrganizationInfo> {
   Widget build(BuildContext context) {
     final OrganizationModel passedOrganization =
         ModalRoute.of(context).settings.arguments;
-    StreamProvider(
-        create: (context) => ActivityProvider().getActivitiesbyOrg(passedOrganization.id));
+    StreamProvider<List<Activity>> list = StreamProvider(
+        create: (context) =>
+            ActivityProvider().getActivitiesbyOrg(passedOrganization.id));
 
     return DefaultTabController(
-        length: 4,
+        length: 3,
         initialIndex: 0,
         child: Scaffold(
           appBar: AppBar(
@@ -54,12 +56,6 @@ class _OrganizationInfoState extends State<OrganizationInfo> {
                   ),
                   Tab(
                     child: FlatButtonIcon(
-                      text: 'Photos',
-                      icon: null,
-                    ),
-                  ),
-                  Tab(
-                    child: FlatButtonIcon(
                       text: 'Activities',
                       icon: null,
                     ),
@@ -71,8 +67,7 @@ class _OrganizationInfoState extends State<OrganizationInfo> {
             children: [
               About(),
               TabActvities(),
-              Photos(),
-              Photos(),
+              TabActvities(),
             ],
           ),
         ));
