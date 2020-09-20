@@ -21,6 +21,7 @@ class ExtrasProvider with ChangeNotifier {
   String _bannerImage;
 
   //getters
+  String get id => _id;
   String get description => _description;
   String get banner => _bannerImage;
 
