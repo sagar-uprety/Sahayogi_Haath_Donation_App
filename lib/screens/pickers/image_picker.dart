@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/user_provider.dart';
 import '../../provider/activity_provider.dart';
 import '../../provider/extras_provider.dart';
-import '../../provider/user_provider.dart';
 import '../../services/image_upload.dart';
 
 import '../../theme/text_styles.dart';

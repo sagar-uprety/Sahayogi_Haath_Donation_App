@@ -3,16 +3,20 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import '../provider/user_provider.dart';
 
 import '../services/image_upload.dart';
 import '../services/firestore_path.dart';
 import '../services/firestore_service.dart';
 import '../models/activitymodel.dart';
+import '../class.dart';
 
 enum SaveState { Uninitialized, Saving, Saved }
 
 class ActivityProvider with ChangeNotifier {
   final firestoreService = FirestoreService();
+  final getid = Sorting();
+  final _service = FirestoreService();
 
   SaveState _state = SaveState.Uninitialized;
 
@@ -21,6 +25,7 @@ class ActivityProvider with ChangeNotifier {
   String _activityID;
   File _image;
   String _imageUrl;
+  String _authorid;
   var uuid = Uuid();
 
   //getters
@@ -49,15 +54,28 @@ class ActivityProvider with ChangeNotifier {
   loadValues(Activity activity) {
     _title = activity.title;
     _description = activity.description;
-    _activityID = activity.activityID;
+    // _activityID = activity.activityID;
     _imageUrl = activity.image;
+    // _authorid = activity.authorid;
   }
 
-  Stream<List<Activity>> getActivities(){
-    return firestoreService.getDatas(path: FirestorePath.activities()).map((snapshot) => snapshot
-    .documents
-    .map((doc) => Activity.fromFirestore(doc.data))
-    .toList());
+  Stream<List<Activity>> getActivities() {
+    return firestoreService.getDatas(path: FirestorePath.activities()).map(
+        (snapshot) => snapshot.documents
+            .map((doc) => Activity.fromFirestore(doc.data))
+            .toList());
+  }
+
+  Stream<List<Activity>> getActivitiesbyOrg(String currentOrgID) {
+    return _service
+        .getConditionData(
+          path: FirestorePath.activities(), //activity??
+          key: 'authorid',
+          value: currentOrgID,
+        )
+        .map((snapshot) => snapshot.documents
+            .map((doc) => Activity.fromFirestore(doc.data))
+            .toList());
   }
 
   Future<bool> uploadImage(uid) async {
@@ -76,7 +94,7 @@ class ActivityProvider with ChangeNotifier {
         .deleteImage(path: CloudPath.activities, id: _activityID);
   }
 
-  saveActivity() async {
+  saveActivity(String userid) async {
     _state = SaveState.Saving;
     if (_activityID == null) {
       String id = uuid.v4();
@@ -85,11 +103,14 @@ class ActivityProvider with ChangeNotifier {
       if (uploadStatus) {
         //create new activity
         var newActivity = Activity(
-            title: title,
-            description: description,
-            image: image,
-            activityID: id);
-        await firestoreService.saveData(path: FirestorePath.activity(id), data: newActivity.toMap());
+          title: title,
+          description: description,
+          image: image,
+          activityID: id,
+          authorid: userid,
+        );
+        await firestoreService.saveData(
+            path: FirestorePath.activity(id), data: newActivity.toMap());
       } else {
         print('Error Uploading the file.');
       }
@@ -99,11 +120,15 @@ class ActivityProvider with ChangeNotifier {
       bool uploadStatus = await uploadImage(_activityID);
       if (uploadStatus) {
         var updatedActivity = Activity(
-            title: title,
-            description: description,
-            image: image,
-            activityID: _activityID);
-        firestoreService.saveData(path: FirestorePath.activity(_activityID), data: updatedActivity.toMap());
+          title: title,
+          description: description,
+          image: image,
+          activityID: _activityID,
+          authorid: _authorid,
+        );
+        firestoreService.saveData(
+            path: FirestorePath.activity(_activityID),
+            data: updatedActivity.toMap());
       }
     }
     _state = SaveState.Saved;

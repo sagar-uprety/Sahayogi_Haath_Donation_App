@@ -1,8 +1,5 @@
-import 'package:sahayogihaath/FireStoredata.dart';
-import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
-
-class Sorting{
-   String userName;
+class Sorting {
+  String userName;
   // Sorting({this.userName});
   //var dashboard = Sorting();
 
@@ -11,13 +8,11 @@ class Sorting{
   //   print(userName);
   //   return userName;
   // }
-  String user(){
+  String user() {
     print(userName);
     //getData();
-    return(userName);
+    return (userName);
   }
-   
-   
 }
 
 // String getData(){

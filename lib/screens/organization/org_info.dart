@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/FlatButtonIcon.dart';
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
 import '../../theme/theme.dart';
+import '../../models/usermodel.dart';
+
+import '../../provider/activity_provider.dart';
 
 import './tabs/about.dart';
 import './tabs/activities.dart';
@@ -15,10 +19,12 @@ class OrganizationInfo extends StatefulWidget {
 }
 
 class _OrganizationInfoState extends State<OrganizationInfo> {
-  
   @override
   Widget build(BuildContext context) {
-    
+    final OrganizationModel passedOrganization =
+        ModalRoute.of(context).settings.arguments;
+    StreamProvider(
+        create: (context) => ActivityProvider().getActivitiesbyOrg(passedOrganization.id));
 
     return DefaultTabController(
         length: 4,

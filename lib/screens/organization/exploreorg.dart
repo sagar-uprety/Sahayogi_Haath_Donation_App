@@ -10,8 +10,6 @@ import '../../theme/text_styles.dart';
 import '../../components/category_tile_single.dart';
 import '../../components/ListTiles/OrgListTiles.dart';
 
-
-
 class ExploreOrganization extends StatefulWidget {
   @override
   _ExploreOrganizationState createState() => _ExploreOrganizationState();
@@ -20,11 +18,13 @@ class ExploreOrganization extends StatefulWidget {
 class _ExploreOrganizationState extends State<ExploreOrganization> {
   String selectedCategory = organizationType[0];
 
-  changeSelectedCategory(String value){
+  changeSelectedCategory(String value) {
     setState(() {
       selectedCategory = value;
     });
   }
+
+  TextEditingController searchController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,23 +48,44 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
               decoration: BoxDecoration(
                   color: Color(0xffEFEFEF),
                   borderRadius: BorderRadius.circular(14)),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.search),
-                  SizedBox(
-                    width: 10,
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  hintText: "Search",
+                  border: InputBorder.none,
+                  prefix: Icon(
+                    Icons.search,
                   ),
-                  Text(
-                    "Search",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 19,
-                    ),
-                  )
-                ],
+                ),
+                onChanged: (value) {},
               ),
             ).vP8,
+
+            // Container(
+            //   padding: EdgeInsets.symmetric(horizontal: 24),
+            //   height: 50,
+            //   decoration: BoxDecoration(
+            //       color: Color(0xffEFEFEF),
+            //       borderRadius: BorderRadius.circular(14)),
+            //   child: Row(
+            //     children: <Widget>[
+            //       Icon(Icons.search),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Text(
+            //         "Search",
+            //         style: TextStyle(
+            //           color: Colors.grey,
+            //           fontSize: 19,
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ).vP8,
+
             Text("Categories", style: TextStyles.title.bold).vP8,
+
             Container(
               height: 30,
               child: ListView.builder(
@@ -74,11 +95,10 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return CategoryTile(
-                      category: organizationType[index],
-                      isSelected: selectedCategory == organizationType[index],
-                      context: this,
-                      changeCategory: changeSelectedCategory
-                    );
+                        category: organizationType[index],
+                        isSelected: selectedCategory == organizationType[index],
+                        context: this,
+                        changeCategory: changeSelectedCategory);
                   }),
             ).vP8,
             _getOrgList(),

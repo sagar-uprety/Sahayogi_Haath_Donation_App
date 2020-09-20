@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -7,8 +6,6 @@ import 'package:provider/provider.dart';
 import './screens/dashboard/dashboard.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
-
-
 import './provider/user_provider.dart';
 import 'provider/extras_provider.dart';
 import './provider/usertransaction_provider.dart';
@@ -48,11 +45,11 @@ class SahayogiHaath extends StatelessWidget {
           create: (context) => ActivityProvider(),
         ),
         StreamProvider(
-          create: (context) =>
-              ActivityProvider().getActivities(),
+          create: (context) => ActivityProvider().getActivities(),
         ),
+
         StreamProvider(
-          create: (context) => UserProvider().getOrganizations()
+          create: (context) => UserProvider().getOrganizations(),
         ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
@@ -70,7 +67,6 @@ class SahayogiHaath extends StatelessWidget {
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
               // return BottomTabBar();
-              // return OrganizationInfo();
               return Dashboard();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
