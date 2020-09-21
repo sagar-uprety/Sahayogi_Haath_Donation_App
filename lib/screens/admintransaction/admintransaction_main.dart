@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../constants/transaction_const.dart';
+import '../../constants.dart';
 import '../../components/transaction_components/transaction_card.dart';
 import '../../FireStoredata.dart';
 import 'package:intl/intl.dart';
 class DonationStream extends StatelessWidget {
     String orgName ;
-    DonationStream({this.orgName});
+    String userid;
+    DonationStream({this.orgName, this.userid});
     DateTime day;
     String donor;
     String donorImage;

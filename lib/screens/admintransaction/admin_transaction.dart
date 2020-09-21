@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../constants/transaction_const.dart';
+import '../../constants.dart';
 import '../../components/transaction_components/search_bar.dart';
 import 'admintransaction_main.dart';
 

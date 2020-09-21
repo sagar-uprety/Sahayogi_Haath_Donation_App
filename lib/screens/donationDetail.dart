@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
-import '../constants/transaction_const.dart';
+import '../constants.dart';
 import '../theme/extention.dart';
-import '../theme/text_styles.dart';
 class DonationDetail extends StatelessWidget {
   String orgName;
   double amount;

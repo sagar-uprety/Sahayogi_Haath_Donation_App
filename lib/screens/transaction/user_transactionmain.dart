@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sahayogihaath/screens/admintransaction/admin_transaction.dart';
 
-import '../../models/usertransactionmodel.dart';
-import '../../provider/usertransaction_provider.dart';
 
 
 
@@ -12,7 +10,6 @@ class UserTransactionMain extends StatelessWidget {
   String userid;
   DateTime selectedDate;
   DateTime endDate;
-  DateTime day;
     String donor;
     String donorImage;
     Timestamp time;
@@ -38,7 +35,7 @@ class UserTransactionMain extends StatelessWidget {
                      donorImage = donation.data['donorImage'];
                     time = donation.data['time'];
                       amount = donation.data['amount'];    
-                    donationLists.add(UserTransactionCard(day: day, donor: donor, donorImage: donorImage, datetime: time, donee: donee,amount: amount,));
+                    donationLists.add(UserTransactionCard(donor: donor, donorImage: donorImage, datetime: time, donee: donee,amount: amount,));
                   }
                   return  Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,4 +45,56 @@ class UserTransactionMain extends StatelessWidget {
    
       );
 }
+}
+
+class AdminTransactionMain extends StatelessWidget {
+    String orgName ;  
+    String donor;
+    String donorImage;
+    Timestamp time;
+    String donee;
+    String amount;
+    AdminTransactionMain({this.orgName});
+    String viewAlldata(String name){
+      String name1 = name;
+      if(name1 == null){
+        return name1;
+      }
+      else{
+        return name1;
+      }
+    }
+
+   
+    
+  Widget build(BuildContext context) {
+    return StreamBuilder <QuerySnapshot>(
+      stream: Firestore.instance.collection('transaction').where('donee', isEqualTo: viewAlldata(orgName)).orderBy('time').snapshots(),
+              builder: (context, snapshot){
+                print(orgName);
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'),);
+                  }
+                  if (!snapshot.hasData) {
+                    return  Text('Loading');
+                  }
+                  
+                  final donations = snapshot.data.documents.reversed;
+                  List <Widget> donationLists = [];
+                  for(var donation in donations){
+                     donor = donation.data['donor'];
+                     donee = donation.data['donee'];
+                     donorImage = donation.data['donorImage'];
+                    time = donation.data['time'];
+                      amount = donation.data['amount'];    
+                    donationLists.add(UserTransactionCard(donor: donor, donorImage: donorImage, datetime: time, donee: donee, amount: amount,));
+                  }
+                  
+                  return  Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: donationLists,
+  );
+              }
+    );
+  }
 }
