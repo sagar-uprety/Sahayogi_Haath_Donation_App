@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sahayogihaath/FireStoredata.dart';
+import 'package:sahayogihaath/models/usermodel.dart';
+import 'package:sahayogihaath/provider/activity_provider.dart';
 import '../../../theme/extention.dart';
 import 'package:provider/provider.dart';
 import '../../../theme/text_styles.dart';
 import '../../../components/ListTiles/ActivitiesListTiles.dart';
 import '../../../models/activitymodel.dart';
-import '../../../provider/user_provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TabActvities extends StatefulWidget {
   @override
@@ -42,6 +42,7 @@ class _TabActvitiesState extends State<TabActvities> {
 
   Widget _activityTile() {
     final activities = Provider.of<List<Activity>>(context);
+
     return (activities != null)
         ? ActivitiesListTiles(
             listprovider: activities,
@@ -51,4 +52,4 @@ class _TabActvitiesState extends State<TabActvities> {
         : Center(child: CircularProgressIndicator());
   }
 }
-//
+

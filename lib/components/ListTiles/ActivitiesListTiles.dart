@@ -11,9 +11,7 @@ class ActivitiesListTiles extends StatelessWidget {
   final double heightPercent;
   final String activityID;
   final String description;
-  final String title;
-  final String image;
-  final String authorid;
+ 
 
   ActivitiesListTiles(
       {this.listprovider,
@@ -21,9 +19,7 @@ class ActivitiesListTiles extends StatelessWidget {
       this.heightPercent,
       this.activityID,
       this.description,
-      this.title,
-      this.image,
-      this.authorid});
+     });
 
   @override
   Widget build(BuildContext context) {
