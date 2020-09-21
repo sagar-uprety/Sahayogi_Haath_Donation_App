@@ -6,15 +6,14 @@ import '../../screens/donationDetail.dart';
 import '../../constants.dart';
 //transaction card
 class TransactionCard extends StatelessWidget {
-   DateTime day;
    String donee;
    String donor;
-   String time;
-   double amount;
+   Timestamp datetime;
+   String amount;
   String donorImage;
-  TransactionCard({this.day,@required this.donor, @required this.donee, @required this.time, @required this.donorImage, @required this.amount});
+  TransactionCard({@required this.donor, @required this.donee, @required this.datetime, @required this.donorImage, @required this.amount});
   
-                      
+                       
 String setDate(DateTime day){
   
   DateTime now = DateTime.now();
@@ -42,9 +41,11 @@ String setDate(DateTime day){
   }
   return(ago);       
 }
-  
   @override
   Widget build(BuildContext context) {
+     DateTime date = datetime.toDate();
+    String time = DateFormat('dd MMM yyyy').format(date);
+     double donatedamount = double.parse(amount);
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     double height =  queryData.size.height*0.007;
@@ -53,7 +54,7 @@ String setDate(DateTime day){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(setDate(day), style: kTransactionCardBoxText,),
+        Text(setDate(date), style: kTransactionCardBoxText,),
         SizedBox(
                     height: queryData.size.height*0.007,
                   ),
@@ -145,15 +146,15 @@ String setDate(DateTime day){
                                     child: IconButton(
                                       iconSize: MediaQuery.of(context).size.width*0.09,
                                       onPressed: (){
-                                        Navigator.push(context, MaterialPageRoute(
-                                          builder: (context)=> DonationDetail(
-                                            orgName: donee,
-                                            amount: amount,
-                                            time: time,
-                                            donor: donor,
-                                          ),
-                                        ),
-                                        ) ;                                     
+                                        // Navigator.push(context, MaterialPageRoute(
+                                        //   builder: (context)=> DonationDetail(
+                                        //     orgName: donee,
+                                        //     amount: amount,
+                                        //     time: datetime,
+                                        //     donor: donor,
+                                        //   ),
+                                        // ),
+                                        // ) ;                                     
                                       },
                                       icon:Icon(
                                         Icons.arrow_right,

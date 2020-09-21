@@ -219,8 +219,8 @@ class _UserTransactionState extends State<UserTransaction> {
                 SizedBox(
                     height:MediaQuery.of(context).size.height*0.015,
                   ),
-               AdminTransactionMain(orgName: holder,),
-                
+                  AdminTransactionMain(orgName: holder,)
+              
               ]
           );
     
@@ -234,7 +234,6 @@ class _UserTransactionState extends State<UserTransaction> {
     MediaQueryData queryData = MediaQuery.of(context);
     double width = queryData.size.width*0.02;
     double height = queryData.size.width*0.03;
-    String userid = user.id;
      return Container(
                   margin: EdgeInsets.symmetric(horizontal: width ),
                 decoration: BoxDecoration(
@@ -278,6 +277,7 @@ class _UserTransactionState extends State<UserTransaction> {
    }
 
    Widget _getOrgName(){
+       MediaQueryData queryData = MediaQuery.of(context);
     return StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection('users').where('isOrganization', isEqualTo: true).snapshots(),
         builder: (context, snapshot){
@@ -295,10 +295,14 @@ class _UserTransactionState extends State<UserTransaction> {
                       items: snapshot.data.documents.map((DocumentSnapshot document){
                         return DropdownMenuItem (
                           value: document.data['name'],
-                          child: Container(
-                            child: Text(document.data['name'],style: TextStyle(
-                            fontSize: 18,
-                              color: Colors.black),),
+                          child: FittedBox(
+                            child: Container(
+                              child: FittedBox(
+                                child: Text(document.data['name'],style: TextStyle(
+                                fontSize: 14,
+                                  color: Colors.black),),
+                              ),
+                            ),
                           ),
                         );
                       }).toList(),
@@ -309,7 +313,7 @@ class _UserTransactionState extends State<UserTransaction> {
                       });
                       },
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 14,
                         color: Colors.black),
                       );
         }

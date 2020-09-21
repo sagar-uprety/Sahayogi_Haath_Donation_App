@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'screens/profile/user_profile.dart';
 import 'screens/profile/edit_user_details.dart';
 
-import './screens/admintransaction/admin_transaction.dart';
+//import './screens/admintransaction/admin_transaction.dart';
 import './screens/donationDetail.dart';
-import './screens/orgtransaction/organization.dart';
+// import './screens/orgtransaction/organization.dart';
 import 'screens/transaction/donationList.dart';
 import './screens/login/login_main.dart';
 import './screens/signup/signup_main.dart';
@@ -71,9 +71,9 @@ class Routes {
     edit_activity: (context) => EditActivity(),
     profile: (context) => Profile(),
     edit_organization: (context) => EditOrganization(),
-    org_transaction: (context) => OrganizationTransaction(),
+    // org_transaction: (context) => OrganizationTransaction(),
     user_transaction: (context) => UserTransaction(),
-    admin_transaction: (context) => AdminTransaction(),
+    // admin_transaction: (context) => AdminTransaction(),
     donation_detail: (context) => DonationDetail()
   };
 }

@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../theme/extention.dart';
 class DonationDetail extends StatelessWidget {
   String orgName;
-  double amount;
-  String time;
+  String amount;
+  Timestamp time;
   String donor;
   String code = '043D087';
   DonationDetail({this.orgName, this.amount, this.time, this.donor});
