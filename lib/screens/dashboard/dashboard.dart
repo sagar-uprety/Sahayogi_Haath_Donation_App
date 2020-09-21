@@ -15,6 +15,8 @@ import '../../models/activitymodel.dart';
 import '../../components/ListTiles/ActivitiesListTiles.dart';
 import '../../components/ListTiles/DonationListTiles.dart';
 import '../../components/FlatButtonIcon.dart';
+import '../../components/AppBars/drawer.dart';
+import '../../components/AppBars/appBar.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -29,7 +31,7 @@ class _DashboardState extends State<Dashboard> {
     getUserData().then((value) {
       print("SuccessFul");
     });
-    getUserExtraData().then((value){
+    getUserExtraData().then((value) {
       print('Extra Data received.');
     });
     super.initState();
@@ -39,7 +41,7 @@ class _DashboardState extends State<Dashboard> {
     final user = Provider.of<UserProvider>(context, listen: false);
     await user.getUserData();
   }
-  
+
   getUserExtraData() async {
     final user = Provider.of<ExtrasProvider>(context, listen: false);
     await user.getCurrentUserInfo();
@@ -48,10 +50,10 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context);
-    
 
     return Scaffold(
-      appBar: _appBar(),
+      appBar: DashboardAppBar(),
+      drawer: SideDrawer(),
       backgroundColor: Theme.of(context).backgroundColor,
       body: user.id == null
           ? Center(child: CircularProgressIndicator())
@@ -69,29 +71,6 @@ class _DashboardState extends State<Dashboard> {
                 _generateLists()
               ],
             ),
-    );
-  }
-
-  //appbar
-  Widget _appBar() {
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Theme.of(context).backgroundColor,
-      leading: Icon(
-        Icons.short_text,
-        size: 30,
-        color: Colors.black,
-      ),
-      actions: <Widget>[
-        IconButton(
-            icon: Icon(
-              Icons.person,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.profile);
-            }),
-      ],
     );
   }
 
@@ -238,9 +217,7 @@ class _DashboardState extends State<Dashboard> {
               FlatButtonIcon(
                 text: "View All",
                 onPress: () {
-                  setState(() {
-                    
-                  });
+                  setState(() {});
 
                   Navigator.pushNamed(context, Routes.user_transaction);
                 },
@@ -248,7 +225,6 @@ class _DashboardState extends State<Dashboard> {
             ],
           ).p16,
           _getTransactionList(),
-         
         ],
       ),
     );

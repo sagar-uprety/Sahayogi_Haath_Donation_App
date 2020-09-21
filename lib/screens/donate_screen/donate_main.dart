@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sahayogihaath/components/RoundedButton.dart';
 import 'package:esewa_pnp/esewa.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:esewa_pnp/esewa_pnp.dart';
 import '../../routes.dart';
+import '../../components/AppBars/appBar.dart';
 
 class DonateScreen extends StatefulWidget {
   @override
@@ -38,9 +38,7 @@ class _DonateScreenState extends State<DonateScreen> {
       ),
       home: Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text("ESewa PNP"),
-        ),
+        appBar: GlobalAppBar(),
         body: Container(
           padding: EdgeInsets.all(20),
           child: Column(

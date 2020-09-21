@@ -48,7 +48,6 @@ class _HeaderState extends State<Header> {
                   BorderRadius.all(Radius.circular(AppTheme.fullWidth(context) * 0.10)),
             ),
             child: CircleAvatar(
-                backgroundColor: Colors.blue,
                 backgroundImage: NetworkImage(user.profileImage),
                 radius: AppTheme.fullWidth(context) * .10),
           ),

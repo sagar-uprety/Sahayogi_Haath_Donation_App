@@ -9,6 +9,8 @@ import '../../models/usermodel.dart';
 
 import '../../provider/activity_provider.dart';
 
+import '../../components/AppBars/appBar.dart';
+import '../../components/AppBars/drawer.dart';
 import './tabs/about.dart';
 import './tabs/activities.dart';
 import './tabs/photos.dart';
@@ -24,16 +26,15 @@ class _OrganizationInfoState extends State<OrganizationInfo> {
     final OrganizationModel passedOrganization =
         ModalRoute.of(context).settings.arguments;
     StreamProvider(
-        create: (context) => ActivityProvider().getActivitiesbyOrg(passedOrganization.id));
+        create: (context) =>
+            ActivityProvider().getActivitiesbyOrg(passedOrganization.id));
 
     return DefaultTabController(
         length: 4,
         initialIndex: 0,
         child: Scaffold(
-          appBar: AppBar(
-              backgroundColor: Theme.of(context).backgroundColor,
-              elevation: 0.0,
-              leading: BackButton(color: Colors.black),
+          drawer: SideDrawer(),
+          appBar: GlobalAppBar(
               bottom: TabBar(
                 isScrollable: true,
                 labelStyle: AppTheme.h5Style.bold,

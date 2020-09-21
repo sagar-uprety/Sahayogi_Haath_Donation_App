@@ -9,6 +9,8 @@ import '../../theme/text_styles.dart';
 
 import '../../components/category_tile_single.dart';
 import '../../components/ListTiles/OrgListTiles.dart';
+import '../../components/AppBars/appBar.dart';
+import '../../components/AppBars/drawer.dart';
 
 class ExploreOrganization extends StatefulWidget {
   @override
@@ -29,11 +31,9 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: SideDrawer(),
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-          backgroundColor: Theme.of(context).backgroundColor,
-          elevation: 0.0,
-          leading: BackButton(color: Colors.black)),
+      appBar: GlobalAppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

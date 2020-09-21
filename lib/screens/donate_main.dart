@@ -1,7 +1,8 @@
 import 'package:esewa_pnp/esewa.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:esewa_pnp/esewa_pnp.dart';
+
+import '../components/AppBars/appBar.dart';
 
 class Donate extends StatefulWidget {
   static const id = "Dashboard";
@@ -39,9 +40,7 @@ class _DonateState extends State<Donate> {
       ),
       home: Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text("ESewa PNP"),
-        ),
+        appBar: GlobalAppBar(),
         body: Container(
           padding: EdgeInsets.all(20),
           child: Column(
@@ -82,12 +81,6 @@ class _DonateState extends State<Donate> {
               ),
               Text(_orgName),
               Text(_referenceID),
-              RaisedButton(
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
-                },
-                child: Text('Logout'),
-              )
             ],
           ),
         ),
