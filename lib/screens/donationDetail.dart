@@ -1,16 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../constants.dart';
 import '../theme/extention.dart';
 class DonationDetail extends StatelessWidget {
+  String transactionId;
   String orgName;
   String amount;
   Timestamp time;
   String donor;
-  String code = '043D087';
-  DonationDetail({this.orgName, this.amount, this.time, this.donor});
+  DonationDetail({this.transactionId, this.orgName, this.amount, this.time, this.donor});
   @override
   Widget build(BuildContext context) {
+     DateTime date = time.toDate();
+    String datetime = DateFormat('dd MMM yyyy').format(date);
+     double donatedamount = double.parse(amount);
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     double height =  queryData.size.height*0.03;
@@ -79,7 +83,7 @@ class DonationDetail extends StatelessWidget {
                           height: queryData.size.height*0.005,
                         ), 
                         Text(
-                          '$time',
+                          '$datetime',
                           style: kDetailTransactionCardText
                         )
                            ],
@@ -88,7 +92,7 @@ class DonationDetail extends StatelessWidget {
                           width: queryData.size.width*0.2,
                         ), 
                         Text(
-                          'Rs $amount',
+                          'Rs $donatedamount',
                           style: kAmount,
                         ),
                       ],
@@ -130,7 +134,7 @@ class DonationDetail extends StatelessWidget {
                           height: queryData.size.height*0.005,
                         ), 
                           Text(
-                            'Esewa Payment',
+                           transactionId,
                             style:  kTransactionCardDoneeBoxText,
                           ),
                         ]

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:date_range_picker/date_range_picker.dart' as dateRange;
 
-import 'user_transactionmain.dart';
+import 'donationListmain.dart';
 
 import '../../constants.dart';
 
@@ -142,6 +142,7 @@ class _UserTransactionState extends State<UserTransaction> {
                        ),
                        if(user.isDonor) _user(),
                        if(user.isAdmin) _admin(),
+                       if(user.isOrganization) _organization(),
                    ]
                  ),
                ) 
@@ -189,6 +190,47 @@ class _UserTransactionState extends State<UserTransaction> {
       ],
      );
   }
+
+  Widget _organization(){
+    MediaQueryData queryData = MediaQuery.of(context);
+     final user = Provider.of<UserProvider>(context);
+    String orgName = user.name; 
+     return Column(
+       children: [
+         Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:<Widget>[
+                  Text('Sort by:'),
+                  SizedBox(
+                    width: queryData.size.width*0.05,
+                  ),
+                  Container(
+                    width: queryData.size.width*0.35,
+                    alignment: Alignment.center,
+                    height: queryData.size.height*0.05,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0),
+                      border: Border.all(
+                        width: 1,
+                        color: Color(0xFFA6AAB4),
+                      ),
+                      color: Color(0x22A6AAB4),
+                    ),
+                      child: Center(
+                        child: sortByDate(),
+                      ),
+                    ),
+                ],
+              ),
+       
+        SizedBox(
+            height:MediaQuery.of(context).size.height*0.015,
+          ),
+        OrgTransaction(orgName: orgName, startDate: selecteddate, endDate: endDate,),
+      ],
+     );
+  }
+
    Widget _admin(){
      MediaQueryData queryData = MediaQuery.of(context);
      final user = Provider.of<UserProvider>(context);

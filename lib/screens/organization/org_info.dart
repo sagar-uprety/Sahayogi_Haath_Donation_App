@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/components/FlatButtonIcon.dart';
-import 'package:sahayogihaath/provider/activity_provider.dart';
-import 'package:sahayogihaath/screens/activities_screen/edit_activity.dart';
+
+import '../../components/FlatButtonIcon.dart';
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
-import '../../theme/text_styles.dart';
 import '../../theme/theme.dart';
+import '../../models/usermodel.dart';
 
-import '../../components/RoundedButton.dart';
-import '../../models/activitymodel.dart';
+import '../../provider/activity_provider.dart';
+
+import '../../components/AppBars/appBar.dart';
+import '../../components/AppBars/drawer.dart';
 import './tabs/about.dart';
 import './tabs/activities.dart';
 import './tabs/photos.dart';
@@ -20,19 +21,20 @@ class OrganizationInfo extends StatefulWidget {
 }
 
 class _OrganizationInfoState extends State<OrganizationInfo> {
-  
   @override
   Widget build(BuildContext context) {
-    
+    final OrganizationModel passedOrganization =
+        ModalRoute.of(context).settings.arguments;
+    StreamProvider(
+        create: (context) =>
+            ActivityProvider().getActivitiesbyOrg(passedOrganization.id));
 
     return DefaultTabController(
         length: 4,
         initialIndex: 0,
         child: Scaffold(
-          appBar: AppBar(
-              backgroundColor: Theme.of(context).backgroundColor,
-              elevation: 0.0,
-              leading: BackButton(color: Colors.black),
+          drawer: SideDrawer(),
+          appBar: GlobalAppBar(
               bottom: TabBar(
                 isScrollable: true,
                 labelStyle: AppTheme.h5Style.bold,

@@ -59,6 +59,7 @@ class UserTransactionMain extends StatelessWidget {
 
 class AdminTransactionMain extends StatelessWidget {
     String orgName ;  
+    String transactionId;
     String donor;
     String donorImage;
     Timestamp time;
@@ -88,21 +89,20 @@ class AdminTransactionMain extends StatelessWidget {
                   if (!snapshot.hasData) {
                     return  Text('Loading');
                   }
-                  
-                 
                     final donations = snapshot.data.documents.reversed;
                    List <Widget> donationLists = [];
                   for(var donation in donations){
+                    transactionId = donation.data['transactionId'];
                        donor = donation.data['donor'];
                      donee = donation.data['donee'];
                      donorImage = donation.data['donorImage'];
                     time = donation.data['time'];
                       amount = donation.data['amount'];   
                        if(orgName==null){
-                        donationLists.add(TransactionCard(donor: donor, donorImage: donorImage, datetime: time, donee: donee, amount: amount,));
+                        donationLists.add(TransactionCard(transactionId: transactionId,donor: donor, donorImage: donorImage, datetime: time, donee: donee, amount: amount,));
                       } 
                       else if(donee == orgName){
-                        donationLists.add(TransactionCard(donor: donor, donorImage: donorImage, datetime: time, donee: donee, amount: amount,));
+                        donationLists.add(TransactionCard(transactionId: transactionId,donor: donor, donorImage: donorImage, datetime: time, donee: donee, amount: amount,));
                       }
                   }
         return  Column(
@@ -113,3 +113,54 @@ class AdminTransactionMain extends StatelessWidget {
     );
   }
 }
+
+class OrgTransaction extends StatelessWidget {
+    DateTime startDate;
+    DateTime endDate;
+    String orgName;
+    OrgTransaction({this.orgName,this.startDate,this.endDate});
+    String transactionId;
+    String donor;
+    String donorImage;
+    Timestamp time;
+    String donee;
+    String amount;
+  Widget build(BuildContext context) {
+    return StreamBuilder <QuerySnapshot>(
+      stream: (startDate == null && endDate==null) ? Firestore.instance.collection('transaction').where('donee', isEqualTo: orgName).orderBy('time').snapshots() : Firestore.instance.collection('transaction').where('donorId', isEqualTo: orgName).where('time', isGreaterThan: startDate).where('time',isLessThan: endDate).orderBy('time').snapshots(),
+              builder: (context, snapshot){
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'),);
+                  }
+                  if (!snapshot.hasData) {
+                    return  Text('Loading');
+                  }
+                   List <Widget> donationLists = [];
+
+                  final donations = snapshot.data.documents.reversed;
+                  for(var donation in donations){
+                    transactionId = donation.data['transactionId'];
+                     donor = donation.data['donor'];
+                     donee = donation.data['donee'];
+                     donorImage = donation.data['donorImage'];
+                    time = donation.data['time'];
+                    DateTime date = donation.data['time'].toDate();
+                      amount = donation.data['amount'];  
+                       if(startDate==null && endDate==null){
+                        donationLists.add(TransactionCard(transactionId: transactionId,donor: donor, donorImage: donorImage, datetime: time, donee: donee, amount: amount,));
+                      } 
+                      else if(date.isAfter(startDate) &&  date.isBefore(endDate)){
+                        donationLists.add(TransactionCard(transactionId: transactionId,donor: donor, donorImage: donorImage, datetime: time, donee: donee, amount: amount,));
+                      }  
+                  }
+                  return  Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: donationLists,
+  );
+  }
+      
+    );
+  }
+  }
+
+

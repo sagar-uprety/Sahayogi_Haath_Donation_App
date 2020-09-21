@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../models/usertransactionmodel.dart';
 
@@ -18,7 +17,6 @@ class UserTransactionProvider with ChangeNotifier{
   String donee;
   String amount;
   String userName;
-
   
   loadValues(UserTransactionModel transaction) {
     time = transaction.time;
@@ -31,9 +29,10 @@ class UserTransactionProvider with ChangeNotifier{
   
 
   Stream<List<UserTransactionModel>> getTransactions(){
-    return _service.getUserTransaction(
+    return _service.getConditionData(
       path: FirestorePath.transactions(), 
-      username: currentUser,
+      key: 'donor',
+      value: currentUser,
     ).map((snapshot) => snapshot
     .documents
     .map((doc) => UserTransactionModel.fromFirestore(doc.data))

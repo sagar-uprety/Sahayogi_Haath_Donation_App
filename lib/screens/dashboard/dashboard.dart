@@ -3,9 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:sahayogihaath/provider/usertransaction_provider.dart';
 import 'package:sahayogihaath/screens/orgtransaction/organization.dart';
 
+import '../../provider/extras_provider.dart';
+import '../../provider/usertransaction_provider.dart';
 import '../../provider/user_provider.dart';
 import '../../screens/dashboard/header.dart';
-
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
 import '../../theme/text_styles.dart';
@@ -16,10 +17,11 @@ import '../../models/activitymodel.dart';
 import '../../components/ListTiles/ActivitiesListTiles.dart';
 import '../../components/ListTiles/DonationListTiles.dart';
 import '../../components/FlatButtonIcon.dart';
+import '../../components/AppBars/drawer.dart';
+import '../../components/AppBars/appBar.dart';
 
 class Dashboard extends StatefulWidget {
-  
-    @override
+  @override
   _DashboardState createState() => _DashboardState();
 }
 
@@ -31,6 +33,9 @@ class _DashboardState extends State<Dashboard> {
     getUserData().then((value) {
       print("SuccessFul");
     });
+    getUserExtraData().then((value) {
+      print('Extra Data received.');
+    });
     super.initState();
   }
 
@@ -38,16 +43,19 @@ class _DashboardState extends State<Dashboard> {
     final user = Provider.of<UserProvider>(context, listen: false);
     await user.getUserData();
   }
-  
-   
+
+  getUserExtraData() async {
+    final user = Provider.of<ExtrasProvider>(context, listen: false);
+    await user.getCurrentUserInfo();
+  }
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context);
-    
 
     return Scaffold(
-      appBar: _appBar(),
+      appBar: DashboardAppBar(),
+      drawer: SideDrawer(),
       backgroundColor: Theme.of(context).backgroundColor,
       body: user.id == null
           ? Center(child: CircularProgressIndicator())
@@ -62,31 +70,9 @@ class _DashboardState extends State<Dashboard> {
                     ],
                   ),
                 ),
+               if(user.isOrganization) _generateLists()
               ],
             ),
-    );
-  }
-
-  //appbar
-  Widget _appBar() {
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Theme.of(context).backgroundColor,
-      leading: Icon(
-        Icons.short_text,
-        size: 30,
-        color: Colors.black,
-      ),
-      actions: <Widget>[
-        IconButton(
-            icon: Icon(
-              Icons.person,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.profile);
-            }),
-      ],
     );
   }
 
@@ -109,12 +95,11 @@ class _DashboardState extends State<Dashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text("Category", style: TextStyles.title.bold),
-              FlatButtonIcon(
+              if(user.isDonor) FlatButtonIcon(
                   text: 'Donate Now',
                   onPress: () {
                     Navigator.pushNamed(context, Routes.donate);
                   }),
-                  
             ],
           ).vP4,
         ),
@@ -161,7 +146,7 @@ class _DashboardState extends State<Dashboard> {
               offset: Offset(4, 4),
               blurRadius: 10,
               color: lightColor.withOpacity(.8),
-            )
+            ),
           ],
         ),
         child: ClipRRect(
@@ -210,7 +195,7 @@ class _DashboardState extends State<Dashboard> {
 
   Widget _generateLists() {
     final transactionProvider = Provider.of<UserTransactionProvider>(context);
-    
+
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -226,28 +211,9 @@ class _DashboardState extends State<Dashboard> {
               )
             ],
           ).hP16,
-           
           _getOrgList(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text("Recent Donations", style: TextStyles.title.bold).p(4),
-              FlatButtonIcon(
-                text: "View All",
-                onPress: () {
-                  setState(() {
-                    
-                  });
-                  
-                  Navigator.pushNamed(context, Routes.user_transaction);
-                },
-              ),
-            ],
-          ).p16,
-          _getTransactionList(),
-         
-        ],
-      ),
+        ]
+      )
     );
   }
 
@@ -256,21 +222,10 @@ class _DashboardState extends State<Dashboard> {
     return (activities != null)
         ? ActivitiesListTiles(
             listprovider: activities,
-            itemCount: activities.length >= 5 ? 5 : 1,
+            itemCount: activities.length >= 5 ? 5 : activities.length,
             heightPercent: activities.length >= 5 ? 0.4 : 0.15,
           )
         : Center(child: CircularProgressIndicator());
   }
 
-  Widget _getTransactionList() {
-    final activities = Provider.of<List<Activity>>(context);
-    return (activities != null)
-        ? DonationListTiles(
-            listprovider: activities,
-            itemCount: activities.length >= 5 ? 5 : 1,
-            heightPercent: activities.length >= 5 ? 0.4 : 0.15,
-          )
-        : Center(child: CircularProgressIndicator());
-  }
-  
 }

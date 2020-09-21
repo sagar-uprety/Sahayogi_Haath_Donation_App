@@ -2,15 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
+import '../../screens/donationDetail.dart';
 import '../../constants.dart';
 
 class TransactionCard extends StatelessWidget {
+  String transactionId;
    String donee;
    String donor;
    Timestamp datetime;
    String amount;
   String donorImage;
-  TransactionCard({@required this.donor, @required this.donee, @required this.datetime, @required this.donorImage, @required this.amount});
+  TransactionCard({this.transactionId,@required this.donor, @required this.donee, @required this.datetime, @required this.donorImage, @required this.amount});
   
                        
 String setDate(DateTime day){
@@ -71,7 +73,7 @@ String setDate(DateTime day){
                     child: Container(
                       width: cardWidth*0.12,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage('https://image.shutterstock.com/image-photo/mountains-during-sunset-beautiful-natural-260nw-407021107.jpg'),
+                        backgroundImage: NetworkImage(donorImage),
                       ),
                     ),
                   ),
@@ -145,15 +147,16 @@ String setDate(DateTime day){
                                     child: IconButton(
                                       iconSize: MediaQuery.of(context).size.width*0.09,
                                       onPressed: (){
-                                        // Navigator.push(context, MaterialPageRoute(
-                                        //   builder: (context)=> DonationDetail(
-                                        //     orgName: donee,
-                                        //     amount: amount,
-                                        //     time: datetime,
-                                        //     donor: donor,
-                                        //   ),
-                                        // ),
-                                        // ) ;                                     
+                                        Navigator.push(context, MaterialPageRoute(
+                                          builder: (context)=> DonationDetail(
+                                            transactionId: transactionId,
+                                            orgName: donee,
+                                            amount: amount,
+                                            time: datetime,
+                                            donor: donor,
+                                          ),
+                                        ),
+                                        ) ;                                     
                                       },
                                       icon:Icon(
                                         Icons.arrow_right,

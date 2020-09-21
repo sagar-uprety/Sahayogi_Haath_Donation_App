@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import '../models/organizationmodel.dart';
-import 'package:intl/intl.dart';
+import '../models/extras_model.dart';
 
 class FirestoreService {
   Firestore _db = Firestore.instance;
@@ -25,8 +24,11 @@ class FirestoreService {
     print(startDate);
       return _db.collection(path).where('donorId', isEqualTo: username).where('time', isGreaterThan: startDate).orderBy('time', descending: true).snapshots().map((snapshot) => snapshot);
   }
+  Stream<QuerySnapshot> getConditionData({@required String path,@required String key,@required value}){
+    return _db.collection(path).where(key, isEqualTo: value).snapshots().map((snapshot) => snapshot);
+  }
 
-   Stream<List<OrganizationDetail>> getdocsData({@required String path}) {
+  Stream<List<OrganizationDetail>> getdocsData({@required String path}) {
     return _db.collection(path).snapshots().map((snapshot) => snapshot
         .documents
         .map((document) => OrganizationDetail.fromFirestore(document.data))

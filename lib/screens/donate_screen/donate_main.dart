@@ -8,6 +8,7 @@ import 'package:esewa_pnp/esewa_pnp.dart';
 import 'package:provider/provider.dart';
 
 import '../../routes.dart';
+import '../../components/AppBars/appBar.dart';
 
 import '../../provider/user_provider.dart';
 import '../../provider/usertransaction_provider.dart';
@@ -45,9 +46,7 @@ class _DonateScreenState extends State<DonateScreen> {
       ),
       home: Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text("ESewa PNP"),
-        ),
+        appBar: GlobalAppBar(),
         body: Container(
           padding: EdgeInsets.all(20),
           child: Column(

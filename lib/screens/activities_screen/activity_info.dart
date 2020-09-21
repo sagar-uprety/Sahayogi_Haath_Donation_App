@@ -41,10 +41,11 @@ class _ActivityInfoState extends State<ActivityInfo> {
         child: Stack(
           children: <Widget>[
             Container(
+              width: double.infinity,
               height: AppTheme.fullHeight(context) * 0.42,
               child: Image.network(
                 passedActivity.image,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
             DraggableScrollableSheet(
