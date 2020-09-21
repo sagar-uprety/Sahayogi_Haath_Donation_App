@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sahayogihaath/provider/usertransaction_provider.dart';
-import 'package:sahayogihaath/screens/orgtransaction/organization.dart';
 
 import '../../provider/extras_provider.dart';
 import '../../provider/usertransaction_provider.dart';
@@ -15,7 +14,6 @@ import '../../routes.dart';
 
 import '../../models/activitymodel.dart';
 import '../../components/ListTiles/ActivitiesListTiles.dart';
-import '../../components/ListTiles/DonationListTiles.dart';
 import '../../components/FlatButtonIcon.dart';
 import '../../components/AppBars/drawer.dart';
 import '../../components/AppBars/appBar.dart';
