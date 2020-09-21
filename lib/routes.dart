@@ -6,7 +6,7 @@ import 'screens/profile/edit_user_details.dart';
 import './screens/admintransaction/admin_transaction.dart';
 import './screens/donationDetail.dart';
 import './screens/orgtransaction/organization.dart';
-import './screens/transaction/user_transaction.dart';
+import 'screens/transaction/donationList.dart';
 import './screens/login/login_main.dart';
 import './screens/signup/signup_main.dart';
 import './screens/signup/signup_org_main.dart';

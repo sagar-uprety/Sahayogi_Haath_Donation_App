@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constants/transaction_const.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../constants.dart';
 
 class SearchBar extends StatefulWidget {
   @override

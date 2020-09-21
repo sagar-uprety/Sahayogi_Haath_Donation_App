@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import '../../constants/transaction_const.dart';
+import '../../constants.dart';
 //transaction card
 class UserTransactionCard extends StatelessWidget {
    DateTime day;
@@ -45,11 +45,6 @@ String setDate(DateTime day){
   Widget build(BuildContext context) {
     DateTime date = datetime.toDate();
     String time = DateFormat('dd MMM yyyy').format(date);
-    // DateTime date = DateTime.parse(time);
-    // print(date);
-    //  DateFormat format = new DateFormat("dd MMM yyyy");
-    // DateTime formattedDate = format.parse(time);
-    // String displayTime = DateFormat('dd MMM yyyy').format(formattedDate);
      double donatedamount = double.parse(amount);
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);

@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:sahayogihaath/routes.dart';
 import '../../screens/donationDetail.dart';
-import '../../constants/transaction_const.dart';
+import '../../constants.dart';
 //transaction card
 class TransactionCard extends StatelessWidget {
    DateTime day;
