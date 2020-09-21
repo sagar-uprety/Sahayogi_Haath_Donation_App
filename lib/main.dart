@@ -58,10 +58,9 @@ class SahayogiHaath extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ActivityProvider(),
         ),
-        // StreamProvider(
-        //   create: (context) => ActivityProvider().getActivities(),
-        // ),
-
+        StreamProvider(
+          create: (context) => ActivityProvider().getActivities(),
+        ),
         StreamProvider(
           create: (context) => UserProvider().getOrganizations(),
         ),

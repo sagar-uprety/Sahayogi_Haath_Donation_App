@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sahayogihaath/FireStoredata.dart';
+import 'package:sahayogihaath/models/usermodel.dart';
+import 'package:sahayogihaath/provider/activity_provider.dart';
 import '../../../theme/extention.dart';
 import 'package:provider/provider.dart';
 import '../../../theme/text_styles.dart';
@@ -40,6 +42,7 @@ class _TabActvitiesState extends State<TabActvities> {
 
   Widget _activityTile() {
     final activities = Provider.of<List<Activity>>(context);
+
     return (activities != null)
         ? ActivitiesListTiles(
             listprovider: activities,
