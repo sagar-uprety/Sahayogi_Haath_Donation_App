@@ -66,16 +66,11 @@ class _ImageFilePickerState extends State<ImageFilePicker> {
     }
 
     if (widget.imageType == ImageType.userProfile) {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      if(widget.existingImage != null){
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-      userProvider.changeProfileImage(pickedImageFile);
-      // if (widget.imageType == ImageType.organization) {
-      //   final orgProvider =
-      //       Provider.of<OrganizationProvider>(context, listen: false);
-
-      //   orgProvider.changeImage(pickedImageFile);
-      // }
-
+        userProvider.changeProfileImage(pickedImageFile);
+      }
     }
     widget.imagePickFn(pickedImageFile);
   }

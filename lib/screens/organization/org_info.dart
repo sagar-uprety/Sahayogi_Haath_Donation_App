@@ -75,6 +75,6 @@ class _OrganizationInfoState extends State<OrganizationInfo> {
               Photos(),
             ],
           ),
-        ));
+        ),);
   }
 }

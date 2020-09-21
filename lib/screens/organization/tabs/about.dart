@@ -26,14 +26,10 @@ class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final user = Provider.of<UserProvider>(context);
 
     Widget getBody(context) {
       final OrganizationModel passedOrganization =
           ModalRoute.of(context).settings.arguments;
-
-      // final OrganizationDetail passedOrganizationdetail =
-      //     ModalRoute.of(context).settings.arguments;
 
       TextStyle titleStyle = TextStyles.title.copyWith(fontSize: 25).bold;
       if (AppTheme.fullWidth(context) < 393) {
@@ -43,23 +39,23 @@ class _AboutState extends State<About> {
       var size = MediaQuery.of(context).size;
       return SingleChildScrollView(
           child: Stack(children: <Widget>[
-        // Container(
-        //   width: double.infinity,
-        //   height: size.height * 0.5,
-        //   decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //         image: AssetImage("assets/images1/children.jpg"),
-        //         fit: BoxFit.cover),
-        //   ),
-        // ),
-
         Container(
-          height: AppTheme.fullHeight(context) * 0.42,
-          child: Image.network(
-            passedOrganization.profileImage,
-            fit: BoxFit.fill,
+          width: double.infinity,
+          height: size.height * 0.5,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images1/children.jpg"),
+                fit: BoxFit.cover),
           ),
         ),
+
+        // Container(
+        //   height: AppTheme.fullHeight(context) * 0.42,
+        //   child: Image.network(
+        //     passedOrganization.profileImage,
+        //     fit: BoxFit.fill,
+        //   ),
+        // ),
 
         Container(
           margin: EdgeInsets.only(top: size.height * 0.45),
@@ -107,14 +103,14 @@ class _AboutState extends State<About> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            user.name,
+                            passedOrganization.name,
                             style: TextStyle(
                                 height: 1.6,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            user.establishedDate,
+                            passedOrganization.establishedDate,
                             style: TextStyle(fontSize: 13),
                           ),
                         ],
@@ -135,7 +131,7 @@ class _AboutState extends State<About> {
             ).vP16,
           ),
         )
-      ]));
+      ],),);
     }
   }
 }
