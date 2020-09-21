@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:sahayogihaath/routes.dart';
-import '../../screens/donationDetail.dart';
+
 import '../../constants.dart';
-//transaction card
+
 class TransactionCard extends StatelessWidget {
    String donee;
    String donor;
@@ -138,7 +137,7 @@ String setDate(DateTime day){
                               child: Row(
                                 children: [
                                   FittedBox(
-                                                                      child: Text('Rs $amount',
+                                  child: Text('Rs $donatedamount',
                                       style: kAmount,
                                     ),
                                   ),

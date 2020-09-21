@@ -38,8 +38,14 @@ class UserTransactionMain extends StatelessWidget {
                      donee = donation.data['donee'];
                      donorImage = donation.data['donorImage'];
                     time = donation.data['time'];
-                      amount = donation.data['amount'];    
-                    donationLists.add(UserTransactionCard(donor: donor, donorImage: donorImage, datetime: time, donee: donee,amount: amount,));
+                    DateTime date = donation.data['time'].toDate();
+                      amount = donation.data['amount'];  
+                       if(selectedDate==null && endDate==null){
+                        donationLists.add(UserTransactionCard(donor: donor, donorImage: donorImage, datetime: time, donee: donee, amount: amount,));
+                      } 
+                      else if(date.isAfter(selectedDate) &&  date.isBefore(endDate)){
+                        donationLists.add(UserTransactionCard(donor: donor, donorImage: donorImage, datetime: time, donee: donee, amount: amount,));
+                      }  
                   }
                   return  Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
