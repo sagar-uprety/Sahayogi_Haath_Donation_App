@@ -1,14 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/screens/activities_screen/edit_activity.dart';
+import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
 import 'package:sahayogihaath/services/firestore_service.dart';
 
 import './screens/organization/org_info.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
-
 
 import './provider/user_provider.dart';
 import './provider/organization_provider.dart';
@@ -55,8 +55,8 @@ class SahayogiHaath extends StatelessWidget {
               FirestoreService().getDatas(path: FirestorePath.activities()),
         ),
         StreamProvider(
-          create: (context) =>
-              FirestoreService().getdocsData(path: FirestorePath.organizations()),
+          create: (context) => FirestoreService()
+              .getdocsData(path: FirestorePath.organizations()),
         ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
@@ -74,7 +74,7 @@ class SahayogiHaath extends StatelessWidget {
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
             if (userSnapshot.hasData) {
               // return BottomTabBar();
-              return OrganizationInfo();
+              return EditActivity();
             }
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
