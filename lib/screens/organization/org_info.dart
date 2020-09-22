@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/extras_provider.dart';
 
 import '../../components/FlatButtonIcon.dart';
 import '../../theme/extention.dart';
@@ -26,49 +26,59 @@ class _OrganizationInfoState extends State<OrganizationInfo> {
     final OrganizationModel passedOrganization =
         ModalRoute.of(context).settings.arguments;
 
-    return StreamProvider(
-      create: (context) => ActivityProvider().getActivitiesbyOrg(passedOrganization.id),
-          child: DefaultTabController(
-          length: 3,
-          initialIndex: 0,
-          child: Scaffold(
-            drawer: SideDrawer(),
-            appBar: GlobalAppBar(
-                bottom: TabBar(
-                  isScrollable: true,
-                  labelStyle: AppTheme.h5Style.bold,
-                  indicatorColor: Colors.white,
-                  tabs: [
-                    Tab(
-                      child: FlatButtonIcon(
-                        text: 'About',
-                        icon: null,
-                        color: LightColor.purpleLight,
-                      ),
-                    ),
-                    Tab(
-                      child: FlatButtonIcon(
-                        text: 'Donations',
-                        icon: null,
-                      ),
-                    ),
-                    Tab(
-                      child: FlatButtonIcon(
-                        text: 'Activities',
-                        icon: null,
-                      ),
-                    ),
-                  ],
-                )),
-            backgroundColor: Colors.white,
-            body: TabBarView(
-              children: [
-                About(),
-                TabActvities(),
-                TabActvities(),
-              ],
-            ),
-          ),),
+    return MultiProvider(
+      providers: [
+        StreamProvider(
+          create: (context) =>
+              ActivityProvider().getActivitiesbyOrg(passedOrganization.id),
+        ),
+        StreamProvider(
+          create: (context) =>
+              ExtrasProvider().getUserExtrabyId(passedOrganization.id),
+        )
+      ],
+      child: DefaultTabController(
+        length: 3,
+        initialIndex: 0,
+        child: Scaffold(
+          drawer: SideDrawer(),
+          appBar: GlobalAppBar(
+              bottom: TabBar(
+            isScrollable: true,
+            labelStyle: AppTheme.h5Style.bold,
+            indicatorColor: Colors.white,
+            tabs: [
+              Tab(
+                child: FlatButtonIcon(
+                  text: 'About',
+                  icon: null,
+                  color: LightColor.purpleLight,
+                ),
+              ),
+              Tab(
+                child: FlatButtonIcon(
+                  text: 'Donations',
+                  icon: null,
+                ),
+              ),
+              Tab(
+                child: FlatButtonIcon(
+                  text: 'Activities',
+                  icon: null,
+                ),
+              ),
+            ],
+          )),
+          backgroundColor: Colors.white,
+          body: TabBarView(
+            children: [
+              About(),
+              TabActvities(),
+              TabActvities(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

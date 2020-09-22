@@ -9,9 +9,7 @@ import '../services/firestore_path.dart';
 import '../services/firestore_service.dart';
 import '../models/extras_model.dart';
 
-
 class ExtrasProvider with ChangeNotifier {
-
   final _service = FirestoreService();
 
   String _id;
@@ -31,7 +29,7 @@ class ExtrasProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  changeBannerImage(File value) async{
+  changeBannerImage(File value) async {
     _image = value;
     notifyListeners();
     await saveBannerImage();
@@ -44,13 +42,20 @@ class ExtrasProvider with ChangeNotifier {
     _bannerImage = organizationDetail.bannerImage;
   }
 
-  getCurrentUserInfo()async{
+  getCurrentUserInfo() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
 
     return _service.getData(path: FirestorePath.extras(user.uid)).then((value) {
       print(value);
       loadValues(OrganizationDetail.fromFirestore(value));
     });
+  }
+
+  Stream<OrganizationDetail> getUserExtrabyId(String id) {
+    return _service
+        .getData(path: FirestorePath.extras(id))
+        .then((value) => OrganizationDetail.fromFirestore(value))
+        .asStream();
   }
 
   Future<bool> uploadImage(id) async {
@@ -67,30 +72,31 @@ class ExtrasProvider with ChangeNotifier {
   }
 
   Future<void> deleteImage() async {
-    await ImageUploader()
-        .deleteImage(path: CloudPath.org_banner, id: _id);
+    await ImageUploader().deleteImage(path: CloudPath.org_banner, id: _id);
   }
 
-  saveDescription(){
-    _service.updateData(path: FirestorePath.extras(_id), data: {'description' : description});
+  saveDescription() {
+    _service.updateData(
+        path: FirestorePath.extras(_id), data: {'description': description});
   }
 
-  saveBannerImage() async{
+  saveBannerImage() async {
     await deleteImage();
     bool uploadStatus = await uploadImage(_id);
-    if(uploadStatus)
-      _service.updateData(path: FirestorePath.extras(_id), data: {'banner_image': _bannerImage});
+    if (uploadStatus)
+      _service.updateData(
+          path: FirestorePath.extras(_id),
+          data: {'banner_image': _bannerImage});
   }
 
-  saveIdName(String id,String name) {
-    _service.saveData(path: FirestorePath.extras(id), data: {'id': id,'name': name});
+  saveIdName(String id, String name) {
+    _service.saveData(
+        path: FirestorePath.extras(id), data: {'id': id, 'name': name});
   }
 
   removeInfo(String id) {
     deleteImage();
-    _service.deleteData(
-        path: FirestorePath.extras(id));
+    _service.deleteData(path: FirestorePath.extras(id));
     notifyListeners(); //check
   }
-  
 }
