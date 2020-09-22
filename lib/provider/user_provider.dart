@@ -79,6 +79,20 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  setNull(){
+    _id = null;
+    _name = null;
+    _email = null;
+    _address = null;
+    _profileImage = null;
+    _establishedDate = null;
+    _type = null;
+    _documentImage = null;
+    _isDonor = false;
+    _isOrganization = false;
+    _isAdmin = false;
+  }
+
   getUserData() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return _service.getData(path: FirestorePath.user(user.uid)).then((value) {

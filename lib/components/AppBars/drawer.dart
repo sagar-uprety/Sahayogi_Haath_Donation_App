@@ -12,7 +12,6 @@ class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
-    print(user.isOrganization);
     return Drawer(
       child: ListView(
         children: [

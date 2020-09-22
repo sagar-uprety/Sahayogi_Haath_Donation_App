@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sahayogihaath/FireStoredata.dart';
-import 'package:sahayogihaath/models/usermodel.dart';
-import 'package:sahayogihaath/provider/activity_provider.dart';
-import '../../../theme/extention.dart';
 import 'package:provider/provider.dart';
 import '../../../theme/text_styles.dart';
 import '../../../components/ListTiles/ActivitiesListTiles.dart';
 import '../../../models/activitymodel.dart';
+import '../../../theme/extention.dart';
 
 class TabActvities extends StatefulWidget {
   @override
@@ -20,23 +17,25 @@ class _TabActvitiesState extends State<TabActvities> {
   }
 
   Widget _activitiesList() {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text("Recent Activities", style: TextStyles.title.bold),
-            IconButton(
-                    icon: Icon(
-                      Icons.sort,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    onPressed: () {})
-                .p(15)
-          ],
-        ).hP16,
-        _activityTile().vP8,
-      ],
+    return SingleChildScrollView(
+          child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text("Recent Activities", style: TextStyles.title.bold),
+              IconButton(
+                      icon: Icon(
+                        Icons.sort,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      onPressed: () {})
+                  .p(15)
+            ],
+          ).hP16,
+          _activityTile().vP8,
+        ],
+      ),
     );
   }
 
