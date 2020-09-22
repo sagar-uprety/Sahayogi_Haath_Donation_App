@@ -6,6 +6,8 @@ import 'package:esewa_pnp/esewa.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:esewa_pnp/esewa_pnp.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/models/usermodel.dart';
+import 'package:sahayogihaath/models/usertransactionmodel.dart';
 
 import '../../routes.dart';
 import '../../components/AppBars/appBar.dart';
@@ -25,6 +27,7 @@ class _DonateScreenState extends State<DonateScreen> {
   String _orgName = '';
   String _referenceID = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  OrganizationModel passedOrganization;
 
   @override
   void initState() {
@@ -40,6 +43,7 @@ class _DonateScreenState extends State<DonateScreen> {
 
   @override
   Widget build(BuildContext context) {
+    passedOrganization = ModalRoute.of(context).settings.arguments;
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Color.fromRGBO(65, 161, 36, 1),
@@ -87,12 +91,6 @@ class _DonateScreenState extends State<DonateScreen> {
               ),
               Text(_orgName),
               Text(_referenceID),
-              RaisedButton(
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
-                },
-                child: Text('Logout'),
-              )
             ],
           ),
         ),
@@ -104,8 +102,8 @@ class _DonateScreenState extends State<DonateScreen> {
    
     ESewaPayment eSewaPayment = ESewaPayment(
       amount: _amount,
-      productName: "Org Test 1",
-      productID: "abc123001",
+      productName: passedOrganization.name,
+      productID: passedOrganization.id,
       callBackURL: "https://www.sagaruprety.com.np",
     );
     try {
@@ -130,18 +128,22 @@ class _DonateScreenState extends State<DonateScreen> {
   Future <void> updateFirestore(ESewaResult res) async{
     final user = Provider.of<UserProvider>(context, listen: false); 
     final ESewaResult response = res;
-    String donor = user.name;
-    String donorId = user.id;
-    String donorImage = user.profileImage;
-    String amount = response.totalAmount;
-    String donee = response.productName;
-    String id = response.referenceId;
-    DateTime date = DateTime.now();
-    Timestamp time = Timestamp.fromDate(date);
+    
+    UserTransactionModel newTransaction = UserTransactionModel(
+      transactionId: response.referenceId,
+      donorId: user.id,
+      donor: user.name,
+      donorImage: user.profileImage,
+      doneeId: passedOrganization.id,
+      donee: passedOrganization.name,
+      doneeImage: passedOrganization.profileImage,
+      amount: double.parse(response.totalAmount),
+      time: Timestamp.fromDate(DateTime.now())
+    );
     
     final transactionProvider = Provider.of<UserTransactionProvider>(context, listen: false);
 
-    await transactionProvider.saveTransaction(amount, donorId, donor, donee, donorImage, time, id);
+    await transactionProvider.saveTransaction(newTransaction, id: response.referenceId);
   }
    
 }

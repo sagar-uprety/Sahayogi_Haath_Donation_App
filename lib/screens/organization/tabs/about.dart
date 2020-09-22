@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/components/RoundedButton.dart';
 import 'package:sahayogihaath/models/extras_model.dart';
+import 'package:sahayogihaath/routes.dart';
 
 import '../../../provider/extras_provider.dart';
 import '../../../provider/user_provider.dart';
@@ -27,7 +29,7 @@ class _AboutState extends State<About> {
         ModalRoute.of(context).settings.arguments;
 
     final banner = passedOrganization != null
-        ? passedOrgExtra == null ? '' :  passedOrgExtra.bannerImage
+        ? passedOrgExtra == null ? '' : passedOrgExtra.bannerImage
         : extra.banner;
     final description = passedOrganization != null
         ? passedOrgExtra == null ? '' : passedOrgExtra.description
@@ -41,7 +43,7 @@ class _AboutState extends State<About> {
             height: size.height * 0.5,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: banner == null || banner ==''
+                  image: banner == null || banner == ''
                       ? AssetImage('assets/images/def_banner.jpg')
                       : NetworkImage(banner),
                   fit: BoxFit.cover),
@@ -97,9 +99,22 @@ class _AboutState extends State<About> {
                       passedOrganization != null
                           ? DescriptionSection(
                               description, passedOrganization.id)
-                          : DescriptionSection(description,extra.id),
+                          : DescriptionSection(description, extra.id),
                     ],
                   ),
+                  if (user.isDonor) SizedBox(height: 8),
+                  if (user.isDonor)
+                    Center(
+                      child: RoundButton(
+                        text: 'Donate via e-sewa',
+                        textColor: Colors.white,
+                        color: Colors.green,
+                        onPress: () {
+                          Navigator.pushNamed(context, Routes.donate,arguments: passedOrganization);
+                          print('Donate via e-sewa');
+                        },
+                      ),
+                    )
                 ],
               ).vP16,
             ),

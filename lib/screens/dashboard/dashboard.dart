@@ -93,11 +93,6 @@ class _DashboardState extends State<Dashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text("Category", style: TextStyles.title.bold),
-              if(user.isDonor) FlatButtonIcon(
-                  text: 'Donate Now',
-                  onPress: () {
-                    Navigator.pushNamed(context, Routes.donate);
-                  }),
             ],
           ).vP4,
         ),
@@ -192,8 +187,6 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _generateLists() {
-    final transactionProvider = Provider.of<UserTransactionProvider>(context);
-
     return SliverList(
       delegate: SliverChildListDelegate(
         [
