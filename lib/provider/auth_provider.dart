@@ -212,7 +212,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future signOut() async {
-    _auth.signOut();
+    await _auth.signOut();
     _status = Status.Unauthenticated;
     user = null;
     notifyListeners();

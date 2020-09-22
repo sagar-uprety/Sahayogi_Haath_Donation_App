@@ -12,6 +12,7 @@ import 'provider/extras_provider.dart';
 import './provider/usertransaction_provider.dart';
 import './provider/auth_provider.dart';
 import './provider/activity_provider.dart';
+import './screens/donate_screen/donation_info.dart';
 
 import './theme/theme.dart';
 import './routes.dart';
@@ -48,7 +49,6 @@ class SahayogiHaath extends StatelessWidget {
         StreamProvider(
           create: (context) => ActivityProvider().getActivities(),
         ),
-
         StreamProvider(
           create: (context) => UserProvider().getOrganizations(),
         ),

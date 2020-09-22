@@ -62,12 +62,12 @@ class ActivityProvider with ChangeNotifier {
             .toList());
   }
 
-  Stream<List<Activity>> getActivitiesbyOrg(String currentOrgID) {
+  Stream<List<Activity>> getActivitiesbyOrg(String id) {
     return _service
         .getConditionData(
-          path: FirestorePath.activities(), //activity??
+          path: FirestorePath.activities(),
           key: 'authorid',
-          value: currentOrgID,
+          value: id,
         )
         .map((snapshot) => snapshot.documents
             .map((doc) => Activity.fromFirestore(doc.data))

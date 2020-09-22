@@ -47,6 +47,14 @@ class SideDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, Routes.org_info);
               },
             ),
+          if (user.isDonor)
+            Tile(
+              icon: Icons.explore,
+              title: 'Explore Organizations',
+              onTap: () {
+                Navigator.pushNamed(context, Routes.explore_org);
+              },
+            ),
           Tile(
             icon: Icons.account_balance_wallet,
             title: 'Transactions',

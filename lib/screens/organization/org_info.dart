@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/extras_provider.dart';
 
 import '../../components/FlatButtonIcon.dart';
 import '../../theme/extention.dart';
@@ -13,7 +14,6 @@ import '../../components/AppBars/appBar.dart';
 import '../../components/AppBars/drawer.dart';
 import './tabs/about.dart';
 import './tabs/activities.dart';
-import './tabs/photos.dart';
 
 class OrganizationInfo extends StatefulWidget {
   @override
@@ -25,57 +25,60 @@ class _OrganizationInfoState extends State<OrganizationInfo> {
   Widget build(BuildContext context) {
     final OrganizationModel passedOrganization =
         ModalRoute.of(context).settings.arguments;
-    StreamProvider(
-        create: (context) =>
-            ActivityProvider().getActivitiesbyOrg(passedOrganization.id));
 
-    return DefaultTabController(
-        length: 4,
+    return MultiProvider(
+      providers: [
+        StreamProvider(
+          create: (context) =>
+              ActivityProvider().getActivitiesbyOrg(passedOrganization.id),
+        ),
+        StreamProvider(
+          create: (context) =>
+              ExtrasProvider().getUserExtrabyId(passedOrganization.id),
+        )
+      ],
+      child: DefaultTabController(
+        length: 3,
         initialIndex: 0,
         child: Scaffold(
           drawer: SideDrawer(),
           appBar: GlobalAppBar(
               bottom: TabBar(
-                isScrollable: true,
-                labelStyle: AppTheme.h5Style.bold,
-                indicatorColor: Colors.white,
-                tabs: [
-                  Tab(
-                    child: FlatButtonIcon(
-                      text: 'About',
-                      icon: null,
-                      color: LightColor.purpleLight,
-                    ),
-                  ),
-                  Tab(
-                    child: FlatButtonIcon(
-                      text: 'Donations',
-                      icon: null,
-                    ),
-                  ),
-                  Tab(
-                    child: FlatButtonIcon(
-                      text: 'Photos',
-                      icon: null,
-                    ),
-                  ),
-                  Tab(
-                    child: FlatButtonIcon(
-                      text: 'Activities',
-                      icon: null,
-                    ),
-                  ),
-                ],
-              )),
+            isScrollable: true,
+            labelStyle: AppTheme.h5Style.bold,
+            indicatorColor: Colors.white,
+            tabs: [
+              Tab(
+                child: FlatButtonIcon(
+                  text: 'About',
+                  icon: null,
+                  color: LightColor.purpleLight,
+                ),
+              ),
+              Tab(
+                child: FlatButtonIcon(
+                  text: 'Donations',
+                  icon: null,
+                ),
+              ),
+              Tab(
+                child: FlatButtonIcon(
+                  text: 'Activities',
+                  icon: null,
+                ),
+              ),
+            ],
+          )),
           backgroundColor: Colors.white,
           body: TabBarView(
             children: [
               About(),
               TabActvities(),
-              Photos(),
-              Photos(),
+              TabActvities(),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

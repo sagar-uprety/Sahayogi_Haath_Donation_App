@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/models/extras_model.dart';
 
 import '../../../provider/extras_provider.dart';
 import '../../../provider/user_provider.dart';
@@ -21,17 +22,17 @@ class _AboutState extends State<About> {
     var size = MediaQuery.of(context).size;
     final user = Provider.of<UserProvider>(context);
     final extra = Provider.of<ExtrasProvider>(context);
-
+    final passedOrgExtra = Provider.of<OrganizationDetail>(context);
     final OrganizationModel passedOrganization =
         ModalRoute.of(context).settings.arguments;
 
     final banner = passedOrganization != null
-        ? passedOrganization.profileImage
+        ? passedOrgExtra == null ? '' :  passedOrgExtra.bannerImage
         : extra.banner;
     final description = passedOrganization != null
-        ? passedOrganization.email
+        ? passedOrgExtra == null ? '' : passedOrgExtra.description
         : extra.description;
-    // --
+
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
@@ -40,9 +41,9 @@ class _AboutState extends State<About> {
             height: size.height * 0.5,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: banner != null
-                      ? NetworkImage(banner)
-                      : AssetImage('assets/images/def_banner.jpg'),
+                  image: banner == null || banner ==''
+                      ? AssetImage('assets/images/def_banner.jpg')
+                      : NetworkImage(banner),
                   fit: BoxFit.cover),
             ),
           ),
@@ -89,7 +90,7 @@ class _AboutState extends State<About> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Header(),
+                      Header(passedOrganization.profileImage),
                       SizedBox(
                         height: 10,
                       ),
