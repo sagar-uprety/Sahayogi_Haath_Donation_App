@@ -88,7 +88,7 @@ String setDate(DateTime day){
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
-                             width: cardWidth*0.4,
+                             width: cardWidth*0.45,
                             child: FittedBox(
                                 child: Row(
                                 children: <Widget>[
@@ -140,7 +140,7 @@ String setDate(DateTime day){
                   ),
                     Container(
                       alignment: Alignment(1.0,0.0),
-                      width: cardWidth*0.30,
+                      width: cardWidth*0.3,
                       child: FittedBox(
                               child: Text('Rs $donatedamount',
                                 style: TextStyle(

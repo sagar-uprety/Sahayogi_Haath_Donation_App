@@ -73,7 +73,7 @@ const kTransactionCardBoxText = TextStyle(
                             );
 const kDetailTransactionCardText = TextStyle(
                               color: Colors.grey,
-                              fontSize:12
+                              fontSize:14
                             );
 const kTransactionCardDoneeBoxText = TextStyle(
                           fontWeight: FontWeight.bold,
