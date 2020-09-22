@@ -7,7 +7,7 @@ import '../theme/extention.dart';
 class DonationDetail extends StatelessWidget {
   String transactionId;
   String orgName;
-  String amount;
+  double amount;
   Timestamp time;
   String donor;
   DonationDetail(
@@ -16,7 +16,7 @@ class DonationDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime date = time.toDate();
     String datetime = DateFormat('dd MMM yyyy').format(date);
-    double donatedamount = double.parse(amount);
+    double donatedamount = amount;
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     double height = queryData.size.height * 0.03;

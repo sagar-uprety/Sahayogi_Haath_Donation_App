@@ -8,7 +8,7 @@ class UserTransactionCard extends StatelessWidget {
    String donee;
    String donor;
    Timestamp datetime;
-   String amount;
+   double amount;
   String donorImage;
   UserTransactionCard({this.day,@required this.donor, @required this.donee, @required this.datetime, @required this.donorImage, @required this.amount});
   
@@ -45,7 +45,7 @@ String setDate(DateTime day){
   Widget build(BuildContext context) {
     DateTime date = datetime.toDate();
     String time = DateFormat('dd MMM yyyy').format(date);
-     double donatedamount = double.parse(amount);
+     double donatedamount = amount;
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     double height =  queryData.size.height*0.007;

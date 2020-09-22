@@ -12,7 +12,7 @@ class UserTransactionMain extends StatelessWidget {
   String donorImage;
   Timestamp time;
   String donee;
-  String amount;
+  double amount;
   UserTransactionMain({this.userid, this.selectedDate, this.endDate});
 
   @override
@@ -83,7 +83,7 @@ class AdminTransactionMain extends StatelessWidget {
   String donorImage;
   Timestamp time;
   String donee;
-  String amount;
+  double amount;
   AdminTransactionMain({this.orgName});
 
   String viewAlldata(String name) {
@@ -163,7 +163,7 @@ class OrgTransaction extends StatelessWidget {
   String donorImage;
   Timestamp time;
   String donee;
-  String amount;
+  double amount;
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: (startDate == null && endDate == null)
