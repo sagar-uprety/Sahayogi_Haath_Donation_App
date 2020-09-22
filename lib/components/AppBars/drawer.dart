@@ -12,6 +12,7 @@ class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
+    print(user.isOrganization);
     return Drawer(
       child: ListView(
         children: [
@@ -45,6 +46,14 @@ class SideDrawer extends StatelessWidget {
               title: 'Profile',
               onTap: () {
                 Navigator.pushNamed(context, Routes.org_info);
+              },
+            ),
+          if (user.isDonor)
+            Tile(
+              icon: Icons.explore,
+              title: 'Explore Organizations',
+              onTap: () {
+                Navigator.pushNamed(context, Routes.explore_org);
               },
             ),
           Tile(

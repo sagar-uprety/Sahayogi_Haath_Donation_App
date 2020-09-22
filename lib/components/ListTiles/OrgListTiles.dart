@@ -58,8 +58,10 @@ class OrgListTiles extends StatelessWidget {
                       height: 55,
                       width: 55,
                       //org image
-                      child: Image.asset('assets/images1/ben.jpg',
-                          fit: BoxFit.fill),
+                      child: Image.asset(
+                        'assets/images1/ben.jpg',
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                   title: Text(

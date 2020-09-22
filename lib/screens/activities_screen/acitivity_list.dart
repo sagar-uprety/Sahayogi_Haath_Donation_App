@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/user_provider.dart';
 
 import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
@@ -29,6 +30,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
   }
 
   Widget _activitiesList() {
+    final user = Provider.of<UserProvider>(context);
     return Column(
       children: <Widget>[
         Row(
@@ -45,12 +47,13 @@ class _ActivitiesListState extends State<ActivitiesList> {
           ],
         ).hP16,
         _activityTile().vP8,
-        RoundButton(
-          text: "Publish Activity",
-          onPress: () {
-            Navigator.pushReplacementNamed(context, Routes.edit_activity);
-          },
-        ),
+        if (user.isOrganization)
+          RoundButton(
+            text: "Publish Activity",
+            onPress: () {
+              Navigator.pushReplacementNamed(context, Routes.edit_activity);
+            },
+          ),
       ],
     );
   }
