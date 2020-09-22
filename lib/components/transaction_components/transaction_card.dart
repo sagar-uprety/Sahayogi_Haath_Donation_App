@@ -81,9 +81,11 @@ String setDate(DateTime day){
                     width: cardWidth*0.03,
                   ),
                   Container(
+                     alignment: Alignment.centerLeft,
                     width: cardWidth*0.35,
                     child: FittedBox(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
