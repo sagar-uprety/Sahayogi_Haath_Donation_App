@@ -47,7 +47,7 @@ class SideDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, Routes.org_info);
               },
             ),
-          if (user.isDonor)
+          if (user.isDonor || user.isAdmin)
             Tile(
               icon: Icons.explore,
               title: 'Explore Organizations',
@@ -59,7 +59,7 @@ class SideDrawer extends StatelessWidget {
             icon: Icons.account_balance_wallet,
             title: 'Transactions',
             onTap: () {
-              print('Transactions');
+              Navigator.pushNamed(context, Routes.user_transaction);
             },
           ),
           Tile(

@@ -1,24 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../screens/donationDetail.dart';
+import '../../provider/user_provider.dart';
+import '../../models/usertransactionmodel.dart';
+
+import '../../routes.dart';
 import '../../constants.dart';
+import '../../theme/extention.dart';
 
 class TransactionCard extends StatelessWidget {
-  String transactionId;
-  String donee;
-  String donor;
-  Timestamp datetime;
-  double amount;
-  String donorImage;
-  TransactionCard(
-      {this.transactionId,
-      @required this.donor,
-      @required this.donee,
-      @required this.datetime,
-      @required this.donorImage,
-      @required this.amount});
+  final UserTransactionModel transaction;
+
+  TransactionCard(this.transaction);
 
   String setDate(DateTime day) {
     DateTime now = DateTime.now();
@@ -44,9 +38,9 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime date = datetime.toDate();
+    DateTime date = transaction.time.toDate();
     String time = DateFormat('dd MMM yyyy').format(date);
-    double donatedamount = amount;
+    double donatedamount = transaction.amount;
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     double height = queryData.size.height * 0.007;
@@ -75,7 +69,7 @@ class TransactionCard extends StatelessWidget {
                 child: Container(
                   width: cardWidth * 0.12,
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(donorImage),
+                    backgroundImage: NetworkImage(transaction.donorImage),
                   ),
                 ),
               ),
@@ -98,7 +92,7 @@ class TransactionCard extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.02,
                           ),
                           FittedBox(
-                            child: Text(donee,
+                            child: Text(transaction.donee,
                                 style: kTransactionCardDoneeBoxText),
                           ),
                         ]),
@@ -107,7 +101,8 @@ class TransactionCard extends StatelessWidget {
                             alignment: WrapAlignment.spaceBetween,
                             direction: Axis.vertical,
                             children: [
-                              Text(donor, style: kDetailTransactionCardText),
+                              Text(transaction.donor,
+                                  style: kDetailTransactionCardText),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.02,
                               ),
@@ -133,27 +128,6 @@ class TransactionCard extends StatelessWidget {
                           style: kAmount,
                         ),
                       ),
-                      FittedBox(
-                        child: IconButton(
-                            iconSize: MediaQuery.of(context).size.width * 0.09,
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DonationDetail(
-                                    transactionId: transactionId,
-                                    orgName: donee,
-                                    amount: amount,
-                                    time: datetime,
-                                    donor: donor,
-                                  ),
-                                ),
-                              );
-                            },
-                            icon: Icon(
-                              Icons.arrow_right,
-                            )),
-                      ),
                     ],
                   ),
                 ),
@@ -165,6 +139,13 @@ class TransactionCard extends StatelessWidget {
           height: height * 0.02,
         ),
       ],
+    ).ripple(
+      () {
+        final user = Provider.of<UserProvider>(context);
+        if (transaction.doneeId == user.id || user.isAdmin)
+          Navigator.pushNamed(context, Routes.donation_detail,
+              arguments: transaction);
+      },
     );
   }
 }

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../models/usertransactionmodel.dart';
+
 import '../../components/transaction_components/transaction_card.dart';
 import '../../components/transaction_components/usertransaction_card.dart';
 
 class UserTransactionMain extends StatelessWidget {
-  String userid;
-  DateTime selectedDate;
-  DateTime endDate;
-  String donor;
-  String donorImage;
-  Timestamp time;
-  String donee;
-  double amount;
+  final String userid;
+  final DateTime selectedDate;
+  final DateTime endDate;
   UserTransactionMain({this.userid, this.selectedDate, this.endDate});
 
   @override
@@ -44,28 +41,14 @@ class UserTransactionMain extends StatelessWidget {
 
           final donations = snapshot.data.documents.reversed;
           for (var donation in donations) {
-            donor = donation.data['donor'];
-            donee = donation.data['donee'];
-            donorImage = donation.data['donorImage'];
-            time = donation.data['time'];
             DateTime date = donation.data['time'].toDate();
-            amount = donation.data['amount'];
+
             if (selectedDate == null && endDate == null) {
               donationLists.add(UserTransactionCard(
-                donor: donor,
-                donorImage: donorImage,
-                datetime: time,
-                donee: donee,
-                amount: amount,
-              ));
+                  UserTransactionModel.fromFirestore(donation.data)));
             } else if (date.isAfter(selectedDate) && date.isBefore(endDate)) {
               donationLists.add(UserTransactionCard(
-                donor: donor,
-                donorImage: donorImage,
-                datetime: time,
-                donee: donee,
-                amount: amount,
-              ));
+                  UserTransactionModel.fromFirestore(donation.data)));
             }
           }
           return Column(
@@ -77,13 +60,7 @@ class UserTransactionMain extends StatelessWidget {
 }
 
 class AdminTransactionMain extends StatelessWidget {
-  String orgName;
-  String transactionId;
-  String donor;
-  String donorImage;
-  Timestamp time;
-  String donee;
-  double amount;
+  final String orgName;
   AdminTransactionMain({this.orgName});
 
   String viewAlldata(String name) {
@@ -119,30 +96,12 @@ class AdminTransactionMain extends StatelessWidget {
           final donations = snapshot.data.documents.reversed;
           List<Widget> donationLists = [];
           for (var donation in donations) {
-            transactionId = donation.data['transactionId'];
-            donor = donation.data['donor'];
-            donee = donation.data['donee'];
-            donorImage = donation.data['donorImage'];
-            time = donation.data['time'];
-            amount = donation.data['amount'];
             if (orgName == null) {
               donationLists.add(TransactionCard(
-                transactionId: transactionId,
-                donor: donor,
-                donorImage: donorImage,
-                datetime: time,
-                donee: donee,
-                amount: amount,
-              ));
-            } else if (donee == orgName) {
+                  UserTransactionModel.fromFirestore(donation.data)));
+            } else if (donation.data['donee'] == orgName) {
               donationLists.add(TransactionCard(
-                transactionId: transactionId,
-                donor: donor,
-                donorImage: donorImage,
-                datetime: time,
-                donee: donee,
-                amount: amount,
-              ));
+                  UserTransactionModel.fromFirestore(donation.data)));
             }
           }
           return Column(
@@ -154,16 +113,11 @@ class AdminTransactionMain extends StatelessWidget {
 }
 
 class OrgTransaction extends StatelessWidget {
-  DateTime startDate;
-  DateTime endDate;
-  String orgName;
-  OrgTransaction({this.orgName, this.startDate, this.endDate});
-  String transactionId;
-  String donor;
-  String donorImage;
-  Timestamp time;
-  String donee;
-  double amount;
+  final DateTime startDate;
+  final DateTime endDate;
+  final String orgName;
+  OrgTransaction({this.startDate, this.endDate, this.orgName});
+
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: (startDate == null && endDate == null)
@@ -192,31 +146,13 @@ class OrgTransaction extends StatelessWidget {
 
           final donations = snapshot.data.documents.reversed;
           for (var donation in donations) {
-            transactionId = donation.data['transactionId'];
-            donor = donation.data['donor'];
-            donee = donation.data['donee'];
-            donorImage = donation.data['donorImage'];
-            time = donation.data['time'];
             DateTime date = donation.data['time'].toDate();
-            amount = donation.data['amount'];
             if (startDate == null && endDate == null) {
               donationLists.add(TransactionCard(
-                transactionId: transactionId,
-                donor: donor,
-                donorImage: donorImage,
-                datetime: time,
-                donee: donee,
-                amount: amount,
-              ));
+                  UserTransactionModel.fromFirestore(donation.data)));
             } else if (date.isAfter(startDate) && date.isBefore(endDate)) {
               donationLists.add(TransactionCard(
-                transactionId: transactionId,
-                donor: donor,
-                donorImage: donorImage,
-                datetime: time,
-                donee: donee,
-                amount: amount,
-              ));
+                  UserTransactionModel.fromFirestore(donation.data)));
             }
           }
           return Column(

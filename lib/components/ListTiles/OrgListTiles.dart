@@ -57,9 +57,8 @@ class OrgListTiles extends StatelessWidget {
                     child: Container(
                       height: 55,
                       width: 55,
-                      //org image
-                      child: Image.asset(
-                        'assets/images1/ben.jpg',
+                      child: Image.network(
+                        listprovider[index].profileImage,
                         fit: BoxFit.fill,
                       ),
                     ),

@@ -38,15 +38,14 @@ class _UserTransactionState extends State<UserTransaction> {
   }
 
   Future selectdateRange(BuildContext context) async {
-    selecteddate = DateTime(current.year, current.month, current.day);
-    endDate = DateTime(current.year, current.month, current.day)
-        .add(Duration(days: 7));
+    selecteddate = DateTime(current.year, current.month, current.day).subtract(Duration(days: 7));
+    endDate = DateTime(current.year, current.month, current.day);
     final List<DateTime> pickedDateRange = await dateRange.showDatePicker(
         context: context,
         initialFirstDate: selecteddate,
-        initialLastDate: endDate,
+        initialLastDate: selecteddate != null ? endDate : DateTime.now(),
         firstDate: DateTime(2009),
-        lastDate: DateTime(2021));
+        lastDate: DateTime.now());
     if (pickedDateRange != null && pickedDateRange.length == 2) {
       setState(() {
         selecteddate = pickedDateRange[0];
@@ -63,7 +62,7 @@ class _UserTransactionState extends State<UserTransaction> {
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(2009),
-      lastDate: DateTime(2021),
+      lastDate: DateTime.now(),
     );
     if (pickedDate != null && pickedDate != selectedDate) {
       setState(() {

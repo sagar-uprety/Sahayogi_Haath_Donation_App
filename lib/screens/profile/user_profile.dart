@@ -8,7 +8,6 @@ import '../../components/RoundedButton.dart';
 
 import '../../provider/auth_provider.dart';
 import '../../provider/user_provider.dart';
-import '../../provider/usertransaction_provider.dart';
 
 import '../dashboard/header.dart';
 
@@ -20,7 +19,6 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
-    final transactionProvider = Provider.of<UserTransactionProvider>(context);
     final _auth = Provider.of<AuthProvider>(context);
     return Scaffold(
       drawer: SideDrawer(),
@@ -42,7 +40,6 @@ class Profile extends StatelessWidget {
                   text: 'My Donations',
                   onPress: () {
                     Navigator.pushNamed(context, Routes.user_transaction);
-                    print('My Donations');
                   },
                   icon: Icons.account_balance_wallet,
                 ),

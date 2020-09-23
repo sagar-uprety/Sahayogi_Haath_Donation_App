@@ -42,47 +42,29 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
               "Explore Organization",
               style: TextStyles.titleM.bold,
             ).vP8,
+            
             Container(
               padding: EdgeInsets.symmetric(horizontal: 24),
               height: 50,
               decoration: BoxDecoration(
                   color: Color(0xffEFEFEF),
                   borderRadius: BorderRadius.circular(14)),
-              child: TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  hintText: "Search",
-                  border: InputBorder.none,
-                  prefix: Icon(
-                    Icons.search,
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.search),
+                  SizedBox(
+                    width: 10,
                   ),
-                ),
-                onChanged: (value) {},
+                  Text(
+                    "Search",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 19,
+                    ),
+                  )
+                ],
               ),
             ).vP8,
-
-            // Container(
-            //   padding: EdgeInsets.symmetric(horizontal: 24),
-            //   height: 50,
-            //   decoration: BoxDecoration(
-            //       color: Color(0xffEFEFEF),
-            //       borderRadius: BorderRadius.circular(14)),
-            //   child: Row(
-            //     children: <Widget>[
-            //       Icon(Icons.search),
-            //       SizedBox(
-            //         width: 10,
-            //       ),
-            //       Text(
-            //         "Search",
-            //         style: TextStyle(
-            //           color: Colors.grey,
-            //           fontSize: 19,
-            //         ),
-            //       )
-            //     ],
-            //   ),
-            // ).vP8,
 
             Text("Categories", style: TextStyles.title.bold).vP8,
 

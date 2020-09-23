@@ -1,22 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../models/usertransactionmodel.dart';
 import '../constants.dart';
 import '../theme/extention.dart';
 
 class DonationDetail extends StatelessWidget {
-  String transactionId;
-  String orgName;
-  double amount;
-  Timestamp time;
-  String donor;
-  DonationDetail(
-      {this.transactionId, this.orgName, this.amount, this.time, this.donor});
+
   @override
   Widget build(BuildContext context) {
-    DateTime date = time.toDate();
+    final UserTransactionModel transaction = ModalRoute.of(context).settings.arguments;
+    DateTime date = transaction.time.toDate();
     String datetime = DateFormat('dd MMM yyyy').format(date);
-    double donatedamount = amount;
+    double donatedamount = transaction.amount;
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     double height = queryData.size.height * 0.03;
@@ -64,6 +60,7 @@ class DonationDetail extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CircleAvatar(
+                            backgroundImage: NetworkImage(transaction.doneeImage),
                             backgroundColor: Colors.blue,
                             radius: 20,
                           ),
@@ -74,7 +71,7 @@ class DonationDetail extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                orgName,
+                                transaction.donee,
                                 style: kTransactionCardDoneeBoxText,
                               ),
                               SizedBox(
@@ -129,28 +126,38 @@ class DonationDetail extends StatelessWidget {
                                 height: queryData.size.height * 0.005,
                               ),
                               Text(
-                                transactionId,
+                                transaction.transactionId,
                                 style: kTransactionCardDoneeBoxText,
                               ),
                             ]),
                         SizedBox(
                           height: queryData.size.height * 0.04,
                         ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Donated By',
-                                style: kTransactionCardBoxText,
-                              ),
-                              SizedBox(
-                                height: queryData.size.height * 0.005,
-                              ),
-                              Text(
-                                donor,
-                                style: kTransactionCardDoneeBoxText,
-                              ),
-                            ]),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Donated By',
+                                    style: kTransactionCardBoxText,
+                                  ),
+                                  SizedBox(
+                                    height: queryData.size.height * 0.005,
+                                  ),
+                                  Text(
+                                    transaction.donor,
+                                    style: kTransactionCardDoneeBoxText,
+                                  ),
+                                ]),
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage(transaction.donorImage),
+                                  backgroundColor: Colors.blue,
+                                  radius: 20,
+                                ),
+                          ],
+                        ),
                       ],
                     ),
                   ]).p(20)),

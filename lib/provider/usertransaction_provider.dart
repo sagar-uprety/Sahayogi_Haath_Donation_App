@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +10,6 @@ String currentUser;
 
 class UserTransactionProvider with ChangeNotifier {
   final _service = FirestoreService();
-  Timestamp time;
-  String donorImage;
-  String _transactionId;
-  String donor;
-  String donee;
-  String amount;
-  String userName;
 
   Stream<List<UserTransactionModel>> getTransactions() {
     return _service
@@ -31,10 +23,21 @@ class UserTransactionProvider with ChangeNotifier {
             .toList());
   }
 
+  Stream<List<UserTransactionModel>> getTransactionsbyOrg(String id) {
+    return _service
+        .getConditionData(
+          path: FirestorePath.transactions(),
+          key: 'doneeId',
+          value: id,
+        )
+        .map((snapshot) => snapshot.documents
+            .map((doc) => UserTransactionModel.fromFirestore(doc.data))
+            .toList());
+  }
+
   saveTransaction(UserTransactionModel transaction,{String id}) {
     _service.saveData(
         path: FirestorePath.transaction(id), data: transaction.toMap());
-    print(transaction.amount.toString() + 'to '+ transaction.donee + 'from' + transaction.donor);
     notifyListeners();
   }
 }

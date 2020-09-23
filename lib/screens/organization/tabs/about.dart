@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/components/RoundedButton.dart';
-import 'package:sahayogihaath/models/extras_model.dart';
-import 'package:sahayogihaath/routes.dart';
+
+import '../../../components/RoundedButton.dart';
+import '../../../models/extras_model.dart';
 
 import '../../../provider/extras_provider.dart';
 import '../../../provider/user_provider.dart';
@@ -12,6 +12,7 @@ import '../../../screens/profile/edit_data_field.dart';
 
 import '../../../theme/extention.dart';
 import '../../../models/usermodel.dart';
+import '../../../routes.dart';
 
 class About extends StatefulWidget {
   @override
@@ -80,6 +81,12 @@ class _AboutState extends State<About> {
                             passedOrganization != null
                                 ? passedOrganization.establishedDate
                                 : user.establishedDate,
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          Text(
+                            passedOrganization != null
+                                ? passedOrganization.type
+                                : user.type,
                             style: TextStyle(fontSize: 13),
                           ),
                         ],
@@ -92,7 +99,7 @@ class _AboutState extends State<About> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Header(passedOrganization.profileImage),
+                      Header(passedOrganization!=null ? passedOrganization.profileImage : null),
                       SizedBox(
                         height: 10,
                       ),

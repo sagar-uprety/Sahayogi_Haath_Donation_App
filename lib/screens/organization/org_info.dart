@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/extras_provider.dart';
 
-import '../../components/FlatButtonIcon.dart';
-import '../../theme/extention.dart';
-import '../../theme/light_color.dart';
-import '../../theme/theme.dart';
+import '../../provider/extras_provider.dart';
+import '../../provider/user_provider.dart';
+import '../../provider/usertransaction_provider.dart';
+import '../../provider/activity_provider.dart';
+
+import '../../screens/organization/tabs/donations.dart';
+import './tabs/about.dart';
+import './tabs/activities.dart';
+
 import '../../models/usermodel.dart';
 
-import '../../provider/activity_provider.dart';
+import '../../theme/extention.dart';
+import '../../theme/theme.dart';
 
 import '../../components/AppBars/appBar.dart';
 import '../../components/AppBars/drawer.dart';
-import './tabs/about.dart';
-import './tabs/activities.dart';
 
 class OrganizationInfo extends StatefulWidget {
   @override
@@ -21,59 +24,66 @@ class OrganizationInfo extends StatefulWidget {
 }
 
 class _OrganizationInfoState extends State<OrganizationInfo> {
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     final OrganizationModel passedOrganization =
         ModalRoute.of(context).settings.arguments;
-
+    final user = Provider.of<UserProvider>(context);
+    final String _id =
+        passedOrganization != null ? passedOrganization.id : user.id;
     return MultiProvider(
       providers: [
         StreamProvider(
-          create: (context) =>
-              ActivityProvider().getActivitiesbyOrg(passedOrganization.id),
+          create: (context) => ActivityProvider().getActivitiesbyOrg(_id),
+        ),
+        StreamProvider(
+          create: (context) => ExtrasProvider().getUserExtrabyId(_id),
         ),
         StreamProvider(
           create: (context) =>
-              ExtrasProvider().getUserExtrabyId(passedOrganization.id),
-        )
+              UserTransactionProvider().getTransactionsbyOrg(_id),
+        ),
       ],
       child: DefaultTabController(
         length: 3,
-        initialIndex: 0,
+        initialIndex: index,
         child: Scaffold(
           drawer: SideDrawer(),
           appBar: GlobalAppBar(
-              bottom: TabBar(
-            isScrollable: true,
-            labelStyle: AppTheme.h5Style.bold,
-            indicatorColor: Colors.white,
-            tabs: [
-              Tab(
-                child: FlatButtonIcon(
-                  text: 'About',
-                  icon: null,
-                  color: LightColor.purpleLight,
+            bottom: TabBar(
+              isScrollable: true,
+              indicator: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          color: Colors.black, style: BorderStyle.solid))),
+              indicatorSize: TabBarIndicatorSize.label,
+              onTap: (i) {
+                setState(() {
+                  index = i;
+                });
+              },
+              labelStyle: AppTheme.h5Style.bold,
+              indicatorColor: Colors.white,
+              tabs: [
+                Tab(
+                  child: Text('About'),
                 ),
-              ),
-              Tab(
-                child: FlatButtonIcon(
-                  text: 'Donations',
-                  icon: null,
+                Tab(
+                  child: Text('Donations')
                 ),
-              ),
-              Tab(
-                child: FlatButtonIcon(
-                  text: 'Activities',
-                  icon: null,
+                Tab(
+                  child: Text('Activities')
                 ),
-              ),
-            ],
-          )),
+              ],
+            ),
+          ),
           backgroundColor: Colors.white,
           body: TabBarView(
             children: [
               About(),
-              TabActvities(),
+              TabDonations(),
               TabActvities(),
             ],
           ),
