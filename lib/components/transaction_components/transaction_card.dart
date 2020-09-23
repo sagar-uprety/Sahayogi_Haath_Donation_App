@@ -141,7 +141,7 @@ class TransactionCard extends StatelessWidget {
       ],
     ).ripple(
       () {
-        final user = Provider.of<UserProvider>(context);
+        final user = Provider.of<UserProvider>(context,listen: false);
         if (transaction.doneeId == user.id || user.isAdmin)
           Navigator.pushNamed(context, Routes.donation_detail,
               arguments: transaction);
