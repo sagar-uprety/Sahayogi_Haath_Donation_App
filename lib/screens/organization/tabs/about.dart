@@ -117,8 +117,7 @@ class _AboutState extends State<About> {
                         textColor: Colors.white,
                         color: Colors.green,
                         onPress: () {
-                          Navigator.pushNamed(context, Routes.donate,arguments: passedOrganization);
-                          print('Donate via e-sewa');
+                          Navigator.pushNamed(context, Routes.donate,arguments: ComboModel(organization: passedOrganization, organizationExtra: passedOrgExtra));
                         },
                       ),
                     )

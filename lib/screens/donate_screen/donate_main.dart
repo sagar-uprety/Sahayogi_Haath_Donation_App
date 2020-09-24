@@ -6,8 +6,10 @@ import 'package:esewa_pnp/esewa.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:esewa_pnp/esewa_pnp.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/models/extras_model.dart';
 import 'package:sahayogihaath/models/usermodel.dart';
 import 'package:sahayogihaath/models/usertransactionmodel.dart';
+import 'package:sahayogihaath/provider/extras_provider.dart';
 
 import '../../routes.dart';
 import '../../components/AppBars/appBar.dart';
@@ -27,7 +29,7 @@ class _DonateScreenState extends State<DonateScreen> {
   String _orgName = '';
   String _referenceID = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  OrganizationModel passedOrganization;
+  ComboModel passedOrganization;
 
   @override
   void initState() {
@@ -44,6 +46,8 @@ class _DonateScreenState extends State<DonateScreen> {
   @override
   Widget build(BuildContext context) {
     passedOrganization = ModalRoute.of(context).settings.arguments;
+
+    print(passedOrganization);
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Color.fromRGBO(65, 161, 36, 1),
@@ -99,11 +103,10 @@ class _DonateScreenState extends State<DonateScreen> {
   }
 
   Future<void> pay() async {
-   
     ESewaPayment eSewaPayment = ESewaPayment(
       amount: _amount,
-      productName: passedOrganization.name,
-      productID: passedOrganization.id,
+      productName: passedOrganization.organization.name,
+      productID: passedOrganization.organization.id,
       callBackURL: "https://www.sagaruprety.com.np",
     );
     try {
@@ -125,25 +128,36 @@ class _DonateScreenState extends State<DonateScreen> {
     );
   }
 
-  Future <void> updateFirestore(ESewaResult res) async{
-    final user = Provider.of<UserProvider>(context, listen: false); 
+  Future<void> updateFirestore(ESewaResult res) async {
+    final user = Provider.of<UserProvider>(context, listen: false);
     final ESewaResult response = res;
-    
+    final double amount = double.parse(response.totalAmount);
     UserTransactionModel newTransaction = UserTransactionModel(
-      transactionId: response.referenceId,
-      donorId: user.id,
-      donor: user.name,
-      donorImage: user.profileImage,
-      doneeId: passedOrganization.id,
-      donee: passedOrganization.name,
-      doneeImage: passedOrganization.profileImage,
-      amount: double.parse(response.totalAmount),
-      time: Timestamp.fromDate(DateTime.now())
-    );
-    
-    final transactionProvider = Provider.of<UserTransactionProvider>(context, listen: false);
+        transactionId: response.referenceId,
+        donorId: user.id,
+        donor: user.name,
+        donorImage: user.profileImage,
+        doneeId: passedOrganization.organization.id,
+        donee: passedOrganization.organization.name,
+        doneeImage: passedOrganization.organization.profileImage,
+        amount: amount,
+        time: Timestamp.fromDate(DateTime.now()));
 
-    await transactionProvider.saveTransaction(newTransaction, id: response.referenceId);
+    final transactionProvider =
+        Provider.of<UserTransactionProvider>(context, listen: false);
+
+    await transactionProvider.saveTransaction(newTransaction,
+        id: response.referenceId);
+
+    final extra = Provider.of<ExtrasProvider>(context, listen: false);
+    extra.changeAmount(amount);
+    extra.saveAmountandCount();
+
+    extra.saveAmountandCountOrg(
+      passedOrganization.organizationExtra.id,
+      updatedAmount:
+          passedOrganization.organizationExtra.receivedAmount + amount,
+      updatedCount: passedOrganization.organizationExtra.countDonation + 1,
+    );
   }
-   
 }

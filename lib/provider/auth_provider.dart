@@ -87,6 +87,7 @@ class AuthProvider extends ChangeNotifier {
                   isAdmin: false,
                 )
           );
+          Provider.of<ExtrasProvider>(ctx,listen: false).saveIdName(uid,true);
         } else if (userType == UserType.organization) {
           userDatabase.registerOrganization(
             OrganizationModel(
@@ -102,8 +103,8 @@ class AuthProvider extends ChangeNotifier {
                 isOrganization: true,
               )
           );
+          Provider.of<ExtrasProvider>(ctx,listen: false).saveIdName(uid,false);
         }
-        Provider.of<ExtrasProvider>(ctx,listen: false).saveIdName(uid,name);
         sendEmailVerification(ctx);
       }
     } on PlatformException catch (err) {

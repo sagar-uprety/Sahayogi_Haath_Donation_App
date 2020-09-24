@@ -1,8 +1,6 @@
 import 'package:esewa_pnp/esewa_pnp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 
 import '../../components/RoundedButton.dart';
 

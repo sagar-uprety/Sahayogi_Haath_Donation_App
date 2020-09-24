@@ -13,16 +13,19 @@ class ExtrasProvider with ChangeNotifier {
   final _service = FirestoreService();
 
   String _id;
-  String _name;
   String _description;
   File _image;
   String _bannerImage;
+
+  double _amount;
+  int _count;
 
   //getters
   String get id => _id;
   String get description => _description;
   String get banner => _bannerImage;
-
+  double get amount => _amount;
+  int get count => _count;
   //setters
   changeDescription(String value) {
     _description = value;
@@ -35,11 +38,32 @@ class ExtrasProvider with ChangeNotifier {
     await saveBannerImage();
   }
 
-  loadValues(OrganizationDetail organizationDetail) {
-    _id = organizationDetail.id;
-    _name = organizationDetail.name;
-    _description = organizationDetail.description;
-    _bannerImage = organizationDetail.bannerImage;
+  changeAmount(double value) {
+    _amount = _amount + value;
+    _count = _count + 1;
+    notifyListeners();
+  }
+
+  setNull() {
+    _id = null;
+    _amount = null;
+    _count = null;
+    _description = null;
+    _bannerImage = null;
+  }
+
+  loadValues({DonorDetail donor, OrganizationDetail organization}) {
+    if (donor != null) {
+      _id = donor.id;
+      _amount = donor.donatedAmount;
+      _count = donor.countDonation;
+    } else if (organization != null) {
+      _id = organization.id;
+      _description = organization.description;
+      _bannerImage = organization.bannerImage;
+      _amount = organization.receivedAmount;
+      _count = organization.countDonation;
+    }
   }
 
   getCurrentUserInfo() async {
@@ -47,7 +71,11 @@ class ExtrasProvider with ChangeNotifier {
 
     return _service.getData(path: FirestorePath.extras(user.uid)).then((value) {
       print(value);
-      loadValues(OrganizationDetail.fromFirestore(value));
+      if (value['donated_amount'] != null) {
+        loadValues(donor: DonorDetail.fromFirestore(value));
+      } else {
+        loadValues(organization: OrganizationDetail.fromFirestore(value));
+      }
     });
   }
 
@@ -89,9 +117,36 @@ class ExtrasProvider with ChangeNotifier {
           data: {'banner_image': _bannerImage});
   }
 
-  saveIdName(String id, String name) {
-    _service.saveData(
-        path: FirestorePath.extras(id), data: {'id': id, 'name': name});
+  saveAmountandCount() {
+    _service.updateData(
+        path: FirestorePath.extras(_id),
+        data: {'donated_amount': amount, 'count_donation': count});
+  }
+
+  saveAmountandCountOrg(
+    String id, {
+    @required double updatedAmount,
+    @required int updatedCount,
+  }) {
+    _service.updateData(path: FirestorePath.extras(id), data: {
+      'received_amount': updatedAmount,
+      'count_donation': updatedCount
+    });
+  }
+
+  saveIdName(String id, [bool isDonor = false]) {
+    if (isDonor)
+      _service.saveData(path: FirestorePath.extras(id), data: {
+        'id': id,
+        'donated_amount': 0,
+        'count_donation': 0
+      });
+    else
+      _service.saveData(path: FirestorePath.extras(id), data: {
+        'id': id,
+        'received_amount': 0,
+        'count_donation': 0
+      });
   }
 
   removeInfo(String id) {
