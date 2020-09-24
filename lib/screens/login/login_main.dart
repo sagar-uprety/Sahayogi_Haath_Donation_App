@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/extras_provider.dart';
 import '../../provider/user_provider.dart';
 
 import './login.dart';
@@ -13,6 +14,7 @@ class _LoginMainState extends State<LoginMain> {
   @override
   Widget build(BuildContext context) {
     Provider.of<UserProvider>(context,listen: false).setNull();
+    Provider.of<ExtrasProvider>(context,listen: false).setNull();
     return Scaffold(
       body: Login(),
     );

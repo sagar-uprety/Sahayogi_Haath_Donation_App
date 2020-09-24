@@ -158,7 +158,6 @@ class UserProvider extends ChangeNotifier {
 
   saveName(){
     _service.updateData(path: FirestorePath.user(id), data: {'name' : name});
-    ExtrasProvider().saveIdName(id,name);
   }
 
   saveAddress(){

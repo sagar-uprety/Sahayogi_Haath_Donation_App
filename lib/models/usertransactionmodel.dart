@@ -45,6 +45,6 @@ class UserTransactionModel {
         doneeId = firestore['doneeId'],
         donee = firestore['donee'],
         doneeImage = firestore['doneeImage'],
-        amount = firestore['amount'],
+        amount = double.parse(firestore['amount'].toString()),
         time = firestore['time'];
 }

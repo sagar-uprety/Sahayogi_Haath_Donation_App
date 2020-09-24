@@ -3,7 +3,7 @@ class FirestorePath {
   static String users() => 'users';
   
   static String extras(String uid) => 'extras/$uid';
-  static String adminExtra(String uid) => 'admins/$uid';
+  static String adminExtra() => 'admin/admin';
   
   static String activity(String uid) => 'activities/$uid';
   static String activities() => 'activities';

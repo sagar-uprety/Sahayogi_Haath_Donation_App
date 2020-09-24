@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:sahayogihaath/models/extras_model.dart';
 
 enum UserType {donor, organization}
 
@@ -81,4 +82,11 @@ class OrganizationModel{
         documentImage = model['document_image'],
         isOrganization = model['isOrganization'],
         description = model['description'];
+}
+
+class ComboModel{
+  OrganizationModel organization;
+  OrganizationDetail organizationExtra;
+
+  ComboModel({this.organization, this.organizationExtra});
 }
