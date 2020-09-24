@@ -55,8 +55,7 @@ class AuthProvider extends ChangeNotifier {
       if (uid != null) {
         String imageUrl;
         await ImageUploader()
-            .uploadImage(
-                image: profileImage, path: CloudPath.profile, id: uid)
+            .uploadImage(image: profileImage, path: CloudPath.profile, id: uid)
             .then((String value) {
           imageUrl = value;
         });
@@ -72,38 +71,37 @@ class AuthProvider extends ChangeNotifier {
           });
         }
 
-        final userDatabase = Provider.of<UserProvider>(ctx,listen: false);
+        final userDatabase = Provider.of<UserProvider>(ctx, listen: false);
 
         if (userType == UserType.donor) {
-          userDatabase.registerDonor(
-              DonorModel(
-                  id: uid,
-                  name: name,
-                  email: email,
-                  address: address,
-                  phone: phone,
-                  profileImage: imageUrl,
-                  isDonor: true,
-                  isAdmin: false,
-                )
-          );
-          Provider.of<ExtrasProvider>(ctx,listen: false).saveIdName(uid,true);
+          userDatabase.registerDonor(DonorModel(
+            id: uid,
+            name: name,
+            email: email,
+            address: address,
+            phone: phone,
+            profileImage: imageUrl,
+            isDonor: true,
+            isAdmin: false,
+          ));
+          Provider.of<ExtrasProvider>(ctx, listen: false).saveIdName(uid, true);
+          Provider.of<AdminExtraProvider>(ctx, listen: false).updateCountDonor();
         } else if (userType == UserType.organization) {
-          userDatabase.registerOrganization(
-            OrganizationModel(
-                id: uid,
-                name: name,
-                email: email,
-                address: address,
-                phone: phone,
-                establishedDate: establishedDate,
-                profileImage: imageUrl,
-                type: type,
-                documentImage: documentUrl,
-                isOrganization: true,
-              )
-          );
-          Provider.of<ExtrasProvider>(ctx,listen: false).saveIdName(uid,false);
+          userDatabase.registerOrganization(OrganizationModel(
+            id: uid,
+            name: name,
+            email: email,
+            address: address,
+            phone: phone,
+            establishedDate: establishedDate,
+            profileImage: imageUrl,
+            type: type,
+            documentImage: documentUrl,
+            isOrganization: true,
+          ));
+          Provider.of<ExtrasProvider>(ctx, listen: false)
+              .saveIdName(uid, false);
+          Provider.of<AdminExtraProvider>(ctx, listen: false).updateCountOrganization();
         }
         sendEmailVerification(ctx);
       }

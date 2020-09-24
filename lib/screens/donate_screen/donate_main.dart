@@ -1,12 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:sahayogihaath/components/RoundedButton.dart';
 import 'package:esewa_pnp/esewa.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:esewa_pnp/esewa_pnp.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/models/extras_model.dart';
 import 'package:sahayogihaath/models/usermodel.dart';
 import 'package:sahayogihaath/models/usertransactionmodel.dart';
 import 'package:sahayogihaath/provider/extras_provider.dart';
@@ -159,5 +155,8 @@ class _DonateScreenState extends State<DonateScreen> {
           passedOrganization.organizationExtra.receivedAmount + amount,
       updatedCount: passedOrganization.organizationExtra.countDonation + 1,
     );
+
+    final admin = Provider.of<AdminExtraProvider>(context,listen: false);
+    admin.updateAmount(amount);
   }
 }

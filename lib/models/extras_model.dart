@@ -51,22 +51,21 @@ class OrganizationDetail {
         countDonation = firestore['count_donation'];
 }
 
-class AdminDetail{
+class AdminDetail {
   final double donationAmount;
   final int countDonation;
   final int countDonor;
   final int countOrganization;
   final int pendingVerfCount;
 
-  AdminDetail({
-    this.donationAmount,
-    this.countDonation,
-    this.countDonor,
-    this.countOrganization,
-    this.pendingVerfCount
-  });
+  AdminDetail(
+      {this.donationAmount,
+      this.countDonation,
+      this.countDonor,
+      this.countOrganization,
+      this.pendingVerfCount});
 
-  Map<String,dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
       'donation_amount': donationAmount,
       'count_donation': countDonation,
@@ -76,10 +75,10 @@ class AdminDetail{
     };
   }
 
-  AdminDetail.fromFirestore(Map<String,dynamic> firestore)
-  :donationAmount = firestore['donation_amount'],
-  countDonation = firestore['count_donation'],
-  countDonor = firestore['count_donor'],
-  countOrganization = firestore['count_organization'],
-  pendingVerfCount = firestore['count_pendingVerification'];
+  AdminDetail.fromFirestore(Map<String, dynamic> firestore)
+      : donationAmount = double.parse(firestore['donation_amount'].toString()),
+        countDonation = firestore['count_donation'],
+        countDonor = firestore['count_donor'],
+        countOrganization = firestore['count_organization'],
+        pendingVerfCount = firestore['count_pendingVerification'];
 }

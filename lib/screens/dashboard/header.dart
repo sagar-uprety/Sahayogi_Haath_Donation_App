@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/extras_provider.dart';
 
 import '../../provider/user_provider.dart';
 
@@ -32,13 +33,14 @@ class _HeaderState extends State<Header> {
   }
 
   Widget _donorOverview() {
+    final overview = Provider.of<ExtrasProvider>(context);
     return Container(
       decoration: cGreyBoxDecoration,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          OverviewDetail(info: 'Rs. 1500.0', title: 'Total Donation'),
-          OverviewDetail(info: '3', title: 'Organization'),
+          OverviewDetail(info: 'Rs. ${overview.amount}', title: 'Total Donation'),
+          OverviewDetail(info: '${overview.count}', title: 'No. of Donations'),
           Container(
             decoration: BoxDecoration(
               border: Border.all(
@@ -58,13 +60,14 @@ class _HeaderState extends State<Header> {
   }
 
   Widget _organizationOverview() {
+    final overview = Provider.of<ExtrasProvider>(context);
     return Container(
       decoration: cGreyBoxDecoration,
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            OverviewDetail(info: 'Rs. 15000.0', title: 'Total Donation'),
-            OverviewDetail(info: '11', title: 'Donors'),
+            OverviewDetail(info: 'Rs. ${overview.amount}', title: 'Total Donation'),
+            OverviewDetail(info: '${overview.count}', title: 'No. of Donations'),
             Container(
               decoration: BoxDecoration(
                 border: Border.all(
@@ -86,6 +89,8 @@ class _HeaderState extends State<Header> {
   }
 
   Widget _adminOverview() {
+    final overview = Provider.of<AdminExtraProvider>(context);
+
     return Container(
       decoration: cGreyBoxDecoration,
       child: Row(
@@ -98,7 +103,7 @@ class _HeaderState extends State<Header> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     OverviewDetail(
-                        title: 'Total Donations', info: 'Rs. 52500.0'),
+                        title: 'Total Donations', info: 'Rs. ${overview.amount}'),
                     SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,20 +112,20 @@ class _HeaderState extends State<Header> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               OverviewDetail(
-                                  title: 'Organizations', info: '30'),
+                                  title: 'Organizations', info: '${overview.countOrganization}'),
                               SizedBox(height: 5),
-                              OverviewDetail(info: 450, title: 'Donations'),
+                              OverviewDetail(info: '${overview.countDonation}', title: 'Donations'),
                             ]),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               OverviewDetail(
                                 title: 'Donors',
-                                info: '5000',
+                                info: '${overview.countDonor}',
                               ),
                               SizedBox(height: 5),
                               OverviewDetail(
-                                  info: 5, title: 'Pending \n Verifications')
+                                  info: '${overview.countPendingVerification}', title: 'Pending \n Verifications')
                             ])
                       ],
                     )

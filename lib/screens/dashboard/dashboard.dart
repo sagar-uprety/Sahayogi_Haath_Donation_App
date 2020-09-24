@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/usertransaction_provider.dart';
+import 'package:sahayogihaath/models/extras_model.dart';
 
 import '../../provider/extras_provider.dart';
-import '../../provider/usertransaction_provider.dart';
 import '../../provider/user_provider.dart';
 import '../../screens/dashboard/header.dart';
 import '../../theme/extention.dart';
@@ -25,7 +24,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   UserProvider user;
-
+  bool loaded = false;
   @override
   void initState() {
     getUserData().then((value) {
@@ -33,6 +32,10 @@ class _DashboardState extends State<Dashboard> {
     });
     getUserExtraData().then((value) {
       print('Extra Data received.');
+    });
+    getAdminInfo().then((value) {
+      print('Admin Data received.');
+      loaded = true;
     });
     super.initState();
   }
@@ -45,6 +48,11 @@ class _DashboardState extends State<Dashboard> {
   getUserExtraData() async {
     final user = Provider.of<ExtrasProvider>(context, listen: false);
     await user.getCurrentUserInfo();
+  }
+
+  getAdminInfo() async {
+    final admin = Provider.of<AdminExtraProvider>(context,listen: false);
+    await admin.getAdminInfo();
   }
 
   @override
@@ -68,7 +76,7 @@ class _DashboardState extends State<Dashboard> {
                     ],
                   ),
                 ),
-               if(user.isOrganization) _generateLists()
+                if (user.isOrganization) _generateLists()
               ],
             ),
     );
@@ -80,7 +88,7 @@ class _DashboardState extends State<Dashboard> {
         children: <Widget>[
           Text("Hello,", style: TextStyles.title.subTitleColor),
           Text(user.name, style: TextStyles.h1Style),
-          Header(),
+          !loaded ? Center(child: CircularProgressIndicator()) : Header(),
         ]).p16;
   }
 
@@ -188,24 +196,21 @@ class _DashboardState extends State<Dashboard> {
 
   Widget _generateLists() {
     return SliverList(
-      delegate: SliverChildListDelegate(
-        [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text("Activities", style: TextStyles.title.bold).p(4),
-              FlatButtonIcon(
-                text: "View All",
-                onPress: () {
-                  Navigator.pushNamed(context, Routes.activities_list);
-                },
-              )
-            ],
-          ).hP16,
-          _getOrgList(),
-        ]
-      )
-    );
+        delegate: SliverChildListDelegate([
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text("Activities", style: TextStyles.title.bold).p(4),
+          FlatButtonIcon(
+            text: "View All",
+            onPress: () {
+              Navigator.pushNamed(context, Routes.activities_list);
+            },
+          )
+        ],
+      ).hP16,
+      _getOrgList(),
+    ]));
   }
 
   Widget _getOrgList() {
@@ -218,5 +223,4 @@ class _DashboardState extends State<Dashboard> {
           )
         : Center(child: CircularProgressIndicator());
   }
-
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/screens/dashboard/dashboard.dart';
 
 import './screens/dashboard/dashboard.dart';
 import './screens/welcome/welcome.dart';
@@ -12,7 +11,6 @@ import 'provider/extras_provider.dart';
 import './provider/usertransaction_provider.dart';
 import './provider/auth_provider.dart';
 import './provider/activity_provider.dart';
-import './screens/donate_screen/donation_info.dart';
 
 import './theme/theme.dart';
 import './routes.dart';
@@ -57,6 +55,9 @@ class SahayogiHaath extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ExtrasProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AdminExtraProvider(),
         ),
       ],
       child: MaterialApp(
