@@ -67,6 +67,8 @@ class SahayogiHaath extends StatelessWidget {
         home: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
+            final admin = Provider.of<AdminExtraProvider>(ctx,listen: false);
+            admin.getAdminInfo().then((value) {print('Admin Data Received');});
             if (userSnapshot.hasData) {
               // return BottomTabBar();
               return Dashboard();

@@ -44,7 +44,6 @@ class _DonateScreenState extends State<DonateScreen> {
   Widget build(BuildContext context) {
     passedOrganization = ModalRoute.of(context).settings.arguments;
 
-    print(passedOrganization);
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Color.fromRGBO(65, 161, 36, 1),

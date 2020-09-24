@@ -31,9 +31,6 @@ class _DashboardState extends State<Dashboard> {
     });
     getUserExtraData().then((value) {
       print('Extra Data received.');
-    });
-    getAdminInfo().then((value) {
-      print('Admin Data received.');
       loaded = true;
     });
     super.initState();
@@ -47,11 +44,6 @@ class _DashboardState extends State<Dashboard> {
   getUserExtraData() async {
     final user = Provider.of<ExtrasProvider>(context, listen: false);
     await user.getCurrentUserInfo();
-  }
-
-  getAdminInfo() async {
-    final admin = Provider.of<AdminExtraProvider>(context,listen: false);
-    await admin.getAdminInfo();
   }
 
   @override
