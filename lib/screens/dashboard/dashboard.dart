@@ -67,7 +67,7 @@ class _DashboardState extends State<Dashboard> {
                     ],
                   ),
                 ),
-                if (user.isOrganization) _generateLists()
+                _generateLists()
               ],
             ),
     );
@@ -209,7 +209,7 @@ class _DashboardState extends State<Dashboard> {
     return (activities != null)
         ? ActivitiesListTiles(
             listprovider: activities,
-            itemCount: activities.length >= 5 ? 5 : activities.length,
+            itemCount: activities.length >= 3 ? 3 : activities.length,
             heightPercent: activities.length >= 5 ? 0.4 : 0.15,
           )
         : Center(child: CircularProgressIndicator());

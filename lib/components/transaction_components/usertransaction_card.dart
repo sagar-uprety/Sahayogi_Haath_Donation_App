@@ -68,7 +68,7 @@ class UserTransactionCard extends StatelessWidget {
                 child: Container(
                   width: cardWidth * 0.12,
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(transaction.donorImage),
+                    backgroundImage: NetworkImage(transaction.doneeImage),
                   ),
                 ),
               ),

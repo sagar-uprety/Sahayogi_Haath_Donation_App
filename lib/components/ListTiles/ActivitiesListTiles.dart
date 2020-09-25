@@ -61,7 +61,7 @@ class ActivitiesListTiles extends StatelessWidget {
                       height: 55,
                       width: 55,
                       //org image
-                      child: Image.asset('assets/images1/ben.jpg',
+                      child: Image.network(listprovider[index].image,
                           fit: BoxFit.fill),
                     ),
                   ),
@@ -73,7 +73,7 @@ class ActivitiesListTiles extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        listprovider[index].description,
+                        listprovider[index].description.substring(0,25) + '...',
                         style: TextStyles.bodySm.subTitleColor.bold,
                       ),
                       Text(

@@ -31,30 +31,32 @@ class _ActivitiesListState extends State<ActivitiesList> {
 
   Widget _activitiesList() {
     final user = Provider.of<UserProvider>(context);
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text("Recent Activities", style: TextStyles.title.bold),
-            IconButton(
-                    icon: Icon(
-                      Icons.sort,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    onPressed: () {})
-                .p(15)
-          ],
-        ).hP16,
-        _activityTile().vP8,
-        if (user.isOrganization)
-          RoundButton(
-            text: "Publish Activity",
-            onPress: () {
-              Navigator.pushReplacementNamed(context, Routes.edit_activity);
-            },
-          ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text("Recent Activities", style: TextStyles.title.bold),
+              IconButton(
+                      icon: Icon(
+                        Icons.sort,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      onPressed: () {})
+                  .p(15)
+            ],
+          ).hP16,
+          _activityTile().vP8,
+          if (user.isOrganization)
+            RoundButton(
+              text: "Publish Activity",
+              onPress: () {
+                Navigator.pushReplacementNamed(context, Routes.edit_activity);
+              },
+            ),
+        ],
+      ),
     );
   }
 

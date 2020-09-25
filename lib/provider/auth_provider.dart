@@ -74,6 +74,8 @@ class AuthProvider extends ChangeNotifier {
         final userDatabase = Provider.of<UserProvider>(ctx, listen: false);
 
         if (userType == UserType.donor) {
+          Provider.of<ExtrasProvider>(ctx, listen: false).saveIdName(uid, true);
+          Provider.of<AdminExtraProvider>(ctx, listen: false).updateCountDonor();
           userDatabase.registerDonor(DonorModel(
             id: uid,
             name: name,
@@ -84,9 +86,10 @@ class AuthProvider extends ChangeNotifier {
             isDonor: true,
             isAdmin: false,
           ));
-          Provider.of<ExtrasProvider>(ctx, listen: false).saveIdName(uid, true);
-          Provider.of<AdminExtraProvider>(ctx, listen: false).updateCountDonor();
         } else if (userType == UserType.organization) {
+          Provider.of<ExtrasProvider>(ctx, listen: false)
+              .saveIdName(uid, false);
+          Provider.of<AdminExtraProvider>(ctx, listen: false).updateCountOrganization();
           userDatabase.registerOrganization(OrganizationModel(
             id: uid,
             name: name,
@@ -99,9 +102,6 @@ class AuthProvider extends ChangeNotifier {
             documentImage: documentUrl,
             isOrganization: true,
           ));
-          Provider.of<ExtrasProvider>(ctx, listen: false)
-              .saveIdName(uid, false);
-          Provider.of<AdminExtraProvider>(ctx, listen: false).updateCountOrganization();
         }
         sendEmailVerification(ctx);
       }
@@ -146,6 +146,7 @@ class AuthProvider extends ChangeNotifier {
         ),
       );
       _status = Status.Unauthenticated;
+      notifyListeners();
     } catch (e) {
       print("Error on the sign in = " + e.toString());
       _status = Status.Unauthenticated;
@@ -191,7 +192,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future sendPasswordResetEmail(email, ctx) async {
-    await _auth.sendPasswordResetEmail(email: email).whenComplete(() {
+    print(email);
+    await _auth.sendPasswordResetEmail(email: email).then((value) => print('hello')).whenComplete(() {
       Scaffold.of(ctx).showSnackBar(
         SnackBar(
           content:
@@ -199,6 +201,7 @@ class AuthProvider extends ChangeNotifier {
           backgroundColor: Colors.green[600],
         ),
       );
+      print('hello2');
     }).catchError((error) {
       Scaffold.of(ctx).showSnackBar(
         SnackBar(
@@ -207,6 +210,8 @@ class AuthProvider extends ChangeNotifier {
           backgroundColor: Colors.red[600],
         ),
       );
+      print('hello3');
+
     });
   }
 
