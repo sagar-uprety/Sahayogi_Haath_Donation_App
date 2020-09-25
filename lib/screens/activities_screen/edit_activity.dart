@@ -99,7 +99,7 @@ class _EditActivityState extends State<EditActivity> {
                     hintText: "Activity Title",
                     key: ValueKey('activity_title'),
                     maxlines: 1,
-                    maxlength: 30,
+                    maxlength: 50,
                     keyboardType: TextInputType.name,
                     validator: (value) {
                       if (value.isEmpty) {
@@ -121,7 +121,7 @@ class _EditActivityState extends State<EditActivity> {
                     hintText: "Describe your Activity",
                     key: ValueKey('activity_description'),
                     maxlength: 1000,
-                    maxlines: 20,
+                    maxlines: 18,
                     enableSuggesstion: false,
                     keyboardType: TextInputType.multiline,
                     validator: (value) {

@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:esewa_pnp/esewa.dart';
 import 'package:esewa_pnp/esewa_pnp.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/models/usermodel.dart';
-import 'package:sahayogihaath/models/usertransactionmodel.dart';
-import 'package:sahayogihaath/provider/extras_provider.dart';
+
+import '../../models/usermodel.dart';
+import '../../models/usertransactionmodel.dart';
 
 import '../../routes.dart';
 import '../../components/AppBars/appBar.dart';
 
+import '../../provider/extras_provider.dart';
 import '../../provider/user_provider.dart';
 import '../../provider/usertransaction_provider.dart';
 
@@ -43,7 +44,6 @@ class _DonateScreenState extends State<DonateScreen> {
   Widget build(BuildContext context) {
     passedOrganization = ModalRoute.of(context).settings.arguments;
 
-    print(passedOrganization);
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Color.fromRGBO(65, 161, 36, 1),

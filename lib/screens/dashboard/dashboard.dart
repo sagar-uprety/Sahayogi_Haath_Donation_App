@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/models/extras_model.dart';
 
 import '../../provider/extras_provider.dart';
 import '../../provider/user_provider.dart';
@@ -32,9 +31,6 @@ class _DashboardState extends State<Dashboard> {
     });
     getUserExtraData().then((value) {
       print('Extra Data received.');
-    });
-    getAdminInfo().then((value) {
-      print('Admin Data received.');
       loaded = true;
     });
     super.initState();
@@ -48,11 +44,6 @@ class _DashboardState extends State<Dashboard> {
   getUserExtraData() async {
     final user = Provider.of<ExtrasProvider>(context, listen: false);
     await user.getCurrentUserInfo();
-  }
-
-  getAdminInfo() async {
-    final admin = Provider.of<AdminExtraProvider>(context,listen: false);
-    await admin.getAdminInfo();
   }
 
   @override
@@ -76,7 +67,7 @@ class _DashboardState extends State<Dashboard> {
                     ],
                   ),
                 ),
-                if (user.isOrganization) _generateLists()
+                _generateLists(),
               ],
             ),
     );
@@ -218,7 +209,7 @@ class _DashboardState extends State<Dashboard> {
     return (activities != null)
         ? ActivitiesListTiles(
             listprovider: activities,
-            itemCount: activities.length >= 5 ? 5 : activities.length,
+            itemCount: activities.length >= 3 ? 3 : activities.length,
             heightPercent: activities.length >= 5 ? 0.4 : 0.15,
           )
         : Center(child: CircularProgressIndicator());

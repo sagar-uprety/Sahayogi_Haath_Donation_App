@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../components/RoundedButton.dart';
 import '../components/RoundedInput.dart';
 import '../provider/auth_provider.dart';
+import '../theme/extention.dart';
 
 class ForgotPassword extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -71,7 +72,7 @@ class ForgotPassword extends StatelessWidget {
                   },
                 ),
               ],
-            ),
+            ).p16,
           )),
     );
   }

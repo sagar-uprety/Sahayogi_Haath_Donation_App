@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sahayogihaath/provider/user_provider.dart';
 
 import '../../provider/activity_provider.dart';
 import '../../screens/activities_screen/edit_activity.dart';
@@ -29,6 +30,7 @@ class _ActivityInfoState extends State<ActivityInfo> {
   @override
   Widget build(BuildContext context) {
     final activityProvider = Provider.of<ActivityProvider>(context);
+    final user = Provider.of<UserProvider>(context);
     final Activity passedActivity = ModalRoute.of(context).settings.arguments;
     
     TextStyle titleStyle = TextStyles.title.copyWith(fontSize: 25).bold;
@@ -100,7 +102,7 @@ class _ActivityInfoState extends State<ActivityInfo> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Org Name",
+                                "Helping Hands",
                                 style: TextStyles.bodySm.subTitleColor.bold,
                               ),
                               Text(
@@ -126,6 +128,7 @@ class _ActivityInfoState extends State<ActivityInfo> {
                 );
               },
             ),
+            user.isAdmin || user.id == passedActivity.authorid ?
             Positioned(
               bottom: 10,
               left: AppTheme.fullWidth(context) * .05,
@@ -169,7 +172,7 @@ class _ActivityInfoState extends State<ActivityInfo> {
                       )),
                 ],
               ).vP16,
-            ),
+            ) : Container(),
             _appbar(),
           ],
         ),
