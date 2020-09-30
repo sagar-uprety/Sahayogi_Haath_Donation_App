@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width *0.1),
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -111,8 +111,7 @@ class _LoginState extends State<Login> {
                               print(error);
                             });
                           }
-                        },
-                      ),
+                        }),
                 SizedBox(height: size.height * 0.03),
                 if (authProvider.status != Status.Authenticating)
                   HaveAnAccountCheck(

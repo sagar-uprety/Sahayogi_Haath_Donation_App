@@ -38,7 +38,8 @@ class _UserTransactionState extends State<UserTransaction> {
   }
 
   Future selectdateRange(BuildContext context) async {
-    selecteddate = DateTime(current.year, current.month, current.day).subtract(Duration(days: 7));
+    selecteddate = DateTime(current.year, current.month, current.day)
+        .subtract(Duration(days: 7));
     endDate = DateTime(current.year, current.month, current.day);
     final List<DateTime> pickedDateRange = await dateRange.showDatePicker(
         context: context,
@@ -113,27 +114,29 @@ class _UserTransactionState extends State<UserTransaction> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
-    String userid = user.id;
     MediaQueryData queryData = MediaQuery.of(context);
     double width = queryData.size.width * 0.02;
     return SafeArea(
-        child: Scaffold(
-      body: Padding(
+      child: Scaffold(
+        body: Padding(
           padding: EdgeInsets.all(width),
           child: SingleChildScrollView(
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SearchBar(),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.015,
-                  ),
-                  if (user.isDonor) _user(),
-                  if (user.isAdmin) _admin(),
-                  if (user.isOrganization) _organization(),
-                ]),
-          )),
-    ));
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SearchBar(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.015,
+                ),
+                if (user.isDonor) _user(),
+                if (user.isAdmin) _admin(),
+                if (user.isOrganization) _organization(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _user() {
@@ -143,28 +146,45 @@ class _UserTransactionState extends State<UserTransaction> {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Sort by:'),
-            SizedBox(
-              width: queryData.size.width * 0.05,
-            ),
-            Container(
-              width: queryData.size.width * 0.35,
-              alignment: Alignment.center,
-              height: queryData.size.height * 0.05,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6.0),
-                border: Border.all(
-                  width: 1,
-                  color: Color(0xFFA6AAB4),
-                ),
-                color: Color(0x22A6AAB4),
+          children: [
+            Flexible(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Sort by:'),
+                  SizedBox(
+                    width: queryData.size.width * 0.05,
+                  ),
+                  Container(
+                    width: queryData.size.width * 0.35,
+                    alignment: Alignment.center,
+                    height: queryData.size.height * 0.05,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0),
+                      border: Border.all(
+                        width: 1,
+                        color: Color(0xFFA6AAB4),
+                      ),
+                      color: Color(0x22A6AAB4),
+                    ),
+                    child: Center(
+                      child: sortByDate(),
+                    ),
+                  ),
+                ],
               ),
-              child: Center(
-                child: sortByDate(),
-              ),
             ),
+            IconButton(
+              icon: Icon(
+                Icons.clear,
+              ),
+              onPressed: () {
+                setState(() {
+                  selecteddate = null;
+                  endDate = null;
+                });
+              },
+            )
           ],
         ),
         SizedBox(
@@ -186,28 +206,45 @@ class _UserTransactionState extends State<UserTransaction> {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Sort by:'),
-            SizedBox(
-              width: queryData.size.width * 0.05,
-            ),
-            Container(
-              width: queryData.size.width * 0.35,
-              alignment: Alignment.center,
-              height: queryData.size.height * 0.05,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6.0),
-                border: Border.all(
-                  width: 1,
-                  color: Color(0xFFA6AAB4),
-                ),
-                color: Color(0x22A6AAB4),
+          children: [
+            Flexible(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Sort by:'),
+                  SizedBox(
+                    width: queryData.size.width * 0.05,
+                  ),
+                  Container(
+                    width: queryData.size.width * 0.35,
+                    alignment: Alignment.center,
+                    height: queryData.size.height * 0.05,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0),
+                      border: Border.all(
+                        width: 1,
+                        color: Color(0xFFA6AAB4),
+                      ),
+                      color: Color(0x22A6AAB4),
+                    ),
+                    child: Center(
+                      child: sortByDate(),
+                    ),
+                  ),
+                ],
               ),
-              child: Center(
-                child: sortByDate(),
-              ),
             ),
+            IconButton(
+              icon: Icon(
+                Icons.clear,
+              ),
+              onPressed: () {
+                setState(() {
+                  selecteddate = null;
+                  endDate = null;
+                });
+              },
+            )
           ],
         ),
         SizedBox(
@@ -224,41 +261,58 @@ class _UserTransactionState extends State<UserTransaction> {
 
   Widget _admin() {
     MediaQueryData queryData = MediaQuery.of(context);
-    final user = Provider.of<UserProvider>(context);
-    String userid = user.id;
-    return Column(children: <Widget>[
-      Container(
-        width: queryData.size.width * 0.5,
-        alignment: Alignment.center,
-        height: queryData.size.height * 0.07,
-        margin: EdgeInsets.symmetric(horizontal: 50, vertical: 0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-            width: 1,
-            color: Color(0xFFA6AAB4),
-          ),
-          color: Color(0x22A6AAB4),
+    return Column(
+      children: <Widget>[
+        Row(
+          children: [
+            Flexible(
+              child: Center(
+                child: Container(
+                  width: queryData.size.width * 0.5,
+                  alignment: Alignment.center,
+                  height: queryData.size.height * 0.07,
+                  margin: EdgeInsets.symmetric(horizontal: 50, vertical: 0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                      width: 1,
+                      color: Color(0xFFA6AAB4),
+                    ),
+                    color: Color(0x22A6AAB4),
+                  ),
+                  child: Center(
+                    child: _getOrgName(),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.clear,
+              ),
+              onPressed: () {
+                setState(() {
+                  holder = null;
+                });
+              },
+            )
+          ],
         ),
-        child: Center(
-          child: _getOrgName(),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.015,
         ),
-      ),
-      SizedBox(
-        height: MediaQuery.of(context).size.height * 0.015,
-      ),
-      Header(),
-      SizedBox(
-        height: MediaQuery.of(context).size.height * 0.015,
-      ),
-      AdminTransactionMain(
-        orgName: holder,
-      )
-    ]);
+        Header(),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.015,
+        ),
+        AdminTransactionMain(
+          orgName: holder,
+        )
+      ],
+    );
   }
 
   Widget _getOrgName() {
-    MediaQueryData queryData = MediaQuery.of(context);
     return StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
             .collection('users')
