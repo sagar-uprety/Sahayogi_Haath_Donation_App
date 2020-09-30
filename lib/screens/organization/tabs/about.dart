@@ -99,7 +99,7 @@ class _AboutState extends State<About> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Header(passedOrganization!=null ? passedOrganization.profileImage : null),
+                      Header(passedOrganization!=null ? passedOrganization.profileImage : null,passedOrgExtra),
                       SizedBox(
                         height: 10,
                       ),

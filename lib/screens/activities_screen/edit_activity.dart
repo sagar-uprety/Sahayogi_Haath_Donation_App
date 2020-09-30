@@ -75,7 +75,7 @@ class _EditActivityState extends State<EditActivity> {
   Widget build(BuildContext context) {
     final activityProvider = Provider.of<ActivityProvider>(context);
     final user = Provider.of<UserProvider>(context);
-    
+
     return Scaffold(
       appBar: GlobalAppBar(),
       backgroundColor: Color(0XFFfefefe),
@@ -142,16 +142,19 @@ class _EditActivityState extends State<EditActivity> {
                             bool validated = _formKey.currentState.validate();
                             FocusScope.of(context).unfocus();
                             // _formKey.currentState.save();
-                            
+
                             if (validated) {
-                              if(widget.activity == null)
-                                await activityProvider.saveActivity(user.id);
+                              if (widget.activity == null)
+                                await activityProvider.saveActivity(
+                                    user.id, user.name);
                               else
-                                await activityProvider.updateActivity(widget.activity.activityID);
+                                await activityProvider
+                                    .updateActivity(widget.activity.activityID);
                               Navigator.pushReplacementNamed(
                                   context, Routes.activities_list);
                             }
-                          }).alignBottomCenter,
+                          },
+                        ).alignBottomCenter,
                 ],
               ),
             ),

@@ -106,7 +106,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Stream<List<OrganizationModel>> getOrganizations(){
-    return _service.getConditionData(path: FirestorePath.users(), key: 'isOrganization', value: true)
+    return _service.getConditionData(path: FirestorePath.users(), key: 'isOrganization', value: true,order: 'name')
         .map((snapshot) => snapshot
         .documents
         .map((doc) =>OrganizationModel.fromFirestore(doc.data))

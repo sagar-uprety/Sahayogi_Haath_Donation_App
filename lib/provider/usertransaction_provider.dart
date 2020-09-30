@@ -17,6 +17,8 @@ class UserTransactionProvider with ChangeNotifier {
           path: FirestorePath.transactions(),
           key: 'donor',
           value: currentUser,
+          desc :true,
+          order: 'time',
         )
         .map((snapshot) => snapshot.documents
             .map((doc) => UserTransactionModel.fromFirestore(doc.data))
@@ -29,6 +31,8 @@ class UserTransactionProvider with ChangeNotifier {
           path: FirestorePath.transactions(),
           key: 'doneeId',
           value: id,
+          desc :true,
+          order: 'time',
         )
         .map((snapshot) => snapshot.documents
             .map((doc) => UserTransactionModel.fromFirestore(doc.data))

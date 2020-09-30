@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
                   hintText: "Enter Your Email",
                   key: ValueKey('email'),
                   icon: Icons.person,
-                  autofocus: false,
+                  autofocus: true,
                   enableSuggesstion: false,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {

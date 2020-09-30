@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/user_provider.dart';
 
+import '../../provider/user_provider.dart';
 import '../../provider/activity_provider.dart';
+
 import '../../screens/activities_screen/edit_activity.dart';
+
 import '../../theme/extention.dart';
 import '../../theme/light_color.dart';
 import '../../theme/text_styles.dart';
@@ -32,7 +35,7 @@ class _ActivityInfoState extends State<ActivityInfo> {
     final activityProvider = Provider.of<ActivityProvider>(context);
     final user = Provider.of<UserProvider>(context);
     final Activity passedActivity = ModalRoute.of(context).settings.arguments;
-    
+
     TextStyle titleStyle = TextStyles.title.copyWith(fontSize: 25).bold;
     if (AppTheme.fullWidth(context) < 393) {
       titleStyle = TextStyles.title.copyWith(fontSize: 23).bold;
@@ -102,11 +105,13 @@ class _ActivityInfoState extends State<ActivityInfo> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Helping Hands",
+                                passedActivity.authorName,
                                 style: TextStyles.bodySm.subTitleColor.bold,
                               ),
                               Text(
-                                "Published On: 08/20/2020",
+                                "Published On: " +
+                                    DateFormat('dd MMM yyyy H:m')
+                                        .format(passedActivity.time.toDate()),
                                 style: TextStyles.bodySm.subTitleColor.bold,
                               ),
                             ],
@@ -128,51 +133,57 @@ class _ActivityInfoState extends State<ActivityInfo> {
                 );
               },
             ),
-            user.isAdmin || user.id == passedActivity.authorid ?
-            Positioned(
-              bottom: 10,
-              left: AppTheme.fullWidth(context) * .05,
-              right: AppTheme.fullWidth(context) * .05,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    flex: 5,
-                    child: RoundButton(
-                      radius: 10,
-                      text: "Edit",
-                      onPress: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                EditActivity(passedActivity)));
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 45,
-                        width: 55,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: LightColor.grey.withAlpha(200)),
-                        child: Icon(
-                          Icons.delete,
-                          color: Colors.red[400],
+            user.isAdmin || user.id == passedActivity.authorid
+                ? Positioned(
+                    bottom: 10,
+                    left: AppTheme.fullWidth(context) * .05,
+                    right: AppTheme.fullWidth(context) * .05,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 5,
+                          child: RoundButton(
+                            radius: 10,
+                            text: "Edit",
+                            onPress: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditActivity(passedActivity)));
+                            },
+                          ),
                         ),
-                      )).ripple(() {
-                    activityProvider.removeActivity(passedActivity.activityID);
-                    Navigator.of(context).pop();
-                  },
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      )),
-                ],
-              ).vP16,
-            ) : Container(),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 45,
+                            width: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: LightColor.grey.withAlpha(200),
+                            ),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.red[400],
+                            ),
+                          ),
+                        ).ripple(
+                          () {
+                            activityProvider
+                                .removeActivity(passedActivity.activityID);
+                            Navigator.of(context).pop();
+                          },
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                      ],
+                    ).vP16,
+                  )
+                : Container(),
             _appbar(),
           ],
         ),

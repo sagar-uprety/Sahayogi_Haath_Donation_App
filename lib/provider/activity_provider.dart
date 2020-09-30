@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -22,6 +23,7 @@ class ActivityProvider with ChangeNotifier {
   File _image;
   String _imageUrl;
   String _authorid;
+
   var uuid = Uuid();
 
   //getters
@@ -68,6 +70,8 @@ class ActivityProvider with ChangeNotifier {
           path: FirestorePath.activities(),
           key: 'authorid',
           value: id,
+          order: 'time',
+          desc :true,
         )
         .map((snapshot) => snapshot.documents
             .map((doc) => Activity.fromFirestore(doc.data))
@@ -103,7 +107,7 @@ class ActivityProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  saveActivity(String userid) async {
+  saveActivity(String userid,String name) async {
     _state = SaveState.Saving;
     String id = uuid.v4();
     bool uploadStatus = await uploadImage(id);
@@ -116,6 +120,8 @@ class ActivityProvider with ChangeNotifier {
         image: image,
         activityID: id,
         authorid: userid,
+        authorName: name,
+        time: Timestamp.now()
       );
       await firestoreService.saveData(
           path: FirestorePath.activity(id), data: newActivity.toMap());

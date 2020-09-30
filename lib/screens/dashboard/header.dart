@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/provider/extras_provider.dart';
 
+import '../../models/extras_model.dart';
 import '../../provider/extras_provider.dart';
 import '../../provider/user_provider.dart';
 
@@ -12,8 +12,9 @@ import '../../constants.dart';
 import '../../components/overview_detail.dart';
 
 class Header extends StatefulWidget {
-  Header([this.userImage]);
+  Header([this.userImage,this.passedOrganization]);
   final String userImage;
+  final OrganizationDetail passedOrganization;
   @override
   _HeaderState createState() => _HeaderState();
 }
@@ -25,8 +26,8 @@ class _HeaderState extends State<Header> {
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context);
     if (widget.userImage == null) {
-      if (user.isDonor) return _donorOverview();
-      if (user.isOrganization) return _organizationOverview();
+      if (user.isDonor && widget.passedOrganization == null) return _donorOverview();
+      if (user.isOrganization || widget.passedOrganization != null) return _organizationOverview();
       if (user.isAdmin) return _adminOverview();
     } else{
       return _organizationOverview();
@@ -63,13 +64,15 @@ class _HeaderState extends State<Header> {
 
   Widget _organizationOverview() {
     final overview = Provider.of<ExtrasProvider>(context);
+    double amount = widget.passedOrganization != null ? widget.passedOrganization.receivedAmount : overview.amount;
+    int count = widget.passedOrganization != null ? widget.passedOrganization.countDonation : overview.count;
     return Container(
       decoration: cGreyBoxDecoration,
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            OverviewDetail(info: 'Rs. ${overview.amount}', title: 'Total Donation'),
-            OverviewDetail(info: '${overview.count}', title: 'No. of Donations'),
+            OverviewDetail(info: 'Rs. $amount', title: 'Total Donation'),
+            OverviewDetail(info: '$count', title: 'No. of Donations'),
             Container(
               decoration: BoxDecoration(
                 border: Border.all(

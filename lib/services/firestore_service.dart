@@ -24,8 +24,8 @@ class FirestoreService {
     print(startDate);
       return _db.collection(path).where('donorId', isEqualTo: username).where('time', isGreaterThan: startDate).orderBy('time', descending: true).snapshots().map((snapshot) => snapshot);
   }
-  Stream<QuerySnapshot> getConditionData({@required String path,@required String key,@required value}){
-    return _db.collection(path).where(key, isEqualTo: value).snapshots().map((snapshot) => snapshot);
+  Stream<QuerySnapshot> getConditionData({@required String path,@required String key,@required value, @required order, desc = false}){
+    return _db.collection(path).where(key, isEqualTo: value).orderBy(order,descending: desc).snapshots().map((snapshot) => snapshot);
   }
 
   Stream<List<OrganizationDetail>> getdocsData({@required String path}) {

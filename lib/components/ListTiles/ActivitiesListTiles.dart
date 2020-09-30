@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../models/activitymodel.dart';
 import '../../theme/theme.dart';
 import '../../theme/text_styles.dart';
 import '../../theme/light_color.dart';
@@ -6,7 +9,7 @@ import '../../theme/extention.dart';
 import '../../routes.dart';
 
 class ActivitiesListTiles extends StatelessWidget {
-  final List listprovider;
+  final List<Activity> listprovider;
   final int itemCount;
   final double heightPercent;
   final String activityID;
@@ -73,11 +76,11 @@ class ActivitiesListTiles extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        listprovider[index].description.substring(0,25) + '...',
+                        listprovider[index].description.length > 25 ? listprovider[index].description.substring(0,25) + '...' : listprovider[index].description,
                         style: TextStyles.bodySm.subTitleColor.bold,
                       ),
                       Text(
-                        "08/21/2020 (3)",
+                        DateFormat('dd MMM yyyy').format(listprovider[index].time.toDate()),
                         style: TextStyles.bodySm.subTitleColor,
                       ),
                     ],
