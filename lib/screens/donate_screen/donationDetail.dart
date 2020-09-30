@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../models/usertransactionmodel.dart';
-import '../constants.dart';
-import '../theme/extention.dart';
+import '../../models/usertransactionmodel.dart';
+import '../../constants.dart';
+import '../../theme/extention.dart';
 
 class DonationDetail extends StatelessWidget {
 

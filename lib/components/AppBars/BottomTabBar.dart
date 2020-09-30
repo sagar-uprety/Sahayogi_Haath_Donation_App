@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../screens/profile/user_profile.dart';
 import '../../screens/dashboard/dashboard.dart';
 import '../../screens/organization/exploreorg.dart';
-import '../../screens/donate_screen/donation_list.dart';
 import '../../theme/theme.dart';
 
 class BottomTabBar extends StatefulWidget {
@@ -15,7 +14,6 @@ class _BottomTabBarState extends State<BottomTabBar> {
   final tabs = [
     Dashboard(),
     ExploreOrganization(),
-    DonationList(),
     Profile(),
   ];
 
