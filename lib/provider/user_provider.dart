@@ -2,10 +2,14 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import '../image_upload.dart';
+
 import '../provider/activity_provider.dart';
+import '../provider/extras_provider.dart';
+
 import '../models/usermodel.dart';
+
 import '../services/firestore_path.dart';
+import '../services/image_upload.dart';
 import '../services/firestore_service.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -22,7 +26,6 @@ class UserProvider extends ChangeNotifier {
   String _establishedDate;
   String _type;
   String _documentImage;
-  String _description;
   bool _isDonor = false;
   bool _isOrganization = false;
   bool _isAdmin = false;
@@ -38,7 +41,6 @@ class UserProvider extends ChangeNotifier {
   String get establishedDate => _establishedDate;
   String get type => _type;
   String get documentImage => _documentImage;
-  String get description => _description;
   bool get isDonor => _isDonor;
   bool get isOrganization => _isOrganization;
   bool get isAdmin => _isAdmin;
@@ -77,9 +79,18 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeDescription(String value) {
-    _description =value;
-    notifyListeners();
+  setNull(){
+    _id = null;
+    _name = null;
+    _email = null;
+    _address = null;
+    _profileImage = null;
+    _establishedDate = null;
+    _type = null;
+    _documentImage = null;
+    _isDonor = false;
+    _isOrganization = false;
+    _isAdmin = false;
   }
 
   getUserData() async {
@@ -92,6 +103,14 @@ class UserProvider extends ChangeNotifier {
         loadOrganizationData(OrganizationModel.fromFirestore(value));
       }
     });
+  }
+
+  Stream<List<OrganizationModel>> getOrganizations(){
+    return _service.getConditionData(path: FirestorePath.users(), key: 'isOrganization', value: true,order: 'name')
+        .map((snapshot) => snapshot
+        .documents
+        .map((doc) =>OrganizationModel.fromFirestore(doc.data))
+        .toList());
   }
 
   loadDonorData(DonorModel donor) {
@@ -115,7 +134,6 @@ class UserProvider extends ChangeNotifier {
     _profileImage = organization.profileImage;
     _establishedDate = organization.establishedDate;
     _type = organization.type;
-    _description = organization.description;
     _documentImage = organization.documentImage;
     _isOrganization = organization.isOrganization;
     notifyListeners();
@@ -163,10 +181,6 @@ class UserProvider extends ChangeNotifier {
     bool uploadStatus = await uploadImage(_id);
     if(uploadStatus)
       _service.updateData(path: FirestorePath.user(id), data: {'profile_image': profileImage});
-  }
-
-  saveDescription(){
-    _service.updateData(path: FirestorePath.user(id), data: {'description' : description});
   }
 
   Future<void> registerDonor(DonorModel donor) async {

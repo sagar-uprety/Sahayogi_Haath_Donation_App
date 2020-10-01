@@ -1,18 +1,19 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-import '../image_upload.dart';
+import '../services/image_upload.dart';
 import '../services/firestore_path.dart';
 import '../services/firestore_service.dart';
 import '../models/activitymodel.dart';
-
 enum SaveState { Uninitialized, Saving, Saved }
 
 class ActivityProvider with ChangeNotifier {
   final firestoreService = FirestoreService();
+    final _service = FirestoreService();
 
   SaveState _state = SaveState.Uninitialized;
 
@@ -21,6 +22,8 @@ class ActivityProvider with ChangeNotifier {
   String _activityID;
   File _image;
   String _imageUrl;
+  String _authorid;
+
   var uuid = Uuid();
 
   //getters
@@ -49,15 +52,30 @@ class ActivityProvider with ChangeNotifier {
   loadValues(Activity activity) {
     _title = activity.title;
     _description = activity.description;
-    _activityID = activity.activityID;
+    // _activityID = activity.activityID;
     _imageUrl = activity.image;
+    // _authorid = activity.authorid;
   }
 
-  Stream<List<Activity>> getActivities(){
-    return firestoreService.getDatas(path: FirestorePath.activities()).map((snapshot) => snapshot
-    .documents
-    .map((doc) => Activity.fromFirestore(doc.data))
-    .toList());
+  Stream<List<Activity>> getActivities() {
+    return firestoreService.getDatas(path: FirestorePath.activities()).map(
+        (snapshot) => snapshot.documents
+            .map((doc) => Activity.fromFirestore(doc.data))
+            .toList());
+  }
+
+  Stream<List<Activity>> getActivitiesbyOrg(String id) {
+    return _service
+        .getConditionData(
+          path: FirestorePath.activities(),
+          key: 'authorid',
+          value: id,
+          order: 'time',
+          desc :true,
+        )
+        .map((snapshot) => snapshot.documents
+            .map((doc) => Activity.fromFirestore(doc.data))
+            .toList());
   }
 
   Future<bool> uploadImage(uid) async {
@@ -71,47 +89,51 @@ class ActivityProvider with ChangeNotifier {
     return isUploaded;
   }
 
-  Future<void> deleteImage() async {
-    await ImageUploader()
-        .deleteImage(path: CloudPath.activities, id: _activityID);
+  Future<void> deleteImage(id) async {
+    await ImageUploader().deleteImage(path: CloudPath.activities, id: id);
   }
 
-  saveActivity() async {
+  updateActivity(String id) async {
     _state = SaveState.Saving;
-    if (_activityID == null) {
-      String id = uuid.v4();
-      bool uploadStatus = await uploadImage(id);
 
-      if (uploadStatus) {
-        //create new activity
-        var newActivity = Activity(
-            title: title,
-            description: description,
-            image: image,
-            activityID: id);
-        await firestoreService.saveData(path: FirestorePath.activity(id), data: newActivity.toMap());
-      } else {
-        print('Error Uploading the file.');
-      }
+    await deleteImage(id);
+    bool uploadStatus = await uploadImage(id);
+    if (uploadStatus) {
+      firestoreService.updateData(
+          path: FirestorePath.activity(id),
+          data: {'title': title, 'image': image, 'description': description});
+    }
+    _state = SaveState.Saved;
+    notifyListeners();
+  }
+
+  saveActivity(String userid,String name) async {
+    _state = SaveState.Saving;
+    String id = uuid.v4();
+    bool uploadStatus = await uploadImage(id);
+
+    if (uploadStatus) {
+      //create new activity
+      var newActivity = Activity(
+        title: title,
+        description: description,
+        image: image,
+        activityID: id,
+        authorid: userid,
+        authorName: name,
+        time: Timestamp.now()
+      );
+      await firestoreService.saveData(
+          path: FirestorePath.activity(id), data: newActivity.toMap());
     } else {
-      //update
-      await deleteImage();
-      bool uploadStatus = await uploadImage(_activityID);
-      if (uploadStatus) {
-        var updatedActivity = Activity(
-            title: title,
-            description: description,
-            image: image,
-            activityID: _activityID);
-        firestoreService.saveData(path: FirestorePath.activity(_activityID), data: updatedActivity.toMap());
-      }
+      print('Error Uploading the file.');
     }
     _state = SaveState.Saved;
     notifyListeners(); //check
   }
 
   removeActivity(String activityID) {
-    deleteImage();
+    deleteImage(activityID);
     firestoreService.deleteData(path: FirestorePath.activity(activityID));
     notifyListeners(); //checl
   }

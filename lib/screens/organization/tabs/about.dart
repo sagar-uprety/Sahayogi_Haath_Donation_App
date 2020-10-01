@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:sahayogihaath/models/organizationmodel.dart';
-import '../../../constants.dart';
-import '../../../theme/extention.dart';
-import '../../../theme/theme.dart';
-import '../../../components/overview_detail.dart';
 import 'package:provider/provider.dart';
-import '../../../provider/organization_provider.dart';
+
+import '../../../components/RoundedButton.dart';
+import '../../../models/extras_model.dart';
+
+import '../../../provider/extras_provider.dart';
+import '../../../provider/user_provider.dart';
+
+import '../../../screens/dashboard/header.dart';
+import '../../../screens/profile/edit_data_field.dart';
+
+import '../../../theme/extention.dart';
+import '../../../models/usermodel.dart';
+import '../../../routes.dart';
 
 class About extends StatefulWidget {
   @override
@@ -15,109 +22,111 @@ class About extends StatefulWidget {
 class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
-    return getBody(context);
-  }
-}
+    var size = MediaQuery.of(context).size;
+    final user = Provider.of<UserProvider>(context);
+    final extra = Provider.of<ExtrasProvider>(context);
+    final passedOrgExtra = Provider.of<OrganizationDetail>(context);
+    final OrganizationModel passedOrganization =
+        ModalRoute.of(context).settings.arguments;
 
-Widget getBody(context) {
-  var size = MediaQuery.of(context).size;
-  return SingleChildScrollView(
-    child: Stack(
-      children: <Widget>[
-        Container(
-          width: double.infinity,
-          height: size.height * 0.5,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images1/children.jpg"),
-                fit: BoxFit.cover),
+    final banner = passedOrganization != null
+        ? passedOrgExtra == null ? '' : passedOrgExtra.bannerImage
+        : extra.banner;
+    final description = passedOrganization != null
+        ? passedOrgExtra == null ? '' : passedOrgExtra.description
+        : extra.description;
+
+    return SingleChildScrollView(
+      child: Stack(
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            height: size.height * 0.5,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: banner == null || banner == ''
+                      ? AssetImage('assets/images/def_banner.jpg')
+                      : NetworkImage(banner),
+                  fit: BoxFit.cover),
+            ),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: size.height * 0.45),
-          width: double.infinity,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(46)),
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Food Distribution",
-                          style: TextStyle(
-                              height: 1.6,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "2020/02/09",
-                          style: TextStyle(fontSize: 13),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                    ),
-                    Container(
-                      decoration: cGreyBoxDecoration,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Container(
+            margin: EdgeInsets.only(top: size.height * 0.45),
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(46)),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          OverviewDetail(
-                              info: 'Rs. 1500.0', title: 'Total Donation'),
-                          OverviewDetail(info: '3', title: 'Organization'),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Color(0xffffffff),
-                                  width: 3,
-                                  style: BorderStyle.solid),
-                              borderRadius: BorderRadius.all(Radius.circular(
-                                  AppTheme.fullWidth(context) * 0.10)),
-                            ),
-                            child: CircleAvatar(
-                                backgroundColor: Colors.blue,
-                                backgroundImage:
-                                    AssetImage("assets/images1/children.jpg"),
-                                radius: AppTheme.fullWidth(context) * .10),
+                          Text(
+                            passedOrganization != null
+                                ? passedOrganization.name
+                                : user.name,
+                            style: TextStyle(
+                                height: 1.6,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            passedOrganization != null
+                                ? passedOrganization.establishedDate
+                                : user.establishedDate,
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          Text(
+                            passedOrganization != null
+                                ? passedOrganization.type
+                                : user.type,
+                            style: TextStyle(fontSize: 13),
                           ),
                         ],
-                      ).p16,
-                    ).vP8,
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Nobody wants to stare at a blank wall all day long, which is why wall art is such a crucial step in the decorating process. And once you start brainstorming, the rest is easy. From gallery walls to DIY pieces like framing your accessories and large-scale photography, we've got plenty of wall art ideas to spark your creativity. And where better to look for inspiration that interior designer-decorated walls",
-                      style: TextStyle(
-                        height: 1.8,
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Header(passedOrganization!=null ? passedOrganization.profileImage : null,passedOrgExtra),
+                      SizedBox(
+                        height: 10,
                       ),
-                      textAlign: TextAlign.justify,
-                    ),
-                  ],
-                ),
-              ],
-            ).vP16,
+                      passedOrganization != null
+                          ? DescriptionSection(
+                              description, passedOrganization.id)
+                          : DescriptionSection(description, extra.id),
+                    ],
+                  ),
+                  if (user.isDonor) SizedBox(height: 8),
+                  if (user.isDonor)
+                    Center(
+                      child: RoundButton(
+                        text: 'Donate via e-sewa',
+                        textColor: Colors.white,
+                        color: Colors.green,
+                        onPress: () {
+                          Navigator.pushNamed(context, Routes.donate,arguments: ComboModel(organization: passedOrganization, organizationExtra: passedOrgExtra));
+                        },
+                      ),
+                    )
+                ],
+              ).vP16,
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }

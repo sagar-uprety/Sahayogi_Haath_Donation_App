@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/components/FlatButtonIcon.dart';
-import 'package:sahayogihaath/provider/activity_provider.dart';
-import 'package:sahayogihaath/screens/activities_screen/edit_activity.dart';
-import '../../theme/extention.dart';
-import '../../theme/light_color.dart';
-import '../../theme/text_styles.dart';
-import '../../theme/theme.dart';
 
-import '../../components/RoundedButton.dart';
-import '../../models/activitymodel.dart';
+import '../../provider/extras_provider.dart';
+import '../../provider/user_provider.dart';
+import '../../provider/usertransaction_provider.dart';
+import '../../provider/activity_provider.dart';
+
+import '../../screens/organization/tabs/donations.dart';
 import './tabs/about.dart';
 import './tabs/activities.dart';
-import './tabs/photos.dart';
+
+import '../../models/usermodel.dart';
+
+import '../../theme/extention.dart';
+import '../../theme/theme.dart';
+
+import '../../components/AppBars/appBar.dart';
+import '../../components/AppBars/drawer.dart';
 
 class OrganizationInfo extends StatefulWidget {
   @override
@@ -20,60 +24,71 @@ class OrganizationInfo extends StatefulWidget {
 }
 
 class _OrganizationInfoState extends State<OrganizationInfo> {
-  
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
-    
-
-    return DefaultTabController(
-        length: 4,
-        initialIndex: 0,
+    final OrganizationModel passedOrganization =
+        ModalRoute.of(context).settings.arguments;
+    final user = Provider.of<UserProvider>(context);
+    final String _id =
+        passedOrganization != null ? passedOrganization.id : user.id;
+    return MultiProvider(
+      providers: [
+        StreamProvider(
+          create: (context) => ActivityProvider().getActivitiesbyOrg(_id),
+        ),
+        StreamProvider(
+          create: (context) => ExtrasProvider().getUserExtrabyId(_id),
+        ),
+        StreamProvider(
+          create: (context) =>
+              UserTransactionProvider().getTransactionsbyOrg(_id),
+        ),
+      ],
+      child: DefaultTabController(
+        length: 3,
+        initialIndex: index,
         child: Scaffold(
-          appBar: AppBar(
-              backgroundColor: Theme.of(context).backgroundColor,
-              elevation: 0.0,
-              leading: BackButton(color: Colors.black),
-              bottom: TabBar(
-                isScrollable: true,
-                labelStyle: AppTheme.h5Style.bold,
-                indicatorColor: Colors.white,
-                tabs: [
-                  Tab(
-                    child: FlatButtonIcon(
-                      text: 'About',
-                      icon: null,
-                      color: LightColor.purpleLight,
-                    ),
-                  ),
-                  Tab(
-                    child: FlatButtonIcon(
-                      text: 'Donations',
-                      icon: null,
-                    ),
-                  ),
-                  Tab(
-                    child: FlatButtonIcon(
-                      text: 'Photos',
-                      icon: null,
-                    ),
-                  ),
-                  Tab(
-                    child: FlatButtonIcon(
-                      text: 'Activities',
-                      icon: null,
-                    ),
-                  ),
-                ],
-              )),
+          drawer: SideDrawer(),
+          appBar: GlobalAppBar(
+            bottom: TabBar(
+              isScrollable: true,
+              indicator: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          color: Colors.black, style: BorderStyle.solid))),
+              indicatorSize: TabBarIndicatorSize.label,
+              onTap: (i) {
+                setState(() {
+                  index = i;
+                });
+              },
+              labelStyle: AppTheme.h5Style.bold,
+              indicatorColor: Colors.white,
+              tabs: [
+                Tab(
+                  child: Text('About'),
+                ),
+                Tab(
+                  child: Text('Donations')
+                ),
+                Tab(
+                  child: Text('Activities')
+                ),
+              ],
+            ),
+          ),
           backgroundColor: Colors.white,
           body: TabBarView(
             children: [
               About(),
+              TabDonations(),
               TabActvities(),
-              Photos(),
-              Photos(),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

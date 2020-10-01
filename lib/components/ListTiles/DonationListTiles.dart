@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:sahayogihaath/timeline.dart';
+
+import '../../provider/user_provider.dart';
+
+import '../../constants.dart';
 import '../../theme/theme.dart';
-import '../../theme/text_styles.dart';
-import '../../theme/light_color.dart';
 import '../../theme/extention.dart';
 import '../../routes.dart';
 
@@ -21,6 +26,11 @@ class DonationListTiles extends StatefulWidget {
 class _DonationListTilesState extends State<DonationListTiles> {
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    double height = queryData.size.height * 0.007;
+    double cardWidth = MediaQuery.of(context).size.width * 0.9;
+    double width = cardWidth * 0.035;
     return Container(
       height: AppTheme.fullHeight(context) *
           widget.heightPercent, //check this. is it perfect?
@@ -29,73 +39,118 @@ class _DonationListTilesState extends State<DonationListTiles> {
           scrollDirection: Axis.vertical,
           itemCount: widget.itemCount,
           itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    offset: Offset(4, 4),
-                    blurRadius: 10,
-                    color: LightColor.grey.withOpacity(.2),
-                  ),
-                  BoxShadow(
-                    offset: Offset(-3, 0),
-                    blurRadius: 15,
-                    color: LightColor.grey.withOpacity(.1),
-                  )
-                ],
-              ),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-                child: ListTile(
-                  isThreeLine: true,
-                  contentPadding: EdgeInsets.all(0),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    child: Container(
-                      height: 55,
-                      width: 55,
-                      //org image
-                      child: Image.asset('assets/images1/ben.jpg',
-                          fit: BoxFit.fill),
-                    ),
-                  ),
-                  title: Text(
-                    widget.listprovider[index].title,
-                    style: TextStyles.title.bold,
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.listprovider[index].description,
-                        style: TextStyles.bodySm.subTitleColor.bold,
+            DateTime date = widget.listprovider[index].time.toDate();
+            String time = DateFormat('dd MMM yyyy').format(date);
+            double donatedamount = widget.listprovider[index].amount;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  Timeline.setDate(date),
+                  style: kTransactionCardBoxText,
+                ),
+                SizedBox(
+                  height: queryData.size.height * 0.007,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: height),
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  decoration: kHomeDecoration,
+                  padding: EdgeInsets.all(width),
+                  child: Container(
+                    width: cardWidth * 1,
+                    child: Row(children: <Widget>[
+                      FittedBox(
+                        child: Container(
+                          width: cardWidth * 0.12,
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                widget.listprovider[index].donorImage),
+                          ),
+                        ),
                       ),
-                      Text(
-                        "08/21/2020 (3)",
-                        style: TextStyles.bodySm.subTitleColor,
+                      SizedBox(
+                        width: cardWidth * 0.03,
                       ),
-                    ],
-                  ),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
-                    size: 30,
-                    color: Theme.of(context).primaryColor,
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        width: cardWidth * 0.45,
+                        child: FittedBox(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FittedBox(
+                                    child: Text('to:',
+                                        style: kTransactionCardBoxText),
+                                  ),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.02,
+                                  ),
+                                  FittedBox(
+                                    child: Text(
+                                        widget.listprovider[index].donee,
+                                        style: kTransactionCardDoneeBoxText),
+                                  ),
+                                ]),
+                                FittedBox(
+                                  child: Wrap(
+                                    alignment: WrapAlignment.spaceBetween,
+                                    direction: Axis.vertical,
+                                    children: [
+                                      Text(widget.listprovider[index].donor,
+                                          style: kDetailTransactionCardText),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.02,
+                                      ),
+                                      Text('$time',
+                                          style: kDetailTransactionCardText),
+                                    ],
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      ),
+                      SizedBox(
+                        width: cardWidth * 0.05,
+                      ),
+                      Container(
+                        alignment: Alignment(1.0, 0.0),
+                        width: cardWidth * 0.3,
+                        child: FittedBox(
+                          child: Row(
+                            children: [
+                              FittedBox(
+                                child: Text(
+                                  'Rs $donatedamount',
+                                  style: kAmount,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]),
                   ),
                 ),
-              ).ripple(
-                () {
-                  Navigator.pushNamed(context, Routes.activity_info,
+                SizedBox(
+                  height: height * 0.02,
+                ),
+              ],
+            ).ripple(
+              () {
+                final user = Provider.of<UserProvider>(context,listen: false);
+                if (user.isOrganization || user.isAdmin || widget.listprovider[index].donorId == user.id)
+                  Navigator.pushNamed(context, Routes.donation_detail,
                       arguments: widget.listprovider[index]);
-                },
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-              ),
+              },
             );
           }),
-    );
+    ).ps(x: 10);
   }
 }

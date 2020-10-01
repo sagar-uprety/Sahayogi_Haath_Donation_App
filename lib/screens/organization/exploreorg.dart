@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sahayogihaath/models/organizationmodel.dart';
+
+import '../../models/usermodel.dart';
+import '../signup/signup_org.dart';
 
 import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
 
-import '../../components/caterogy_tile_single.dart';
+import '../../components/category_tile_single.dart';
 import '../../components/ListTiles/OrgListTiles.dart';
-
-
-String selectedCategory = "Orphanage";
+import '../../components/AppBars/appBar.dart';
+import '../../components/AppBars/drawer.dart';
 
 class ExploreOrganization extends StatefulWidget {
   @override
@@ -17,21 +18,22 @@ class ExploreOrganization extends StatefulWidget {
 }
 
 class _ExploreOrganizationState extends State<ExploreOrganization> {
-  List<String> categories = [
-    "Orphanage",
-    "Child Care",
-    "Nusring Home",
-    "Edlerly Care"
-  ];
+  String selectedCategory = organizationType[0];
+
+  changeSelectedCategory(String value) {
+    setState(() {
+      selectedCategory = value;
+    });
+  }
+
+  TextEditingController searchController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: SideDrawer(),
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-          backgroundColor: Theme.of(context).backgroundColor,
-          elevation: 0.0,
-          leading: BackButton(color: Colors.black)),
+      appBar: GlobalAppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,6 +42,7 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
               "Explore Organization",
               style: TextStyles.titleM.bold,
             ).vP8,
+            
             Container(
               padding: EdgeInsets.symmetric(horizontal: 24),
               height: 50,
@@ -62,20 +65,22 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
                 ],
               ),
             ).vP8,
+
             Text("Categories", style: TextStyles.title.bold).vP8,
+
             Container(
               height: 30,
               child: ListView.builder(
-                  itemCount: categories.length,
+                  itemCount: organizationType.length,
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return CategorieTile(
-                      category: categories[index],
-                      isSelected: selectedCategory == categories[index],
-                      context: this,
-                    );
+                    return CategoryTile(
+                        category: organizationType[index],
+                        isSelected: selectedCategory == organizationType[index],
+                        context: this,
+                        changeCategory: changeSelectedCategory);
                   }),
             ).vP8,
             _getOrgList(),
@@ -86,7 +91,7 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
   }
 
   Widget _getOrgList() {
-    final organinfo = Provider.of<List<OrganizationDetail>>(context);
+    final organinfo = Provider.of<List<OrganizationModel>>(context);
     return (organinfo != null)
         ? OrgListTiles(
             listprovider: organinfo,
@@ -95,8 +100,5 @@ class _ExploreOrganizationState extends State<ExploreOrganization> {
             hm: 0,
           )
         : Center(child: CircularProgressIndicator());
-
-
   }
-
 }

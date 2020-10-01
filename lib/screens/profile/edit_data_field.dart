@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/user_provider.dart';
+import '../../provider/extras_provider.dart';
 
 import '../../components/FormInput.dart' as formInput;
 import '../../components/RoundedInput.dart';
@@ -95,65 +95,65 @@ class _EditDataFieldState extends State<EditDataField> {
   Widget _editingData() {
     return Row(
       children: [
-      if (widget.type == 'normal')
-        Flexible(
-          child: RoundedInput(
-            icon: widget.icon,
-            initialValue: widget.dataText,
-            autofocus: true,
-            keyboardType: widget.keyboardType,
-            onChanged: widget.onChanged,
-            validator: widget.validator,
-          ),
-        ),
-      if (widget.type == 'date')
-        Flexible(
-          child: RoundedInput(
-            icon: widget.icon,
-            initialValue: widget.dataText,
-            autofocus: false,
-            suffixIcon: widget.suffixIcon,
-            validator: widget.validator,
-          ).ripple(() {
-            showDatePicker(
-                    context: context,
-                    initialDate: DateTime.parse(widget.dataText),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime.now())
-                .then((date) {
-                  var _pickedDate = DateFormat("yyyy-MM-dd")
-                      .format(DateTime.parse(date.toString()));
-
-                  widget.onChanged(_pickedDate);
-                });
-          }),
-        ),
-      if (widget.type == 'type')
-        Flexible(
-          child: TextInputController(
-            child: DropdownButtonFormField(
-              value: widget.dataText,
-              icon: Icon(
-                Icons.arrow_drop_down,
-                color: kPrimaryColor,
-              ),
-              decoration: InputDecoration(
-                prefixIcon: Icon(
-                  widget.icon,
-                  color: kPrimaryColor,
-                ),
-              ),
-              items: organizationType
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+        if (widget.type == 'normal')
+          Flexible(
+            child: RoundedInput(
+              icon: widget.icon,
+              initialValue: widget.dataText,
+              autofocus: true,
+              keyboardType: widget.keyboardType,
               onChanged: widget.onChanged,
+              validator: widget.validator,
             ),
           ),
-        ),
+        if (widget.type == 'date')
+          Flexible(
+            child: RoundedInput(
+              icon: widget.icon,
+              initialValue: widget.dataText,
+              autofocus: false,
+              suffixIcon: widget.suffixIcon,
+              validator: widget.validator,
+            ).ripple(() {
+              showDatePicker(
+                      context: context,
+                      initialDate: DateTime.parse(widget.dataText),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime.now())
+                  .then((date) {
+                var _pickedDate = DateFormat("yyyy-MM-dd")
+                    .format(DateTime.parse(date.toString()));
+
+                widget.onChanged(_pickedDate);
+              });
+            }),
+          ),
+        if (widget.type == 'type')
+          Flexible(
+            child: TextInputController(
+              child: DropdownButtonFormField(
+                value: widget.dataText,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color: kPrimaryColor,
+                ),
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    widget.icon,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                items: organizationType
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: widget.onChanged,
+              ),
+            ),
+          ),
         FlatButton(
           padding: EdgeInsets.all(10),
           child: Row(
@@ -172,7 +172,7 @@ class _EditDataFieldState extends State<EditDataField> {
                       decoration: TextDecoration.underline)),
             ],
           ),
-          onPressed: (){
+          onPressed: () {
             widget.onSaved();
             toggleEditability();
           },
@@ -183,106 +183,112 @@ class _EditDataFieldState extends State<EditDataField> {
 }
 
 class DescriptionSection extends StatefulWidget {
+  final String description;
+  final String id;
+
+  DescriptionSection(this.description, this.id);
+
   @override
   _DescriptionSectionState createState() => _DescriptionSectionState();
 }
 
 class _DescriptionSectionState extends State<DescriptionSection> {
-  
-  bool isEditable =false;
+  bool isEditable = false;
 
-  toggleEditability(){
+  toggleEditability() {
     setState(() {
-      isEditable =!isEditable;
+      isEditable = !isEditable;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context);
+    final user = Provider.of<ExtrasProvider>(context);
 
-    return Container(
-      child: !isEditable ?
-        Container(
-          child: user.description == null || user.description ==''?
-              FlatButton(
-                onPressed: toggleEditability,
-                textColor: Colors.blue, 
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Add a Description'
-                    ),
-                    SizedBox(width: 3),
-                    Icon(
-                      Icons.edit,
-                      size: 15,
-                    )
-                  ]
-                )
-              ) :
-              Column(
-                children:[
-                  Text(
-                    user.description,
-                    textAlign: TextAlign.center,
-                    style: TextStyles.bodySm.copyWith(fontWeight: FontWeight.w400),
-                  ).ps(x: 15),
+    if (widget.id == user.id) {
+      return Container(
+          child: !isEditable
+              ? Container(
+                  child: user.description == null || user.description == ''
+                      ? FlatButton(
+                          onPressed: toggleEditability,
+                          textColor: Colors.blue,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Add a Description'),
+                                SizedBox(width: 3),
+                                Icon(
+                                  Icons.edit,
+                                  size: 15,
+                                )
+                              ]))
+                      : Column(children: [
+                          Text(
+                            user.description,
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              fontSize: FontSizes.bodySm,
+                              fontWeight: FontWeight.w400,
+                              height: 1.8,
+                              letterSpacing: 0.4,
+                            ),
+                          ).ps(x: 15),
+                          FlatButton(
+                              textColor: Colors.blue,
+                              onPressed: toggleEditability,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Edit'),
+                                    SizedBox(width: 3),
+                                    Icon(
+                                      Icons.edit,
+                                      size: 15,
+                                    )
+                                  ])),
+                        ]))
+              : Column(children: [
+                  formInput.FormInput(
+                    hintText: 'Add your description',
+                    value: user.description,
+                    onChanged: (value) {
+                      user.changeDescription(value.trim());
+                    },
+                    capitalization: TextCapitalization.sentences,
+                    autofocus: true,
+                    maxlines: 3,
+                    maxlength: 200,
+                  ),
                   FlatButton(
                     textColor: Colors.blue,
-                    onPressed: toggleEditability, 
-                    child:  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Edit'
-                        ),
-                        SizedBox(width: 3),
-                        Icon(
-                          Icons.edit,
-                          size: 15,
-                        )
-                      ]
-                    )
-                  ),
-                ]
-              )
-        ) :
-        Column(
-          children: [
-            formInput.FormInput(
-              hintText: 'Add your description',
-              value: user.description,
-              onChanged: (value){
-                user.changeDescription(value.trim());
-              },
-              capitalization: TextCapitalization.sentences,
-              autofocus: true,
-              maxlines: 3,
-              maxlength: 200,
-            ),
-            FlatButton(
-              textColor: Colors.blue,
-              onPressed: (){
-                user.saveDescription();
-                toggleEditability();
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.save,
-                    size: 15,
-                  ),
-                  SizedBox(width: 3),
-                  Text(
-                    'Save'
-                  ),
-                ]
-              ),
-            )
-          ]
-        )
-    );
+                    onPressed: () {
+                      user.saveDescription();
+                      toggleEditability();
+                    },
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.save,
+                            size: 15,
+                          ),
+                          SizedBox(width: 3),
+                          Text('Save'),
+                        ]),
+                  )
+                ]));
+    } else {
+      return Text(
+        widget.description == null || widget.description == '' ? '' : widget.description ,
+        textAlign: TextAlign.justify,
+        style: TextStyle(
+          fontSize: FontSizes.bodySm,
+          fontWeight: FontWeight.w400,
+          height: 1.8,
+          letterSpacing: 0.4,
+        ),
+      ).ps(x: 15);
+    }
   }
 }

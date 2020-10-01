@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 import '../../components/RoundedButton.dart';
 
+import '../../provider/extras_provider.dart';
 import '../../provider/user_provider.dart';
-import './edit_data_field.dart';
 
+import './edit_data_field.dart';
 import '../pickers/image_picker.dart';
 
 import '../../theme/extention.dart';
@@ -22,15 +24,21 @@ class EditData extends StatefulWidget {
 class _EditDataState extends State<EditData> {
   final _formKey = GlobalKey<FormState>();
 
-  File _changedImage;
+  File _changedProfile;
+  File _banner;
 
-  void _pickedImage(File image) {
-    _changedImage = image;
+  void _pickedProfile(File image) {
+    _changedProfile= image;
+  }
+
+  void _pickedBanner(File image) {
+    _banner = image;
   }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
+    final extra = Provider.of<ExtrasProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
@@ -46,7 +54,7 @@ class _EditDataState extends State<EditData> {
                 ),
                 SizedBox(height: 15),
                 ImageFilePicker(
-                  _pickedImage,
+                  _pickedProfile,
                   imageType: ImageType.userProfile,
                   existingImage: user.profileImage,
                 ),
@@ -120,6 +128,12 @@ class _EditDataState extends State<EditData> {
                         user.changeType(value.trim());
                       },
                       onSaved: user.saveType,
+                    ),
+                  if(user.isOrganization)
+                    ImageFilePicker(
+                      _pickedBanner,
+                      imageType: ImageType.banner,
+                      existingImage: extra.banner,
                     ),
                   RoundButton(
                     text: 'Done',

@@ -5,12 +5,14 @@ import 'package:provider/provider.dart';
 
 import '../../models/activitymodel.dart';
 import '../../provider/activity_provider.dart';
+import '../../provider/user_provider.dart';
 import '../../screens/pickers/image_picker.dart';
 
 import '../../theme/theme.dart';
 import '../../theme/extention.dart';
 import '../../theme/text_styles.dart';
 import '../../components/FormInput.dart';
+import '../../components/AppBars/appBar.dart';
 import '../../components/RoundedButton.dart';
 import '../../routes.dart';
 
@@ -51,6 +53,7 @@ class _EditActivityState extends State<EditActivity> {
       new Future.delayed(Duration.zero, () {
         final productProvider =
             Provider.of<ActivityProvider>(context, listen: false);
+
         productProvider.loadValues(Activity());
       });
     } else {
@@ -71,8 +74,10 @@ class _EditActivityState extends State<EditActivity> {
   @override
   Widget build(BuildContext context) {
     final activityProvider = Provider.of<ActivityProvider>(context);
+    final user = Provider.of<UserProvider>(context);
+
     return Scaffold(
-      appBar: _appBar(),
+      appBar: GlobalAppBar(),
       backgroundColor: Color(0XFFfefefe),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -94,7 +99,7 @@ class _EditActivityState extends State<EditActivity> {
                     hintText: "Activity Title",
                     key: ValueKey('activity_title'),
                     maxlines: 1,
-                    maxlength: 30,
+                    maxlength: 50,
                     keyboardType: TextInputType.name,
                     validator: (value) {
                       if (value.isEmpty) {
@@ -116,7 +121,7 @@ class _EditActivityState extends State<EditActivity> {
                     hintText: "Describe your Activity",
                     key: ValueKey('activity_description'),
                     maxlength: 1000,
-                    maxlines: 20,
+                    maxlines: 18,
                     enableSuggesstion: false,
                     keyboardType: TextInputType.multiline,
                     validator: (value) {
@@ -137,44 +142,25 @@ class _EditActivityState extends State<EditActivity> {
                             bool validated = _formKey.currentState.validate();
                             FocusScope.of(context).unfocus();
                             // _formKey.currentState.save();
+
                             if (validated) {
-                              await activityProvider.saveActivity();
+                              if (widget.activity == null)
+                                await activityProvider.saveActivity(
+                                    user.id, user.name);
+                              else
+                                await activityProvider
+                                    .updateActivity(widget.activity.activityID);
                               Navigator.pushReplacementNamed(
                                   context, Routes.activities_list);
                             }
-                          }).alignBottomCenter,
+                          },
+                        ).alignBottomCenter,
                 ],
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  Widget _appBar() {
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Color(0XFFfefefe), //manage all theme color
-      leading: BackButton(color: Theme.of(context).primaryColor),
-      actions: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          child: Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-            ),
-            child: Image.asset(
-              "assets/images1/janko.jpg", //user profile image
-              fit: BoxFit.fill,
-            ),
-          ),
-        ).p(9),
-      ],
     );
   }
 }

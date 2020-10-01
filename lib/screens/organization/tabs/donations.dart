@@ -1,29 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../components/ListTiles/DonationListTiles.dart';
+import '../../../models/usertransactionmodel.dart';
+
 import '../../../theme/text_styles.dart';
-import '../../../components/ListTiles/ActivitiesListTiles.dart';
-import '../../../models/activitymodel.dart';
 import '../../../theme/extention.dart';
 
-class TabActvities extends StatefulWidget {
-  @override
-  _TabActvitiesState createState() => _TabActvitiesState();
-}
-
-class _TabActvitiesState extends State<TabActvities> {
+class TabDonations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return _activitiesList();
-  }
-
-  Widget _activitiesList() {
     return SingleChildScrollView(
-          child: Column(
+      child: Column(
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("Recent Activities", style: TextStyles.title.bold),
+              Text("Received Donations", style: TextStyles.title.bold),
               IconButton(
                       icon: Icon(
                         Icons.sort,
@@ -33,22 +27,21 @@ class _TabActvitiesState extends State<TabActvities> {
                   .p(15)
             ],
           ).hP16,
-          _activityTile().vP8,
+          _transactionTile(context).vP8,
         ],
       ),
     );
   }
 
-  Widget _activityTile() {
-    final activities = Provider.of<List<Activity>>(context);
-
-    return (activities != null)
-        ? ActivitiesListTiles(
-            listprovider: activities,
-            itemCount: activities.length,
+  
+  Widget _transactionTile(BuildContext context) {
+    final transactions = Provider.of<List<UserTransactionModel>>(context);
+    return (transactions != null)
+        ? DonationListTiles(
+            listprovider: transactions,
+            itemCount: transactions.length,
             heightPercent: 0.7, //from 0 to 1
           )
         : Center(child: CircularProgressIndicator());
   }
 }
-

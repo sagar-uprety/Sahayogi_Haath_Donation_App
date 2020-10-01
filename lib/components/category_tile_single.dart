@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import '../theme/light_color.dart';
-import '../screens/organization/exploreorg.dart';
 
-class CategorieTile extends StatefulWidget {
+class CategoryTile extends StatefulWidget {
   final String category;
   final bool isSelected;
   final context;
-  CategorieTile({this.category, this.isSelected, this.context});
+  final Function changeCategory;
+  CategoryTile({this.category, this.isSelected, this.changeCategory,this.context});
 
   @override
-  _CategorieTileState createState() => _CategorieTileState();
+  _CategoryTileState createState() => _CategoryTileState();
 }
 
-class _CategorieTileState extends State<CategorieTile> {
+class _CategoryTileState extends State<CategoryTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.context.setState(() {
-          selectedCategory = widget.category;
-          print(selectedCategory);
-        });
+        widget.changeCategory(widget.category);
       },
       child: Container(
         alignment: Alignment.center,

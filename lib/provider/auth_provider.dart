@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/extras_provider.dart';
 import '../provider/user_provider.dart';
 import '../routes.dart';
 import '../models/usermodel.dart';
-import '../image_upload.dart';
+import '../services/image_upload.dart';
 
 enum Status {
   Uninitialized,
@@ -54,8 +55,7 @@ class AuthProvider extends ChangeNotifier {
       if (uid != null) {
         String imageUrl;
         await ImageUploader()
-            .uploadImage(
-                image: profileImage, path: CloudPath.profile, id: uid)
+            .uploadImage(image: profileImage, path: CloudPath.profile, id: uid)
             .then((String value) {
           imageUrl = value;
         });
@@ -71,38 +71,38 @@ class AuthProvider extends ChangeNotifier {
           });
         }
 
-         final userDatabase = Provider.of<UserProvider>(ctx,listen: false);
+        final userDatabase = Provider.of<UserProvider>(ctx, listen: false);
 
         if (userType == UserType.donor) {
-          userDatabase.registerDonor(
-              DonorModel(
-                  id: uid,
-                  name: name,
-                  email: email,
-                  address: address,
-                  phone: phone,
-                  profileImage: imageUrl,
-                  isDonor: true,
-                  isAdmin: false,
-                )
-          );
+          Provider.of<ExtrasProvider>(ctx, listen: false).saveIdName(uid, true);
+          Provider.of<AdminExtraProvider>(ctx, listen: false).updateCountDonor();
+          userDatabase.registerDonor(DonorModel(
+            id: uid,
+            name: name,
+            email: email,
+            address: address,
+            phone: phone,
+            profileImage: imageUrl,
+            isDonor: true,
+            isAdmin: false,
+          ));
         } else if (userType == UserType.organization) {
-          userDatabase.registerOrganization(
-            OrganizationModel(
-                id: uid,
-                name: name,
-                email: email,
-                address: address,
-                phone: phone,
-                establishedDate: establishedDate,
-                profileImage: imageUrl,
-                type: type,
-                documentImage: documentUrl,
-                isOrganization: true,
-              )
-          );
+          Provider.of<ExtrasProvider>(ctx, listen: false)
+              .saveIdName(uid, false);
+          Provider.of<AdminExtraProvider>(ctx, listen: false).updateCountOrganization();
+          userDatabase.registerOrganization(OrganizationModel(
+            id: uid,
+            name: name,
+            email: email,
+            address: address,
+            phone: phone,
+            establishedDate: establishedDate,
+            profileImage: imageUrl,
+            type: type,
+            documentImage: documentUrl,
+            isOrganization: true,
+          ));
         }
-
         sendEmailVerification(ctx);
       }
     } on PlatformException catch (err) {
@@ -146,6 +146,7 @@ class AuthProvider extends ChangeNotifier {
         ),
       );
       _status = Status.Unauthenticated;
+      notifyListeners();
     } catch (e) {
       print("Error on the sign in = " + e.toString());
       _status = Status.Unauthenticated;
@@ -191,7 +192,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future sendPasswordResetEmail(email, ctx) async {
-    await _auth.sendPasswordResetEmail(email: email).whenComplete(() {
+    print(email);
+    await _auth.sendPasswordResetEmail(email: email).then((value) => print('hello')).whenComplete(() {
       Scaffold.of(ctx).showSnackBar(
         SnackBar(
           content:
@@ -199,6 +201,7 @@ class AuthProvider extends ChangeNotifier {
           backgroundColor: Colors.green[600],
         ),
       );
+      print('hello2');
     }).catchError((error) {
       Scaffold.of(ctx).showSnackBar(
         SnackBar(
@@ -207,11 +210,13 @@ class AuthProvider extends ChangeNotifier {
           backgroundColor: Colors.red[600],
         ),
       );
+      print('hello3');
+
     });
   }
 
   Future signOut() async {
-    _auth.signOut();
+    await _auth.signOut();
     _status = Status.Unauthenticated;
     user = null;
     notifyListeners();
