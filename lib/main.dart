@@ -6,11 +6,11 @@ import 'package:provider/provider.dart';
 import './screens/dashboard/dashboard.dart';
 import './screens/welcome/welcome.dart';
 import './screens/splash.dart';
-<<<<<<< HEAD
-
-=======
->>>>>>> 0c646e4e227d3afdcd9b134477b3c0014cd83276
 import './provider/user_provider.dart';
+import './provider/auth_provider.dart';
+import './provider/activity_provider.dart';
+import './provider/usertransaction_provider.dart';
+
 import 'provider/extras_provider.dart';
 import './theme/theme.dart';
 import './routes.dart';
@@ -48,12 +48,7 @@ class SahayogiHaath extends StatelessWidget {
           create: (context) => ActivityProvider().getActivities(),
         ),
         StreamProvider(
-<<<<<<< HEAD
-          create: (context) => FirestoreService()
-              .getdocsData(path: FirestorePath.organizations()),
-=======
           create: (context) => UserProvider().getOrganizations(),
->>>>>>> 0c646e4e227d3afdcd9b134477b3c0014cd83276
         ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
@@ -72,8 +67,10 @@ class SahayogiHaath extends StatelessWidget {
         home: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (BuildContext ctx, AsyncSnapshot userSnapshot) {
-            final admin = Provider.of<AdminExtraProvider>(ctx,listen: false);
-            admin.getAdminInfo().then((value) {print('Admin Data Received');});
+            final admin = Provider.of<AdminExtraProvider>(ctx, listen: false);
+            admin.getAdminInfo().then((value) {
+              print('Admin Data Received');
+            });
             if (userSnapshot.hasData) {
               // return BottomTabBar();
               return Dashboard();
