@@ -119,7 +119,7 @@ class OrgTransaction extends StatelessWidget {
                 .snapshots()
             : Firestore.instance
                 .collection('transaction')
-                .where('doneeId', isEqualTo: id)
+                .where('donorId', isEqualTo: id)
                 .where('time', isGreaterThan: startDate)
                 .where('time', isLessThan: endDate)
                 .orderBy('time')
