@@ -113,7 +113,7 @@ class _SignUpOrganizationState extends State<SignUpOrganization> {
                       },
                     ),
                     RoundedInput(
-                      hintText: "Enter Organization's Email",
+                      hintText: "Email",
                       key: ValueKey('email'),
                       icon: Icons.email,
                       enableSuggesstion: false,

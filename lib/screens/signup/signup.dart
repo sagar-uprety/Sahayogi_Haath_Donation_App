@@ -83,7 +83,7 @@ class _SignUpState extends State<SignUp> {
                   },
                 ),
                 RoundedInput(
-                  hintText: "Enter Your Email",
+                  hintText: "Email",
                   key: ValueKey('email'),
                   icon: Icons.email,
                   enableSuggesstion: false,
