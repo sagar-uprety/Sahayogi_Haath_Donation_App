@@ -6,6 +6,7 @@ import 'package:date_range_picker/date_range_picker.dart' as dateRange;
 import '../../screens/dashboard/header.dart';
 import 'donationListmain.dart';
 import '../../components/transaction_components/search_bar.dart';
+import '../../theme/extention.dart';
 import '../../provider/user_provider.dart';
 
 class UserTransaction extends StatefulWidget {
@@ -124,7 +125,29 @@ class _UserTransactionState extends State<UserTransaction> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SearchBar(),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: Color(0xffEFEFEF),
+                      borderRadius: BorderRadius.circular(14)),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.search),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Search Transactions",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 19,
+                        ),
+                      )
+                    ],
+                  ),
+                ).vP8,
+                // SearchBar(),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.015,
                 ),
