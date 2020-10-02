@@ -11,8 +11,8 @@ class FirestoreService {
     return reference.setData(data);
   }
   
-  Stream<QuerySnapshot> getDatas({@required String path}){
-    return _db.collection(path).snapshots().map((snapshot) => snapshot);
+  Stream<QuerySnapshot> getDatas({@required String path,@required String orderBy}){
+    return _db.collection(path).orderBy(orderBy,descending: true).snapshots().map((snapshot) => snapshot);
   }
 
   Future<void> updateData({@required String path, @required Map<String, dynamic> data}){

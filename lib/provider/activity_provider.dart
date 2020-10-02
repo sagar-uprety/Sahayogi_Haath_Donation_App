@@ -58,7 +58,7 @@ class ActivityProvider with ChangeNotifier {
   }
 
   Stream<List<Activity>> getActivities() {
-    return firestoreService.getDatas(path: FirestorePath.activities()).map(
+    return firestoreService.getDatas(path: FirestorePath.activities(),orderBy: 'time').map(
         (snapshot) => snapshot.documents
             .map((doc) => Activity.fromFirestore(doc.data))
             .toList());

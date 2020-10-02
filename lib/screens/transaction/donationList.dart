@@ -32,8 +32,8 @@ class _UserTransactionState extends State<UserTransaction> {
     return endDate;
   }
 
-  String getCurrentData(String orgName) {
-    holder = orgName;
+  String getCurrentData(String orgId) {
+    holder = orgId;
     return holder;
   }
 
@@ -84,7 +84,7 @@ class _UserTransactionState extends State<UserTransaction> {
 
   List<String> sortByData = ['Date', 'Range'];
   String selectedValue;
-  String orgName;
+  String orgId;
   DropdownButton sortByDate() {
     List<DropdownMenuItem> sortList = [];
     for (var data in sortByData) {
@@ -202,7 +202,7 @@ class _UserTransactionState extends State<UserTransaction> {
   Widget _organization() {
     MediaQueryData queryData = MediaQuery.of(context);
     final user = Provider.of<UserProvider>(context);
-    String orgName = user.name;
+    String org = user.id;
     return Column(
       children: [
         Row(
@@ -251,7 +251,7 @@ class _UserTransactionState extends State<UserTransaction> {
           height: MediaQuery.of(context).size.height * 0.015,
         ),
         OrgTransaction(
-          orgName: orgName,
+          id: org,
           startDate: selecteddate,
           endDate: endDate,
         ),
@@ -306,7 +306,7 @@ class _UserTransactionState extends State<UserTransaction> {
           height: MediaQuery.of(context).size.height * 0.015,
         ),
         AdminTransactionMain(
-          orgName: holder,
+          id: holder,
         )
       ],
     );
@@ -328,13 +328,13 @@ class _UserTransactionState extends State<UserTransaction> {
             return Text('Loading');
           }
           return DropdownButton(
-            value: orgName,
+            value: orgId,
             hint: Text('View Transaction'),
             isExpanded: false,
             underline: SizedBox(),
             items: snapshot.data.documents.map((DocumentSnapshot document) {
               return DropdownMenuItem(
-                value: document.data['name'],
+                value: document.data['id'],
                 child: FittedBox(
                   child: Container(
                     child: FittedBox(
@@ -349,8 +349,8 @@ class _UserTransactionState extends State<UserTransaction> {
             }).toList(),
             onChanged: (value) {
               setState(() {
-                orgName = value;
-                getCurrentData(orgName);
+                orgId = value;
+                getCurrentData(orgId);
               });
             },
             style: TextStyle(fontSize: 14, color: Colors.black),

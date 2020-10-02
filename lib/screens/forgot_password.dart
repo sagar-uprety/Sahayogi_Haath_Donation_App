@@ -7,11 +7,11 @@ import '../provider/auth_provider.dart';
 import '../theme/extention.dart';
 
 class ForgotPassword extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     String email;
+    bool isValid = false;
 
     return Container(
       color: Color(0xff757575),
@@ -23,7 +23,6 @@ class ForgotPassword extends StatelessWidget {
                 topRight: Radius.circular(20.0),
               )),
           child: Form(
-            key: _formKey,
             child: Column(
               children: <Widget>[
                 Text(
@@ -48,6 +47,7 @@ class ForgotPassword extends StatelessWidget {
                     if (value.isEmpty || !value.contains('@')) {
                       return 'Please enter a valid email address.';
                     }
+                    isValid = true;
                     return null;
                   },
                   onSaved: (value) {
@@ -58,13 +58,11 @@ class ForgotPassword extends StatelessWidget {
                 RoundButton(
                   text: 'Reset Password',
                   onPress: () {
-                    final isValid = _formKey.currentState.validate();
                     FocusScope.of(context).unfocus();
 
                     print(email);
 
                     if (isValid) {
-                      _formKey.currentState.save();
                       Provider.of<AuthProvider>(context, listen: false)
                           .sendPasswordResetEmail(email, context);
                       Navigator.pop(context);

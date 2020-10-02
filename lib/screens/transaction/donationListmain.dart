@@ -35,7 +35,7 @@ class UserTransactionMain extends StatelessWidget {
             );
           }
           if (!snapshot.hasData) {
-            return Text('Loading');
+            return Center(child: CircularProgressIndicator());
           }
           List<Widget> donationLists = [];
 
@@ -60,28 +60,19 @@ class UserTransactionMain extends StatelessWidget {
 }
 
 class AdminTransactionMain extends StatelessWidget {
-  final String orgName;
-  AdminTransactionMain({this.orgName});
-
-  String viewAlldata(String name) {
-    String name1 = name;
-    if (name1 == null) {
-      return name1;
-    } else {
-      return name1;
-    }
-  }
+  final String id;
+  AdminTransactionMain({this.id});
 
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: (orgName != null)
+        stream: (id != null)
             ? Firestore.instance
                 .collection('transaction')
                 .orderBy('time')
                 .snapshots()
             : Firestore.instance
                 .collection('transaction')
-                .where('donee', isEqualTo: viewAlldata(orgName))
+                .where('doneeId', isEqualTo: id)
                 .orderBy('time')
                 .snapshots(),
         builder: (context, snapshot) {
@@ -96,10 +87,10 @@ class AdminTransactionMain extends StatelessWidget {
           final donations = snapshot.data.documents.reversed;
           List<Widget> donationLists = [];
           for (var donation in donations) {
-            if (orgName == null) {
+            if (id == null) {
               donationLists.add(TransactionCard(
                   UserTransactionModel.fromFirestore(donation.data)));
-            } else if (donation.data['donee'] == orgName) {
+            } else if (donation.data['doneeId'] == id) {
               donationLists.add(TransactionCard(
                   UserTransactionModel.fromFirestore(donation.data)));
             }
@@ -115,20 +106,20 @@ class AdminTransactionMain extends StatelessWidget {
 class OrgTransaction extends StatelessWidget {
   final DateTime startDate;
   final DateTime endDate;
-  final String orgName;
-  OrgTransaction({this.startDate, this.endDate, this.orgName});
+  final String id;
+  OrgTransaction({this.startDate, this.endDate, this.id});
 
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: (startDate == null && endDate == null)
             ? Firestore.instance
                 .collection('transaction')
-                .where('donee', isEqualTo: orgName)
+                .where('doneeId', isEqualTo: id)
                 .orderBy('time')
                 .snapshots()
             : Firestore.instance
                 .collection('transaction')
-                .where('donorId', isEqualTo: orgName)
+                .where('donorId', isEqualTo: id)
                 .where('time', isGreaterThan: startDate)
                 .where('time', isLessThan: endDate)
                 .orderBy('time')
