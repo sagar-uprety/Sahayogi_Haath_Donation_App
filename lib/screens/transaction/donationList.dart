@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:date_range_picker/date_range_picker.dart' as dateRange;
+import 'package:sahayogihaath/components/AppBars/appBar.dart';
 
 import '../../screens/dashboard/header.dart';
 import 'donationListmain.dart';
@@ -119,6 +120,7 @@ class _UserTransactionState extends State<UserTransaction> {
     double width = queryData.size.width * 0.02;
     return SafeArea(
       child: Scaffold(
+        appBar: GlobalAppBar(),
         body: Padding(
           padding: EdgeInsets.all(width),
           child: SingleChildScrollView(
