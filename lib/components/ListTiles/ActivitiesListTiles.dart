@@ -90,10 +90,7 @@ class ActivitiesListTiles extends StatelessWidget {
                         children: [
                           Text(
                             listprovider[index].description.length > 25
-                                ? listprovider[index]
-                                        .description
-                                        .substring(0, 25) +
-                                    '...'
+                                ? listprovider[index].authorName
                                 : listprovider[index].description,
                             style: TextStyles.bodySm.subTitleColor.bold,
                           ),
