@@ -1,4 +1,4 @@
-# sahayogihaath
+# Sahayogi Haath
 
 A donation app made with Flutter, Firabase and lots of love! 
 
