@@ -1,5 +1,5 @@
 <h1 align="center">
- <img src="./logo.png"/>
+ <img src="./logo.png" />
 </h1>
 <h4 align="center"><b> Sahayogi Haath - Donatations Made Easy!</b></h4>
 <div align="center">
@@ -8,7 +8,7 @@
 
 ## About ℹ️ 
 
-Sahayogi Haath (Helping Hands) is a Flutter based Mobile Application that provides a single platform for users to search charity organizations, get detailed information and donate to the ones’ they love. This application also integrates eSewa payment gateways for seamless transactions. 
+Sahayogi Haath (Helping Hands) is a Flutter based Mobile Application that provides a single platform for users to search charity organizations`, get detailed information and donate to the ones’ they love. This application also integrates eSewa payment gateways for seamless transactions. 
 
 ## Key Features 🧑‍💻
 
@@ -48,13 +48,13 @@ $ flutter build
   
 ## Screenshots 
 
-   ![Dashbaord](./screenshots/dashboard.jpeg)
-   ![Explore](./screenshots/explore.jpeg)
-   ![Organization Detail](./screenshots/org-detail.jpeg)
-   ![esewa](./screenshots/esewa.jpeg)
-   ![donations](./screenshots/donations.jpeg)
-   ![admin](./screenshots/admin.jpeg)
-
+  <img src="./screenshots/dashboard.jpeg" height=450 />
+  <img src="./screenshots/explore.jpeg" height=450 />
+  <img src="./screenshots/org-detail.jpeg" height=450 />
+  <img src="./screenshots/esewa.jpeg" height=400/>
+  <img src="./screenshots/donations.jpeg" height=450 />
+  <img src="screenshots/dashboard.jpeg" height=450 />
+  
 
 ## Contributions
 
