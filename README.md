@@ -48,13 +48,14 @@ $ flutter build
   
 ## Screenshots 
 
+<div align="center">
   <img src="./screenshots/dashboard.jpeg" height=450 />
   <img src="./screenshots/explore.jpeg" height=450 />
   <img src="./screenshots/org-detail.jpeg" height=450 />
   <img src="./screenshots/esewa.jpeg" height=400/>
   <img src="./screenshots/donations.jpeg" height=450 />
   <img src="screenshots/dashboard.jpeg" height=450 />
-  
+</div>
 
 ## Contributions
 
